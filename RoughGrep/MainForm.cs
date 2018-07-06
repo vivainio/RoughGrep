@@ -23,10 +23,5 @@ namespace RoughGrep
             });
             this.Deactivate += (o, e) => behindDisposer.Dispose();
         }
-
-        private void searchControl2_Load(object sender, EventArgs e)
-        {
-
-        }
     }
 }

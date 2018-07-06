@@ -62,16 +62,9 @@ namespace RoughGrep
             void SearchBack() => 
                 ui.resultBox.Find(ctrl.searchTextBox.Text, 0, ui.resultBox.SelectionStart - 1, RichTextBoxFinds.Reverse);
 
-            ctrl.searchTextBox.TextChanged += (o, e) =>
-            {
-                SearchForward();
-            };
-            /*
-            {
-                ui.resultBox.Find(ctrl.searchTextBox.Text);
-            };
-            */
+            ctrl.searchTextBox.TextChanged += (o, e) => SearchForward();            
             ctrl.btnNext.Click += (o, e) => SearchForward();
+            ctrl.btnPrev.Click += (o, e) => SearchBack();
             ctrl.searchTextBox.KeyDown += (o, e) =>
             {
                 if (e.KeyCode == Keys.Enter)
@@ -88,7 +81,6 @@ namespace RoughGrep
                 }
             };
 
-            ctrl.btnPrev.Click += (o, e) => SearchBack();
         }
 
         private static void SearchStartEvent(MainFormUi ui, KeyEventArgs e)
