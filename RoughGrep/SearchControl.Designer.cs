@@ -30,7 +30,7 @@
         {
             this.searchTextBox = new System.Windows.Forms.TextBox();
             this.btnPrev = new System.Windows.Forms.Button();
-            this.btnNexn = new System.Windows.Forms.Button();
+            this.btnNext = new System.Windows.Forms.Button();
             this.panel1 = new System.Windows.Forms.Panel();
             this.panel1.SuspendLayout();
             this.SuspendLayout();
@@ -53,17 +53,17 @@
             // 
             // button2
             // 
-            this.btnNexn.Location = new System.Drawing.Point(144, 3);
-            this.btnNexn.Name = "button2";
-            this.btnNexn.Size = new System.Drawing.Size(27, 23);
-            this.btnNexn.TabIndex = 2;
-            this.btnNexn.Text = ">";
-            this.btnNexn.UseVisualStyleBackColor = true;
+            this.btnNext.Location = new System.Drawing.Point(144, 3);
+            this.btnNext.Name = "button2";
+            this.btnNext.Size = new System.Drawing.Size(27, 23);
+            this.btnNext.TabIndex = 2;
+            this.btnNext.Text = ">";
+            this.btnNext.UseVisualStyleBackColor = true;
             // 
             // panel1
             // 
             this.panel1.Controls.Add(this.searchTextBox);
-            this.panel1.Controls.Add(this.btnNexn);
+            this.panel1.Controls.Add(this.btnNext);
             this.panel1.Controls.Add(this.btnPrev);
             this.panel1.Location = new System.Drawing.Point(0, 0);
             this.panel1.Name = "panel1";
@@ -87,7 +87,7 @@
 
         public System.Windows.Forms.TextBox searchTextBox;
         public System.Windows.Forms.Button btnPrev;
-        public System.Windows.Forms.Button btnNexn;
+        public System.Windows.Forms.Button btnNext;
         public System.Windows.Forms.Panel panel1;
     }
 }

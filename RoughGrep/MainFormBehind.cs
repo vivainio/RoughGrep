@@ -71,7 +71,7 @@ namespace RoughGrep
                 ui.resultBox.Find(ctrl.searchTextBox.Text);
             };
             */
-            ctrl.btnNexn.Click += (o, e) => SearchForward();
+            ctrl.btnNext.Click += (o, e) => SearchForward();
             ctrl.searchTextBox.KeyDown += (o, e) =>
             {
                 if (e.KeyCode == Keys.Enter)
