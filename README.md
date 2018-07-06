@@ -9,6 +9,8 @@ at the line of the hit, or event at the nesting project (e.g. the directory that
 
 ([RipGrep](https://github.com/BurntSushi/ripgrep), as people know, is the fastest Grep on the planet!)
 
+![Screenshot](site/screenshot.png)
+
 ## Requirements
 
 - RipGrep (rg.exe) on PATH
