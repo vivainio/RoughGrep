@@ -53,7 +53,6 @@ namespace RoughGrep
             return this;
         }
         public RichTextRenderer Italic(string s) => WithFont(italicFont, s);
-       
     }
     public static class Logic
     {
@@ -131,9 +130,7 @@ namespace RoughGrep
                     if (char.IsDigit(line[0]))
                     {
                         var parts = line.Split(new[] { ":" }, 2,  StringSplitOptions.None);
-                        var lineLabel = parts[0].PadRight(4);
-                        var matchBody = parts[1];
-                        render.Italic(lineLabel + " ").Feed(matchBody + "\r\n");
+                        render.Feed(parts[1].TrimStart() + "\r\n");
                     } else
                     {
                         render.Right(line);
