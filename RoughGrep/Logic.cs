@@ -3,15 +3,58 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Diagnostics;
+using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 using TrivialBehind;
 
 namespace RoughGrep
 {
 
+    class RichTextRenderer
+    {
+        private readonly RichTextBox rt;
+        private readonly Font normFont;
+        private readonly Font italicFont;
+
+        public RichTextRenderer(RichTextBox rt)
+        {
+            this.rt = rt;
+            this.normFont = new Font(rt.Font, FontStyle.Regular);
+            this.italicFont = new Font(rt.Font, FontStyle.Italic);
+           
+        }
+
+        public RichTextRenderer Feed(string s)
+        {
+            rt.AppendText(s);
+            return this;
+        }
+        public RichTextRenderer Lf()
+        {
+            rt.AppendText("\r\n");
+            return this;
+        }
+        public RichTextRenderer Right(string s)
+        {
+            this.rt.SelectionAlignment = HorizontalAlignment.Right;
+            this.Feed(s + "\r\n");
+            this.rt.SelectionAlignment = HorizontalAlignment.Left;
+            return this;
+        }
+        public RichTextRenderer WithFont(Font font, string s)
+        {
+            this.rt.SelectionFont = font;
+            this.Feed(s);
+            this.rt.SelectionFont = this.normFont;
+            return this;
+        }
+        public RichTextRenderer Italic(string s) => WithFont(italicFont, s);
+       
+    }
     public static class Logic
     {
         public static string WorkDir = null;
@@ -72,11 +115,31 @@ namespace RoughGrep
             var flushlock = new Object();
 
 
+            var render = new RichTextRenderer(ui.resultBox);
             Action doFlush = () =>
             {
                 var fl = toFlush;
                 toFlush = new List<string>();
-                ui.resultBox.AppendText(string.Join("\r\n", fl) + "\r\n");
+                foreach (var line in fl)
+                {
+                    if (line.Length == 0)
+                    {
+                        render.Lf();
+                        continue;
+                    }
+
+                    if (char.IsDigit(line[0]))
+                    {
+                        var parts = line.Split(new[] { ":" }, 2,  StringSplitOptions.None);
+                        var lineLabel = parts[0].PadRight(4);
+                        var matchBody = parts[1];
+                        render.Italic(lineLabel + " ").Feed(matchBody + "\r\n");
+                    } else
+                    {
+                        render.Right(line);
+                    }
+                }
+                //ui.resultBox.AppendText(string.Join("\r\n", fl) + "\r\n");
             };
             Action debouncedFlush = Debounce(100, doFlush);
 
