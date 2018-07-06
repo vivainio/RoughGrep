@@ -35,26 +35,26 @@
             this.panel1.SuspendLayout();
             this.SuspendLayout();
             // 
-            // textBox1
+            // searchTextBox
             // 
             this.searchTextBox.Location = new System.Drawing.Point(3, 3);
-            this.searchTextBox.Name = "textBox1";
+            this.searchTextBox.Name = "searchTextBox";
             this.searchTextBox.Size = new System.Drawing.Size(100, 22);
             this.searchTextBox.TabIndex = 0;
             // 
-            // button1
+            // btnPrev
             // 
-            this.btnPrev.Location = new System.Drawing.Point(109, 3);
-            this.btnPrev.Name = "button1";
+            this.btnPrev.Location = new System.Drawing.Point(109, 4);
+            this.btnPrev.Name = "btnPrev";
             this.btnPrev.Size = new System.Drawing.Size(27, 23);
             this.btnPrev.TabIndex = 1;
             this.btnPrev.Text = "<";
             this.btnPrev.UseVisualStyleBackColor = true;
             // 
-            // button2
+            // btnNext
             // 
-            this.btnNext.Location = new System.Drawing.Point(144, 3);
-            this.btnNext.Name = "button2";
+            this.btnNext.Location = new System.Drawing.Point(133, 4);
+            this.btnNext.Name = "btnNext";
             this.btnNext.Size = new System.Drawing.Size(27, 23);
             this.btnNext.TabIndex = 2;
             this.btnNext.Text = ">";

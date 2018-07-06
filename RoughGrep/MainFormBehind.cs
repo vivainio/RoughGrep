@@ -55,12 +55,13 @@ namespace RoughGrep
         private void LiveSearchEvents(MainFormUi ui)
         {
             var ctrl = ui.searchControl;
+            var rb = ui.resultBox;
+            void SearchForward() =>
+                ui.resultBox.Find(ctrl.searchTextBox.Text, rb.SelectionStart + rb.SelectionLength, RichTextBoxFinds.None);
 
-            void SearchForward() =>             
-                ui.resultBox.Find(ctrl.searchTextBox.Text, ui.resultBox.SelectionStart + 1, RichTextBoxFinds.None);
 
             void SearchBack() => 
-                ui.resultBox.Find(ctrl.searchTextBox.Text, 0, ui.resultBox.SelectionStart - 1, RichTextBoxFinds.Reverse);
+                ui.resultBox.Find(ctrl.searchTextBox.Text, 0, rb.SelectionStart, RichTextBoxFinds.Reverse);
 
             ctrl.searchTextBox.TextChanged += (o, e) => SearchForward();            
             ctrl.btnNext.Click += (o, e) => SearchForward();
