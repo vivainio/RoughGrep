@@ -48,9 +48,48 @@ namespace RoughGrep
             {
                 ui.searchTextBox.Select();
             };
+            LiveSearchEvents(ui);
             
         }
 
+        private void LiveSearchEvents(MainFormUi ui)
+        {
+            var ctrl = ui.searchControl;
+
+            void SearchForward() =>             
+                ui.resultBox.Find(ctrl.searchTextBox.Text, ui.resultBox.SelectionStart + 1, RichTextBoxFinds.None);
+
+            void SearchBack() => 
+                ui.resultBox.Find(ctrl.searchTextBox.Text, 0, ui.resultBox.SelectionStart - 1, RichTextBoxFinds.Reverse);
+
+            ctrl.searchTextBox.TextChanged += (o, e) =>
+            {
+                SearchForward();
+            };
+            /*
+            {
+                ui.resultBox.Find(ctrl.searchTextBox.Text);
+            };
+            */
+            ctrl.btnNexn.Click += (o, e) => SearchForward();
+            ctrl.searchTextBox.KeyDown += (o, e) =>
+            {
+                if (e.KeyCode == Keys.Enter)
+                {
+                    if (e.Shift)
+                    {
+                        SearchBack();
+                    } else
+                    {
+                        SearchForward();
+                    }
+                    e.SuppressKeyPress = true;
+                    e.Handled = true;
+                }
+            };
+
+            ctrl.btnPrev.Click += (o, e) => SearchBack();
+        }
 
         private static void SearchStartEvent(MainFormUi ui, KeyEventArgs e)
         {

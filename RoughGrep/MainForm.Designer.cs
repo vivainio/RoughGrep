@@ -34,14 +34,15 @@
             this.previewBox = new System.Windows.Forms.TextBox();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.searchControl = new RoughGrep.SearchControl();
             this.tableLayoutPanel1.SuspendLayout();
             this.panel1.SuspendLayout();
             this.SuspendLayout();
             // 
-            // textBox1
+            // searchTextBox
             // 
             this.searchTextBox.Location = new System.Drawing.Point(3, 3);
-            this.searchTextBox.Name = "textBox1";
+            this.searchTextBox.Name = "searchTextBox";
             this.searchTextBox.Size = new System.Drawing.Size(269, 24);
             this.searchTextBox.TabIndex = 0;
             // 
@@ -61,27 +62,27 @@
             this.resultBox.BackColor = System.Drawing.SystemColors.Window;
             this.resultBox.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.resultBox.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.resultBox.HideSelection = false;
             this.resultBox.Location = new System.Drawing.Point(3, 32);
             this.resultBox.Margin = new System.Windows.Forms.Padding(3, 0, 0, 0);
             this.resultBox.MaxLength = 200000;
             this.resultBox.Name = "resultBox";
             this.resultBox.ReadOnly = true;
             this.resultBox.ScrollBars = System.Windows.Forms.RichTextBoxScrollBars.Vertical;
-            this.resultBox.Size = new System.Drawing.Size(1022, 413);
+            this.resultBox.Size = new System.Drawing.Size(1022, 396);
             this.resultBox.TabIndex = 0;
             this.resultBox.Text = "";
             this.resultBox.WordWrap = false;
-            this.resultBox.TextChanged += new System.EventHandler(this.resultBox_TextChanged);
             // 
             // previewBox
             // 
             this.previewBox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.previewBox.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.previewBox.Location = new System.Drawing.Point(0, 445);
+            this.previewBox.Location = new System.Drawing.Point(0, 428);
             this.previewBox.Margin = new System.Windows.Forms.Padding(0);
             this.previewBox.Multiline = true;
             this.previewBox.Name = "previewBox";
-            this.previewBox.Size = new System.Drawing.Size(1025, 83);
+            this.previewBox.Size = new System.Drawing.Size(1025, 79);
             this.previewBox.TabIndex = 1;
             // 
             // tableLayoutPanel1
@@ -95,16 +96,18 @@
             this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 0);
             this.tableLayoutPanel1.Margin = new System.Windows.Forms.Padding(0, 1, 0, 1);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
-            this.tableLayoutPanel1.RowCount = 3;
+            this.tableLayoutPanel1.RowCount = 4;
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 32F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 83.33333F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 16.66667F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
             this.tableLayoutPanel1.Size = new System.Drawing.Size(1025, 528);
             this.tableLayoutPanel1.TabIndex = 3;
             // 
             // panel1
             // 
             this.panel1.BackColor = System.Drawing.SystemColors.Control;
+            this.panel1.Controls.Add(this.searchControl);
             this.panel1.Controls.Add(this.dirSelector);
             this.panel1.Controls.Add(this.searchTextBox);
             this.panel1.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -114,13 +117,21 @@
             this.panel1.Size = new System.Drawing.Size(1025, 32);
             this.panel1.TabIndex = 3;
             // 
-            // Form1
+            // searchControl
+            // 
+            this.searchControl.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.searchControl.Location = new System.Drawing.Point(424, 0);
+            this.searchControl.Name = "searchControl";
+            this.searchControl.Size = new System.Drawing.Size(174, 29);
+            this.searchControl.TabIndex = 2;
+            // 
+            // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1025, 528);
             this.Controls.Add(this.tableLayoutPanel1);
-            this.Name = "Form1";
+            this.Name = "MainForm";
             this.Text = "RoughGrep";
             this.tableLayoutPanel1.ResumeLayout(false);
             this.tableLayoutPanel1.PerformLayout();
@@ -138,6 +149,7 @@
         private System.Windows.Forms.ComboBox dirSelector;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
         private System.Windows.Forms.Panel panel1;
+        private SearchControl searchControl;
     }
 }
 

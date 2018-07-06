@@ -14,6 +14,7 @@ namespace RoughGrep
             
             behindDisposer = TrivialBehinds.CreateForUi(new MainFormUi
             {
+                searchControl = searchControl,
                 form = this,
                 dirSelector = dirSelector,
                 resultBox = resultBox,
@@ -23,7 +24,7 @@ namespace RoughGrep
             this.Deactivate += (o, e) => behindDisposer.Dispose();
         }
 
-        private void resultBox_TextChanged(object sender, EventArgs e)
+        private void searchControl2_Load(object sender, EventArgs e)
         {
 
         }

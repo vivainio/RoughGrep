@@ -93,12 +93,11 @@ namespace RoughGrep
                     ui.resultBox.Invoke(debouncedFlush);
                 }
             };
+            Action moveToStart = () => ui.resultBox.SelectionStart = 0;
             p.Exited += (o, ev) =>
             {
                 ui.resultBox.Invoke(doFlush);
-                //Action a = () => ui.resultBox.Lines = Lines.ToArray();
-                //ui.resultBox.Invoke(a);
-
+                ui.resultBox.Invoke(moveToStart);
             };
             p.Start();
             p.BeginOutputReadLine();
