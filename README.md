@@ -4,8 +4,7 @@ Fast and minimal UI on top of RipGrep
 
 "You RipGrep, so why not RoughGrep?" -Anon, 2018
 
-RoughGrep is a very thin UI over RipGrep that allows comfortably browsing over the results, and launching VSCode
-at the line of the hit, or event at the nesting project (e.g. the directory that has the .csproj or .fsproj file).
+RoughGrep is a very thin UI over RipGrep that allows comfortably browsing over the results.
 
 ([RipGrep](https://github.com/BurntSushi/ripgrep), as people know, is the fastest Grep on the planet!)
 
@@ -29,8 +28,8 @@ Grab it from [Releases](https://github.com/vivainio/RoughGrep/releases) and unzi
 - Enter the search string in the box and press enter
 - Navigate the results. When you find interesting result you can:
   - Press "space" to show some context in preview pane
-  - Press ENTER to open it in vscode
-  - Press "p" to open the parent project DIRECTORY in vscode. RoughGrep takes the best guess on what that might be.
+  - Press ENTER to open it in VSCode
+  - Press "p" to open the parent project DIRECTORY in vscode. RoughGrep takes the best guess on what that might be (e.g. finds .csproj).
 
 
 ## License
