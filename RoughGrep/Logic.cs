@@ -116,7 +116,8 @@ namespace RoughGrep
             var toFlush = new List<string>();
             var flushlock = new Object();
             var render = new RichTextRenderer(ui.resultBox);
-            // slower, emits formatting
+            // do not decorate 
+            var emitCommentsForFiles = !RgExtraArgs.StartsWith("--files");
             void RichFlush(IEnumerable<string> lines)
             {
                 var sb = new StringBuilder();
@@ -136,7 +137,11 @@ namespace RoughGrep
                     }
                     else
                     {
-                        sb.Append("//- ").Append(line).Append("\r\n");
+                        if (emitCommentsForFiles)
+                        {
+                            sb.Append("//- ");
+                        }
+                        sb.Append(line).Append("\r\n");
                     }
                 }
                 render.Feed(sb.ToString());
