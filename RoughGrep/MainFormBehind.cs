@@ -8,47 +8,53 @@ using System.Windows.Forms;
 
 namespace RoughGrep
 {
+    public static class SciUtil
+    {
+        public static Scintilla CreateScintilla()
+        {
+            var scintilla = new Scintilla();
+            scintilla.Lexer = Lexer.Cpp;
+
+            // Configuring the default style with properties
+            // we have common to every lexer style saves time.
+
+            scintilla.StyleResetDefault();
+            scintilla.Styles[Style.Default].Font = "Consolas";
+            scintilla.Styles[Style.Default].Size = 10;
+            scintilla.StyleClearAll();
+
+            // Configure the CPP (C#) lexer styles
+            scintilla.Styles[Style.Cpp.Default].ForeColor = Color.Silver;
+            scintilla.Styles[Style.Cpp.Comment].ForeColor = Color.FromArgb(0, 128, 0); // Green
+            scintilla.Styles[Style.Cpp.CommentLine].ForeColor = Color.FromArgb(0, 128, 0); // Green
+            scintilla.Styles[Style.Cpp.CommentLineDoc].ForeColor = Color.FromArgb(128, 128, 128); // Gray
+            scintilla.Styles[Style.Cpp.Number].ForeColor = Color.Olive;
+            scintilla.Styles[Style.Cpp.Word].ForeColor = Color.Blue;
+            scintilla.Styles[Style.Cpp.Word2].ForeColor = Color.Blue;
+            scintilla.Styles[Style.Cpp.String].ForeColor = Color.FromArgb(163, 21, 21); // Red
+            scintilla.Styles[Style.Cpp.Character].ForeColor = Color.FromArgb(163, 21, 21); // Red
+            scintilla.Styles[Style.Cpp.Verbatim].ForeColor = Color.FromArgb(163, 21, 21); // Red
+            scintilla.Styles[Style.Cpp.StringEol].BackColor = Color.Pink;
+            scintilla.Styles[Style.Cpp.Operator].ForeColor = Color.Purple;
+            scintilla.Styles[Style.Cpp.Preprocessor].ForeColor = Color.Maroon;
+            scintilla.Lexer = Lexer.Cpp;
+
+            // Set the keywords
+            scintilla.SetKeywords(0, "abstract as base break case catch checked continue default delegate do else event explicit extern false finally fixed for foreach goto if implicit in interface internal is lock namespace new null object operator out override params private protected public readonly ref return sealed sizeof stackalloc switch this throw true try typeof unchecked unsafe using virtual while");
+            scintilla.SetKeywords(1, "bool byte char class const decimal double enum float int long sbyte short static string struct uint ulong ushort void");
+            return scintilla;
+        }
+
+    }
     public class MainFormBehind
     {
         private readonly MainFormUi Ui;
-
+       
         public MainFormBehind(MainFormUi ui)
         {
-            void SetupLexer(Scintilla scintilla)
-            {
-                // Configuring the default style with properties
-                // we have common to every lexer style saves time.
-                scintilla.StyleResetDefault();
-                scintilla.Styles[Style.Default].Font = "Consolas";
-                scintilla.Styles[Style.Default].Size = 10;
-                scintilla.StyleClearAll();
-
-                // Configure the CPP (C#) lexer styles
-                scintilla.Styles[Style.Cpp.Default].ForeColor = Color.Silver;
-                scintilla.Styles[Style.Cpp.Comment].ForeColor = Color.FromArgb(0, 128, 0); // Green
-                scintilla.Styles[Style.Cpp.CommentLine].ForeColor = Color.FromArgb(0, 128, 0); // Green
-                scintilla.Styles[Style.Cpp.CommentLineDoc].ForeColor = Color.FromArgb(128, 128, 128); // Gray
-                scintilla.Styles[Style.Cpp.Number].ForeColor = Color.Olive;
-                scintilla.Styles[Style.Cpp.Word].ForeColor = Color.Blue;
-                scintilla.Styles[Style.Cpp.Word2].ForeColor = Color.Blue;
-                scintilla.Styles[Style.Cpp.String].ForeColor = Color.FromArgb(163, 21, 21); // Red
-                scintilla.Styles[Style.Cpp.Character].ForeColor = Color.FromArgb(163, 21, 21); // Red
-                scintilla.Styles[Style.Cpp.Verbatim].ForeColor = Color.FromArgb(163, 21, 21); // Red
-                scintilla.Styles[Style.Cpp.StringEol].BackColor = Color.Pink;
-                scintilla.Styles[Style.Cpp.Operator].ForeColor = Color.Purple;
-                scintilla.Styles[Style.Cpp.Preprocessor].ForeColor = Color.Maroon;
-                scintilla.Lexer = Lexer.Cpp;
-
-                // Set the keywords
-                scintilla.SetKeywords(0, "abstract as base break case catch checked continue default delegate do else event explicit extern false finally fixed for foreach goto if implicit in interface internal is lock namespace new null object operator out override params private protected public readonly ref return sealed sizeof stackalloc switch this throw true try typeof unchecked unsafe using virtual while");
-                scintilla.SetKeywords(1, "bool byte char class const decimal double enum float int long sbyte short static string struct uint ulong ushort void");
-
-            }
             void SetupScintilla()
             {
-                var scintilla = new Scintilla();
-                scintilla.Lexer = Lexer.Cpp;
-                SetupLexer(scintilla);
+                var scintilla = SciUtil.CreateScintilla();
                 scintilla.UpdateUI += (o, e) =>
                 {
                     if (e.Change == UpdateChange.Selection)
@@ -66,6 +72,9 @@ namespace RoughGrep
 
             this.Ui = ui;
             SetupScintilla();
+            var s2 = SciUtil.CreateScintilla();
+            
+            s2.Show();
             ui.searchTextBox.KeyDown += (o, e) =>
             {
                 if (e.KeyCode == Keys.Enter)
@@ -103,6 +112,10 @@ namespace RoughGrep
             LiveSearchEvents(ui);
             
         }
+        private readonly Lazy<FullPreviewForm> Previewer = new Lazy<FullPreviewForm>(() =>
+        {
+            return new FullPreviewForm();
+        });
 
         private void PositionUpdated()
         {
@@ -170,6 +183,7 @@ namespace RoughGrep
             {
                 case Keys.Space:
                     {
+
                         var (file, lineNum) = Logic.LookupFileAtLine(line);
                         if (file != null)
                         {
@@ -246,13 +260,12 @@ namespace RoughGrep
 
         void PreviewFile(string path, int linenum)
         {
-            var lines = File.ReadLines(path).Skip(Math.Max(linenum - 2, 0)).Take(10);
-            var asText = string.Join("\r\n", lines);
-            asText = asText.Substring(0, Math.Min(5000, asText.Length));
-            Ui.previewBox.Text = asText;
-            Ui.previewBox.SelectionStart = 0;
-            Ui.previewBox.SelectionLength = 1;
-            Ui.previewBox.ScrollToCaret();
+            var text = File.ReadAllText(path);
+            var fp = Previewer.Value;
+            fp.scintilla.Text = text;
+            var pos = fp.scintilla.Lines[linenum].Position;
+            fp.scintilla.GotoPosition(pos);
+            fp.Show();
         }
 
         void LaunchEditorWithArgs(string args)
