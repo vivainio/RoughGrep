@@ -115,28 +115,37 @@ namespace RoughGrep
         {
             var ctrl = ui.searchControl;
             var rb = ui.resultBox;
-            void SearchForward()
+            void SearchAndMove(bool reverse = false)
             {
+                if (reverse)
+                {
+                    rb.TargetStart = rb.CurrentPosition-1;
+                    rb.TargetEnd = 0;
+                } else
+                {
+                    rb.TargetStart = rb.CurrentPosition;
+                    rb.TargetEnd = rb.TextLength;
+
+                }
+                rb.SearchInTarget(ctrl.searchTextBox.Text);
+                rb.SelectionStart = rb.TargetStart;
+                rb.SelectionEnd = rb.TargetEnd;
+                rb.ScrollCaret();
             }
-                //ui.resultBox.Find(ctrl.searchTextBox.Text, rb.SelectionStart + rb.SelectionLength, RichTextBoxFinds.None);
 
-
-            void SearchBack() { }
-                //ui.resultBox.Find(ctrl.searchTextBox.Text, 0, rb.SelectionStart, RichTextBoxFinds.Reverse);
-
-            ctrl.searchTextBox.TextChanged += (o, e) => SearchForward();            
-            ctrl.btnNext.Click += (o, e) => SearchForward();
-            ctrl.btnPrev.Click += (o, e) => SearchBack();
+            ctrl.searchTextBox.TextChanged += (o, e) => SearchAndMove();
+            ctrl.btnNext.Click += (o, e) => SearchAndMove();
+            ctrl.btnPrev.Click += (o, e) => SearchAndMove(reverse: true);
             ctrl.searchTextBox.KeyDown += (o, e) =>
             {
                 if (e.KeyCode == Keys.Enter)
                 {
                     if (e.Shift)
                     {
-                        SearchBack();
+                        SearchAndMove(reverse: true);
                     } else
                     {
-                        SearchForward();
+                        SearchAndMove();
                     }
                     e.SuppressKeyPress = true;
                     e.Handled = true;
