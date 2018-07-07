@@ -106,8 +106,8 @@ namespace RoughGrep
 
         private void PositionUpdated()
         {
-            var file = Logic.LookupFileAtLine(Ui.resultBox.CurrentLine);
-            
+            var (file, line) = Logic.LookupFileAtLine(Ui.resultBox.CurrentLine, relative: true);
+            Ui.statusLabel.Text = $"{file} +{line}";
 
             
         }

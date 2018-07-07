@@ -21,11 +21,22 @@ namespace RoughGrep
                 previewBox = previewBox,
                 searchTextBox = searchTextBox,
                 btnAbort = btnAbort,
-                tableLayout = tableLayoutPanel1
+                tableLayout = tableLayoutPanel1,
+                statusLabel = statusLabel1
+                
 
             });
             this.Deactivate += (o, e) => behindDisposer.Dispose();
         }
 
+        private void toolStrip1_ItemClicked(object sender, ToolStripItemClickedEventArgs e)
+        {
+
+        }
+
+        private void statusStrip1_ItemClicked(object sender, ToolStripItemClickedEventArgs e)
+        {
+
+        }
     }
 }

@@ -223,7 +223,7 @@ namespace RoughGrep
             return psi;
         }
 
-        public static (string, int) LookupFileAtLine(int lineNumber)
+        public static (string, int) LookupFileAtLine(int lineNumber, bool relative=false)
         {
             if (lineNumber > Lines.Count - 1)
             {
@@ -247,7 +247,7 @@ namespace RoughGrep
                 {
                     continue;
                 }
-                return (Path.Combine(WorkDir, Lines[idx]), resLineNum);
+                return (relative ? Lines[idx] : Path.Combine(WorkDir, Lines[idx]), resLineNum);
             }
             return (null, 0);
         }
