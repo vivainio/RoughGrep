@@ -11,8 +11,19 @@ namespace RoughGrep
         private readonly MainFormUi Ui;
         public MainFormBehind(MainFormUi ui)
         {
+            void SetupScintilla()
+            {
+                var sci = new ScintillaNET.Scintilla();
+                //sci.ReadOnly = true;
+                ui.resultBox = sci;
+                ui.form.Controls.Add(ui.resultBox);
+                ui.resultBox.Dock = DockStyle.Fill;
+                ui.searchTextBox.Select();
+                ui.tableLayout.Controls.Add(ui.resultBox, 0, 1);
+            }
 
             this.Ui = ui;
+            SetupScintilla();
             ui.searchTextBox.KeyDown += (o, e) =>
             {
                 if (e.KeyCode == Keys.Enter)
@@ -30,9 +41,7 @@ namespace RoughGrep
 
             ui.resultBox.KeyDown += (o, e) =>
             {
-                var idx = ui.resultBox.GetFirstCharIndexOfCurrentLine();
-                var line = ui.resultBox.GetLineFromCharIndex(idx);
-                HandleKeyDownOnResults(e, line);
+                HandleKeyDownOnResults(e, ui.resultBox.CurrentLine);
             };
             ui.resultBox.KeyPress += (o, e) =>
             {
@@ -44,10 +53,6 @@ namespace RoughGrep
             ui.dirSelector.DataSource = Logic.DirHistory;
             ui.searchTextBox.DataSource = Logic.SearchHistory;
             ui.dirSelector.Text = Logic.WorkDir;
-            ui.form.Load += (o, e) =>
-            {
-                ui.searchTextBox.Select();
-            };
             ui.btnAbort.Click += (o, e) =>
             {
                 ui.btnAbort.Visible = false;
@@ -61,12 +66,14 @@ namespace RoughGrep
         {
             var ctrl = ui.searchControl;
             var rb = ui.resultBox;
-            void SearchForward() =>
-                ui.resultBox.Find(ctrl.searchTextBox.Text, rb.SelectionStart + rb.SelectionLength, RichTextBoxFinds.None);
+            void SearchForward()
+            {
+            }
+                //ui.resultBox.Find(ctrl.searchTextBox.Text, rb.SelectionStart + rb.SelectionLength, RichTextBoxFinds.None);
 
 
-            void SearchBack() => 
-                ui.resultBox.Find(ctrl.searchTextBox.Text, 0, rb.SelectionStart, RichTextBoxFinds.Reverse);
+            void SearchBack() { }
+                //ui.resultBox.Find(ctrl.searchTextBox.Text, 0, rb.SelectionStart, RichTextBoxFinds.Reverse);
 
             ctrl.searchTextBox.TextChanged += (o, e) => SearchForward();            
             ctrl.btnNext.Click += (o, e) => SearchForward();

@@ -30,12 +30,11 @@
         {
             this.searchTextBox = new System.Windows.Forms.ComboBox();
             this.dirSelector = new System.Windows.Forms.ComboBox();
-            this.resultBox = new System.Windows.Forms.RichTextBox();
             this.previewBox = new System.Windows.Forms.TextBox();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.panel1 = new System.Windows.Forms.Panel();
-            this.searchControl = new RoughGrep.SearchControl();
             this.btnAbort = new System.Windows.Forms.Button();
+            this.searchControl = new RoughGrep.SearchControl();
             this.tableLayoutPanel1.SuspendLayout();
             this.panel1.SuspendLayout();
             this.SuspendLayout();
@@ -58,23 +57,6 @@
             this.dirSelector.Size = new System.Drawing.Size(418, 24);
             this.dirSelector.TabIndex = 1;
             // 
-            // resultBox
-            // 
-            this.resultBox.BackColor = System.Drawing.SystemColors.Window;
-            this.resultBox.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.resultBox.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.resultBox.HideSelection = false;
-            this.resultBox.Location = new System.Drawing.Point(3, 32);
-            this.resultBox.Margin = new System.Windows.Forms.Padding(3, 0, 0, 0);
-            this.resultBox.MaxLength = 200000;
-            this.resultBox.Name = "resultBox";
-            this.resultBox.ReadOnly = true;
-            this.resultBox.ScrollBars = System.Windows.Forms.RichTextBoxScrollBars.Vertical;
-            this.resultBox.Size = new System.Drawing.Size(1022, 396);
-            this.resultBox.TabIndex = 0;
-            this.resultBox.Text = "";
-            this.resultBox.WordWrap = false;
-            // 
             // previewBox
             // 
             this.previewBox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
@@ -92,7 +74,6 @@
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tableLayoutPanel1.Controls.Add(this.panel1, 0, 0);
             this.tableLayoutPanel1.Controls.Add(this.previewBox, 0, 2);
-            this.tableLayoutPanel1.Controls.Add(this.resultBox, 0, 1);
             this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 0);
             this.tableLayoutPanel1.Margin = new System.Windows.Forms.Padding(0, 1, 0, 1);
@@ -119,15 +100,7 @@
             this.panel1.Size = new System.Drawing.Size(1025, 32);
             this.panel1.TabIndex = 3;
             // 
-            // searchControl
-            // 
-            this.searchControl.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.searchControl.Location = new System.Drawing.Point(424, 0);
-            this.searchControl.Name = "searchControl";
-            this.searchControl.Size = new System.Drawing.Size(174, 29);
-            this.searchControl.TabIndex = 2;
-            // 
-            // button1
+            // btnAbort
             // 
             this.btnAbort.Location = new System.Drawing.Point(278, 3);
             this.btnAbort.Name = "btnAbort";
@@ -136,6 +109,14 @@
             this.btnAbort.Text = "x";
             this.btnAbort.UseVisualStyleBackColor = true;
             this.btnAbort.Visible = false;
+            // 
+            // searchControl
+            // 
+            this.searchControl.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.searchControl.Location = new System.Drawing.Point(424, 0);
+            this.searchControl.Name = "searchControl";
+            this.searchControl.Size = new System.Drawing.Size(174, 29);
+            this.searchControl.TabIndex = 2;
             // 
             // MainForm
             // 
@@ -154,8 +135,6 @@
 
         #endregion
         private System.Windows.Forms.ComboBox searchTextBox;
-        //private System.Windows.Forms.TextBox resultBox;
-        private System.Windows.Forms.RichTextBox resultBox;
 
         private System.Windows.Forms.TextBox previewBox;
         private System.Windows.Forms.ComboBox dirSelector;

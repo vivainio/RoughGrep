@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ScintillaNET;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
@@ -16,11 +17,11 @@ namespace RoughGrep
 
     class RichTextRenderer
     {
-        private readonly RichTextBox rt;
+        private readonly Scintilla rt;
         private readonly Font normFont;
         private readonly Font italicFont;
 
-        public RichTextRenderer(RichTextBox rt)
+        public RichTextRenderer(Scintilla rt)
         {
             this.rt = rt;
             this.normFont = new Font(rt.Font, FontStyle.Regular);
@@ -38,29 +39,12 @@ namespace RoughGrep
             rt.AppendText("\r\n");
             return this;
         }
-        public RichTextRenderer Right(string s)
-        {
-            this.rt.SelectionAlignment = HorizontalAlignment.Right;
-            this.Feed(s + "\r\n");
-            this.rt.SelectionAlignment = HorizontalAlignment.Left;
-            return this;
-        }
         public RichTextRenderer Bullet(string s)
         {
-            this.rt.SelectionBullet = true;
             this.Feed(s + "\r\n");
-            this.rt.SelectionBullet = false;
             return this;
         }
 
-        public RichTextRenderer WithFont(Font font, string s)
-        {
-            this.rt.SelectionFont = font;
-            this.Feed(s);
-            this.rt.SelectionFont = this.normFont;
-            return this;
-        }
-        public RichTextRenderer Italic(string s) => WithFont(italicFont, s);
     }
     public static class Logic
     {
@@ -126,42 +110,45 @@ namespace RoughGrep
             p.StartInfo.RedirectStandardError = true;
             ui.previewBox.Text = $"{p.StartInfo.Arguments} [{WorkDir}]";
 
-            ui.resultBox.Clear();
+            ui.resultBox.ClearAll();
             Lines.Clear();
             p.EnableRaisingEvents = true;
-            Action updateRows = () => ui.resultBox.Lines = Lines.ToArray();
             var toFlush = new List<string>();
             var flushlock = new Object();
             var render = new RichTextRenderer(ui.resultBox);
             // slower, emits formatting
             void RichFlush(IEnumerable<string> lines)
             {
+                var sb = new StringBuilder();
                 foreach (var line in lines)
                 {
+                    
                     if (line.Length == 0)
                     {
-                        render.Lf();
+                        sb.Append("\r\n");
                         continue;
                     }
 
                     if (char.IsDigit(line[0]))
                     {
                         var parts = line.Split(new[] { ":" }, 2, StringSplitOptions.None);
-                        render.Feed(parts[1].Trim() + "\r\n");
+                        sb.Append(" ").Append(parts[1].Trim()).Append("\r\n");
                     }
                     else
                     {
-                        render.Bullet(line);
+                        sb.Append(line).Append("\r\n");
                     }
                 }
+                render.Feed(sb.ToString());
             }
-            void PlainFlush(IEnumerable<string> lines)
+            void PlainFlush(ICollection<string> lines)
             {
+
                 var s = string.Join("\r\n", lines) + "\r\n";
                 render.Feed(s);
             }
 
-            var usePlainFlush = RgExtraArgs.StartsWith("--files");
+            var usePlainFlush = false;
             Action doFlush = () =>
             {
                 var fl = toFlush;
@@ -190,9 +177,11 @@ namespace RoughGrep
                 }
             };
             Action hideAbort = () => ui.btnAbort.Visible = false;
-            Action moveToStart = () => ui.resultBox.SelectionStart = 0;
-
-
+            Action moveToStart = () =>
+            {
+                ui.resultBox.SelectionStart = 0;
+                ui.resultBox.SelectionEnd = 0;
+            };
             p.ErrorDataReceived += (o, e) =>
             {
                 if (e.Data == null)
