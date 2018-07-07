@@ -45,6 +45,14 @@ namespace RoughGrep
             this.rt.SelectionAlignment = HorizontalAlignment.Left;
             return this;
         }
+        public RichTextRenderer Bullet(string s)
+        {
+            this.rt.SelectionBullet = true;
+            this.Feed(s + "\r\n");
+            this.rt.SelectionBullet = false;
+            return this;
+        }
+
         public RichTextRenderer WithFont(Font font, string s)
         {
             this.rt.SelectionFont = font;
@@ -130,10 +138,11 @@ namespace RoughGrep
                     if (char.IsDigit(line[0]))
                     {
                         var parts = line.Split(new[] { ":" }, 2, StringSplitOptions.None);
-                        render.Feed(parts[1].TrimStart() + "\r\n");
+                        render.Feed(parts[1].Trim() + "\r\n");
                     } else
                     {
-                        render.Right(line);
+
+                        render.Bullet(line);
                     }
                 }
                 //ui.resultBox.AppendText(string.Join("\r\n", fl) + "\r\n");
