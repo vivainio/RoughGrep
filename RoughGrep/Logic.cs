@@ -94,6 +94,16 @@ namespace RoughGrep
                 }
             };
         }
+
+        private static string CreateArgsForRg(string text)
+        {
+            if (RgExtraArgs.StartsWith("--files"))
+            {
+                // special handling for --files, interpret search text as -g glob
+                return $"{RgExtraArgs} -g {text}";
+            }
+            return $"{RgExtraArgs}--heading -M 200 -n \"{text}\"";
+        }
         public static void StartSearch(MainFormUi ui)
         {
             var text = ui.searchTextBox.Text;
@@ -110,8 +120,10 @@ namespace RoughGrep
             text = text.Replace("\"", "\\\"");
             var p = new Process();
 
-            AssignStartInfo(p.StartInfo, "rg.exe", $"{RgExtraArgs}--heading -M 200 -n \"{text}\"");
+            var args = CreateArgsForRg(text);
+            AssignStartInfo(p.StartInfo, "rg.exe", args);
             p.StartInfo.RedirectStandardOutput = true;
+            p.StartInfo.RedirectStandardError = true;
             ui.previewBox.Text = $"{p.StartInfo.Arguments} [{WorkDir}]";
 
             ui.resultBox.Clear();
@@ -120,14 +132,11 @@ namespace RoughGrep
             Action updateRows = () => ui.resultBox.Lines = Lines.ToArray();
             var toFlush = new List<string>();
             var flushlock = new Object();
-
-
             var render = new RichTextRenderer(ui.resultBox);
-            Action doFlush = () =>
+            // slower, emits formatting
+            void RichFlush(IEnumerable<string> lines)
             {
-                var fl = toFlush;
-                toFlush = new List<string>();
-                foreach (var line in fl)
+                foreach (var line in lines)
                 {
                     if (line.Length == 0)
                     {
@@ -139,13 +148,31 @@ namespace RoughGrep
                     {
                         var parts = line.Split(new[] { ":" }, 2, StringSplitOptions.None);
                         render.Feed(parts[1].Trim() + "\r\n");
-                    } else
+                    }
+                    else
                     {
-
                         render.Bullet(line);
                     }
                 }
-                //ui.resultBox.AppendText(string.Join("\r\n", fl) + "\r\n");
+            }
+            void PlainFlush(IEnumerable<string> lines)
+            {
+                var s = string.Join("\r\n", lines) + "\r\n";
+                render.Feed(s);
+            }
+
+            var usePlainFlush = RgExtraArgs.StartsWith("--files");
+            Action doFlush = () =>
+            {
+                var fl = toFlush;
+                toFlush = new List<string>();
+                if (usePlainFlush)
+                {
+                    PlainFlush(fl);
+                } else
+                {
+                    RichFlush(fl);
+                }
             };
             Action debouncedFlush = Debounce(100, doFlush);
 
@@ -164,8 +191,21 @@ namespace RoughGrep
             };
             Action hideAbort = () => ui.btnAbort.Visible = false;
             Action moveToStart = () => ui.resultBox.SelectionStart = 0;
+
+
+            p.ErrorDataReceived += (o, e) =>
+            {
+                if (e.Data == null)
+                {
+                    return;
+                }
+                toFlush.Add(e.Data);
+
+                ui.resultBox.Invoke(doFlush);
+            };
             p.Exited += (o, ev) =>
             {
+
                 CurrentSearchProcess = null;
                 ui.btnAbort.Invoke(hideAbort);
                 ui.resultBox.Invoke(doFlush);
@@ -173,7 +213,8 @@ namespace RoughGrep
             };
             p.Start();
             p.BeginOutputReadLine();
-           
+            p.BeginErrorReadLine();
+
             CurrentSearchProcess = p;
             ui.btnAbort.Visible = true;
             PrependIfNew(Logic.DirHistory, WorkDir);
