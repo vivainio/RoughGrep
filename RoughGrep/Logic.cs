@@ -86,7 +86,7 @@ namespace RoughGrep
                 // special handling for --files, interpret search text as -g glob
                 return $"{RgExtraArgs} -g {text}";
             }
-            return $"{RgExtraArgs}--heading -M 200 -n \"{text}\"";
+            return $"{RgExtraArgs}--heading -m 1000 -M 300 -n \"{text}\"";
         }
         public static void StartSearch(MainFormUi ui)
         {
@@ -136,30 +136,18 @@ namespace RoughGrep
                     }
                     else
                     {
-                        sb.Append(line).Append("\r\n");
+                        sb.Append("//- ").Append(line).Append("\r\n");
                     }
                 }
                 render.Feed(sb.ToString());
             }
-            void PlainFlush(ICollection<string> lines)
-            {
 
-                var s = string.Join("\r\n", lines) + "\r\n";
-                render.Feed(s);
-            }
-
-            var usePlainFlush = false;
             Action doFlush = () =>
             {
                 var fl = toFlush;
                 toFlush = new List<string>();
-                if (usePlainFlush)
-                {
-                    PlainFlush(fl);
-                } else
-                {
-                    RichFlush(fl);
-                }
+                RichFlush(fl);
+                
             };
             Action debouncedFlush = Debounce(100, doFlush);
 
