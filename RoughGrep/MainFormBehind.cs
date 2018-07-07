@@ -99,7 +99,7 @@ namespace RoughGrep
                 // prevent PLING sound
                 e.Handled = true;
             };
-            ui.previewBox.Text = "Tutorial: space=preview, enter=edit, p=edit parent project dir";
+            ui.resultBox.Text = "Tutorial: space=preview, enter=edit, p=edit parent project dir";
 
             ui.dirSelector.DataSource = Logic.DirHistory;
             ui.searchTextBox.DataSource = Logic.SearchHistory;
