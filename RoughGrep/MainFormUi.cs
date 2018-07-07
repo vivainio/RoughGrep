@@ -7,7 +7,6 @@ namespace RoughGrep
     {
         public ComboBox searchTextBox;
         public Scintilla resultBox;
-        public TextBox previewBox;
         public ComboBox dirSelector;
         public MainForm form;
         public SearchControl searchControl;

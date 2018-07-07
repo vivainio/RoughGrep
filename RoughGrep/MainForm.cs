@@ -18,7 +18,6 @@ namespace RoughGrep
                 form = this,
                 dirSelector = dirSelector,
                 //resultBox = resultBox,
-                previewBox = previewBox,
                 searchTextBox = searchTextBox,
                 btnAbort = btnAbort,
                 tableLayout = tableLayoutPanel1,

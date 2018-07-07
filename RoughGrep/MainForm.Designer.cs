@@ -31,7 +31,6 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
             this.searchTextBox = new System.Windows.Forms.ComboBox();
             this.dirSelector = new System.Windows.Forms.ComboBox();
-            this.previewBox = new System.Windows.Forms.TextBox();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.panel1 = new System.Windows.Forms.Panel();
             this.btnAbort = new System.Windows.Forms.Button();
@@ -63,32 +62,20 @@
             this.dirSelector.Size = new System.Drawing.Size(418, 24);
             this.dirSelector.TabIndex = 1;
             // 
-            // previewBox
-            // 
-            this.previewBox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.previewBox.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.previewBox.Location = new System.Drawing.Point(0, 428);
-            this.previewBox.Margin = new System.Windows.Forms.Padding(0);
-            this.previewBox.Multiline = true;
-            this.previewBox.Name = "previewBox";
-            this.previewBox.Size = new System.Drawing.Size(1025, 79);
-            this.previewBox.TabIndex = 1;
-            // 
             // tableLayoutPanel1
             // 
             this.tableLayoutPanel1.ColumnCount = 1;
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tableLayoutPanel1.Controls.Add(this.panel1, 0, 0);
-            this.tableLayoutPanel1.Controls.Add(this.previewBox, 0, 2);
-            this.tableLayoutPanel1.Controls.Add(this.statusStrip1, 0, 3);
+            this.tableLayoutPanel1.Controls.Add(this.statusStrip1, 0, 2);
             this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 0);
             this.tableLayoutPanel1.Margin = new System.Windows.Forms.Padding(0, 1, 0, 1);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
-            this.tableLayoutPanel1.RowCount = 4;
+            this.tableLayoutPanel1.RowCount = 3;
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 32F));
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 83.33333F));
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 16.66667F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
             this.tableLayoutPanel1.Size = new System.Drawing.Size(1025, 528);
             this.tableLayoutPanel1.TabIndex = 3;
@@ -133,9 +120,9 @@
             this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.statusLabel1,
             this.toolStripDropDownButton1});
-            this.statusStrip1.Location = new System.Drawing.Point(0, 507);
+            this.statusStrip1.Location = new System.Drawing.Point(0, 508);
             this.statusStrip1.Name = "statusStrip1";
-            this.statusStrip1.Size = new System.Drawing.Size(1025, 21);
+            this.statusStrip1.Size = new System.Drawing.Size(1025, 20);
             this.statusStrip1.TabIndex = 4;
             this.statusStrip1.ItemClicked += new System.Windows.Forms.ToolStripItemClickedEventHandler(this.statusStrip1_ItemClicked);
             // 
@@ -156,7 +143,7 @@
             this.toolStripDropDownButton1.Image = ((System.Drawing.Image)(resources.GetObject("toolStripDropDownButton1.Image")));
             this.toolStripDropDownButton1.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripDropDownButton1.Name = "toolStripDropDownButton1";
-            this.toolStripDropDownButton1.Size = new System.Drawing.Size(34, 19);
+            this.toolStripDropDownButton1.Size = new System.Drawing.Size(34, 18);
             this.toolStripDropDownButton1.Text = "toolStripDropDownButton1";
             // 
             // rgArgsComboBox
@@ -185,8 +172,6 @@
 
         #endregion
         private System.Windows.Forms.ComboBox searchTextBox;
-
-        private System.Windows.Forms.TextBox previewBox;
         private System.Windows.Forms.ComboBox dirSelector;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
         private System.Windows.Forms.Panel panel1;

@@ -98,7 +98,7 @@ namespace RoughGrep
             WorkDir = ui.dirSelector.Text;
             if (!Directory.Exists(WorkDir))
             {
-                ui.previewBox.Text = $"Directory does not exist: '{WorkDir}'";
+                ui.resultBox.Text = $"Directory does not exist: '{WorkDir}'";
                 return;
             }
             text = text.Replace("\"", "\\\"");
@@ -108,7 +108,6 @@ namespace RoughGrep
             AssignStartInfo(p.StartInfo, "rg.exe", args);
             p.StartInfo.RedirectStandardOutput = true;
             p.StartInfo.RedirectStandardError = true;
-            ui.previewBox.Text = $"{p.StartInfo.Arguments} [{WorkDir}]";
 
             ui.resultBox.ClearAll();
             Lines.Clear();
