@@ -35,6 +35,7 @@
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.panel1 = new System.Windows.Forms.Panel();
             this.searchControl = new RoughGrep.SearchControl();
+            this.btnAbort = new System.Windows.Forms.Button();
             this.tableLayoutPanel1.SuspendLayout();
             this.panel1.SuspendLayout();
             this.SuspendLayout();
@@ -107,6 +108,7 @@
             // panel1
             // 
             this.panel1.BackColor = System.Drawing.SystemColors.Control;
+            this.panel1.Controls.Add(this.btnAbort);
             this.panel1.Controls.Add(this.searchControl);
             this.panel1.Controls.Add(this.dirSelector);
             this.panel1.Controls.Add(this.searchTextBox);
@@ -124,6 +126,16 @@
             this.searchControl.Name = "searchControl";
             this.searchControl.Size = new System.Drawing.Size(174, 29);
             this.searchControl.TabIndex = 2;
+            // 
+            // button1
+            // 
+            this.btnAbort.Location = new System.Drawing.Point(278, 3);
+            this.btnAbort.Name = "btnAbort";
+            this.btnAbort.Size = new System.Drawing.Size(18, 23);
+            this.btnAbort.TabIndex = 3;
+            this.btnAbort.Text = "x";
+            this.btnAbort.UseVisualStyleBackColor = true;
+            this.btnAbort.Visible = false;
             // 
             // MainForm
             // 
@@ -150,6 +162,7 @@
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
         private System.Windows.Forms.Panel panel1;
         private SearchControl searchControl;
+        private System.Windows.Forms.Button btnAbort;
     }
 }
 

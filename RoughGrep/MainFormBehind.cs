@@ -48,6 +48,11 @@ namespace RoughGrep
             {
                 ui.searchTextBox.Select();
             };
+            ui.btnAbort.Click += (o, e) =>
+            {
+                ui.btnAbort.Visible = false;
+                Logic.KillSearch();
+            };
             LiveSearchEvents(ui);
             
         }

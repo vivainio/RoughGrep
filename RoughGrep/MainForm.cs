@@ -19,7 +19,8 @@ namespace RoughGrep
                 dirSelector = dirSelector,
                 resultBox = resultBox,
                 previewBox = previewBox,
-                searchTextBox = searchTextBox
+                searchTextBox = searchTextBox,
+                btnAbort = btnAbort
             });
             this.Deactivate += (o, e) => behindDisposer.Dispose();
         }

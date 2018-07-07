@@ -61,7 +61,7 @@ namespace RoughGrep
         static List<string> Lines = new List<string>();
         public static BindingList<string> DirHistory = new BindingList<string>();
         public static BindingList<string> SearchHistory = new BindingList<string>();
-
+        public static Process CurrentSearchProcess = null;
         public static void InitApp()
         {
             var extraArgs = string.Join(" ", Environment.GetCommandLineArgs().Skip(1));
@@ -129,7 +129,7 @@ namespace RoughGrep
 
                     if (char.IsDigit(line[0]))
                     {
-                        var parts = line.Split(new[] { ":" }, 2,  StringSplitOptions.None);
+                        var parts = line.Split(new[] { ":" }, 2, StringSplitOptions.None);
                         render.Feed(parts[1].TrimStart() + "\r\n");
                     } else
                     {
@@ -140,7 +140,7 @@ namespace RoughGrep
             };
             Action debouncedFlush = Debounce(100, doFlush);
 
-            p.OutputDataReceived += (o,ev) =>            
+            p.OutputDataReceived += (o, ev) =>
             {
                 if (ev.Data == null)
                 {
@@ -153,14 +153,20 @@ namespace RoughGrep
                     ui.resultBox.Invoke(debouncedFlush);
                 }
             };
+            Action hideAbort = () => ui.btnAbort.Visible = false;
             Action moveToStart = () => ui.resultBox.SelectionStart = 0;
             p.Exited += (o, ev) =>
             {
+                CurrentSearchProcess = null;
+                ui.btnAbort.Invoke(hideAbort);
                 ui.resultBox.Invoke(doFlush);
                 ui.resultBox.Invoke(moveToStart);
             };
             p.Start();
             p.BeginOutputReadLine();
+           
+            CurrentSearchProcess = p;
+            ui.btnAbort.Visible = true;
             PrependIfNew(Logic.DirHistory, WorkDir);
             PrependIfNew(Logic.SearchHistory, text);
             ui.dirSelector.SelectedIndex = 0;
@@ -217,6 +223,14 @@ namespace RoughGrep
                 return (Path.Combine(WorkDir, Lines[idx]), resLineNum);
             }
             return (null, 0);
+        }
+
+        public static void KillSearch()
+        {
+            if (CurrentSearchProcess != null)
+            {
+                CurrentSearchProcess.CancelOutputRead();
+            }
         }
     }
 }

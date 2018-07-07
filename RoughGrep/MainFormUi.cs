@@ -10,5 +10,6 @@ namespace RoughGrep
         public ComboBox dirSelector;
         public MainForm form;
         public SearchControl searchControl;
+        public Button btnAbort;
     }
 }
