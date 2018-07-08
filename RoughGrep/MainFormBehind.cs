@@ -128,6 +128,8 @@ namespace RoughGrep
             };
             LiveSearchEvents(ui);
             
+            
+            
         }
         private readonly Lazy<FullPreviewForm> Previewer = new Lazy<FullPreviewForm>(() =>
         {
@@ -176,20 +178,16 @@ namespace RoughGrep
         internal void HandleKeyDownOnResults(KeyEventArgs e, int line)
         {
             var supress = true;
-
-
             switch (e.KeyCode)
             {
                 case Keys.Space:
                     {
-
                         var (file, lineNum) = Logic.LookupFileAtLine(line);
                         if (file != null)
                         {
                             PreviewFile(file, lineNum);
                         }
                         break;
-
                     }
                 case Keys.Enter:
                     {
@@ -199,7 +197,6 @@ namespace RoughGrep
                             EditFile(file, lineNum);
                         }
                         break;
-
                     }
                 case Keys.P:
                     {
@@ -209,7 +206,6 @@ namespace RoughGrep
                             OpenProject(file, lineNum);
                         }
                         break;
-
                     }
 
                 default:

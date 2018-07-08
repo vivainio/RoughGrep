@@ -15,37 +15,6 @@ using TrivialBehind;
 namespace RoughGrep
 {
 
-    class RichTextRenderer
-    {
-        private readonly Scintilla rt;
-        private readonly Font normFont;
-        private readonly Font italicFont;
-
-        public RichTextRenderer(Scintilla rt)
-        {
-            this.rt = rt;
-            this.normFont = new Font(rt.Font, FontStyle.Regular);
-            this.italicFont = new Font(rt.Font, FontStyle.Italic);
-           
-        }
-
-        public RichTextRenderer Feed(string s)
-        {
-            rt.AppendText(s);
-            return this;
-        }
-        public RichTextRenderer Lf()
-        {
-            rt.AppendText("\r\n");
-            return this;
-        }
-        public RichTextRenderer Bullet(string s)
-        {
-            this.Feed(s + "\r\n");
-            return this;
-        }
-
-    }
     public static class Logic
     {
         public static string WorkDir = null;
@@ -114,7 +83,6 @@ namespace RoughGrep
             p.EnableRaisingEvents = true;
             var toFlush = new List<string>();
             var flushlock = new Object();
-            var render = new RichTextRenderer(ui.resultBox);
             // do not decorate 
             var emitCommentsForFiles = !RgExtraArgs.StartsWith("--files");
             void RichFlush(IEnumerable<string> lines)
@@ -143,7 +111,7 @@ namespace RoughGrep
                         sb.Append(line).Append("\r\n");
                     }
                 }
-                render.Feed(sb.ToString());
+                ui.resultBox.AppendText(sb.ToString());
             }
 
             Action doFlush = () =>

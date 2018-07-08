@@ -14,5 +14,6 @@ namespace RoughGrep
         public Scintilla sci;
         public TableLayoutPanel tableLayout;
         public ToolStripStatusLabel statusLabel;
+        public ToolStripComboBox rgArgsComboBox;
     }
 }
