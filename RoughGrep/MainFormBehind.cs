@@ -263,7 +263,7 @@ namespace RoughGrep
             var fp = Previewer.Value;
             fp.scintilla.Text = text;
             fp.Text = path;
-            var pos = fp.scintilla.Lines[linenum].Position;
+            var pos = fp.scintilla.Lines[linenum-1].Position;
             fp.scintilla.GotoPosition(pos);
             SciUtil.SearchAndMove(fp.scintilla, Ui.searchTextBox.Text);
             fp.Show();
