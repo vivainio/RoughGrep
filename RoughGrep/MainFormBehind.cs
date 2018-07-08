@@ -120,6 +120,16 @@ namespace RoughGrep
 
             ui.dirSelector.DataSource = Logic.DirHistory;
             ui.searchTextBox.DataSource = Logic.SearchHistory;
+            ui.rgArgsComboBox.Items.AddRange(new[]
+            {
+                Logic.RgExtraArgs,
+                "--files"
+            });
+            ui.rgArgsComboBox.TextChanged += (o, e) =>
+            {
+                Logic.RgExtraArgs = ui.rgArgsComboBox.Text;
+            };
+
             ui.dirSelector.Text = Logic.WorkDir;
             ui.btnAbort.Click += (o, e) =>
             {

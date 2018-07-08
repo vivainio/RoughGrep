@@ -26,7 +26,7 @@ namespace RoughGrep
         public static void InitApp()
         {
             var extraArgs = string.Join(" ", Environment.GetCommandLineArgs().Skip(1));
-            Logic.RgExtraArgs = extraArgs == "" ? "-i " : extraArgs + " ";
+            Logic.RgExtraArgs = extraArgs == "" ? "--smart-case" : extraArgs;
             Logic.WorkDir = Directory.GetCurrentDirectory();
             TrivialBehinds.RegisterBehind<MainFormUi, MainFormBehind>();
         }
@@ -55,7 +55,11 @@ namespace RoughGrep
                 // special handling for --files, interpret search text as -g glob
                 return $"{RgExtraArgs} -g {text}";
             }
-            return $"{RgExtraArgs}--heading -m 1000 -M 300 -n \"{text}\"";
+
+            var maxcount = RgExtraArgs.Contains("-m ") ?  "" :  "-m 1000";
+            var maxlen = RgExtraArgs.Contains("-M ") ? "" : "-M 300";
+            
+            return $"{RgExtraArgs} {maxcount} {maxlen} --heading -n \"{text}\"";
         }
         public static void StartSearch(MainFormUi ui)
         {
