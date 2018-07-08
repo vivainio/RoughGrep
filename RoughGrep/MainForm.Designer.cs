@@ -142,7 +142,7 @@
             // 
             this.rgArgsComboBox.Margin = new System.Windows.Forms.Padding(0);
             this.rgArgsComboBox.Name = "rgArgsComboBox";
-            this.rgArgsComboBox.Size = new System.Drawing.Size(121, 28);
+            this.rgArgsComboBox.Size = new System.Drawing.Size(200, 28);
             this.rgArgsComboBox.ToolTipText = "rg command line arguments";
             // 
             // searchControl

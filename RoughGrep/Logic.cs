@@ -104,7 +104,14 @@ namespace RoughGrep
                     if (char.IsDigit(line[0]))
                     {
                         var parts = line.Split(new[] { ":" }, 2, StringSplitOptions.None);
-                        sb.Append(" ").Append(parts[1].Trim()).Append("\r\n");
+                        // context
+                        if (parts.Length == 1)
+                        {
+                            sb.Append(line + "\r\n");
+                        } else
+                        {
+                            sb.Append(" ").Append(parts[1].Trim()).Append("\r\n");
+                        }
                     }
                     else
                     {

@@ -123,7 +123,13 @@ namespace RoughGrep
             ui.rgArgsComboBox.Items.AddRange(new[]
             {
                 Logic.RgExtraArgs,
-                "--files"
+                "--files",
+                "-m 5", 
+                "-M 1000",
+                "-g *.cs *.xml",
+                "--no-ignore",
+                "--context 2"
+
             });
             ui.rgArgsComboBox.TextChanged += (o, e) =>
             {
