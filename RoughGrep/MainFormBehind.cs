@@ -44,6 +44,26 @@ namespace RoughGrep
             scintilla.SetKeywords(1, "bool byte char class const decimal double enum float int long sbyte short static string struct uint ulong ushort void");
             return scintilla;
         }
+        public static void SearchAndMove(Scintilla scintilla, string searchText, bool reverse = false)
+        {
+            if (reverse)
+            {
+                scintilla.TargetStart = scintilla.CurrentPosition - 1;
+                scintilla.TargetEnd = 0;
+            }
+            else
+            {
+                scintilla.TargetStart = scintilla.CurrentPosition;
+                scintilla.TargetEnd = scintilla.TextLength;
+
+            }
+            scintilla.SearchInTarget(searchText);
+            scintilla.SelectionStart = scintilla.TargetStart;
+            scintilla.SelectionEnd = scintilla.TargetEnd;
+            scintilla.ScrollCaret();
+        }
+
+
 
     }
     public class MainFormBehind
@@ -72,9 +92,6 @@ namespace RoughGrep
 
             this.Ui = ui;
             SetupScintilla();
-            var s2 = SciUtil.CreateScintilla();
-            
-            s2.Show();
             ui.searchTextBox.KeyDown += (o, e) =>
             {
                 if (e.KeyCode == Keys.Enter)
@@ -128,37 +145,19 @@ namespace RoughGrep
         {
             var ctrl = ui.searchControl;
             var rb = ui.resultBox;
-            void SearchAndMove(bool reverse = false)
-            {
-                if (reverse)
-                {
-                    rb.TargetStart = rb.CurrentPosition-1;
-                    rb.TargetEnd = 0;
-                } else
-                {
-                    rb.TargetStart = rb.CurrentPosition;
-                    rb.TargetEnd = rb.TextLength;
-
-                }
-                rb.SearchInTarget(ctrl.searchTextBox.Text);
-                rb.SelectionStart = rb.TargetStart;
-                rb.SelectionEnd = rb.TargetEnd;
-                rb.ScrollCaret();
-            }
-
-            ctrl.searchTextBox.TextChanged += (o, e) => SearchAndMove();
-            ctrl.btnNext.Click += (o, e) => SearchAndMove();
-            ctrl.btnPrev.Click += (o, e) => SearchAndMove(reverse: true);
+            ctrl.searchTextBox.TextChanged += (o, e) => SciUtil.SearchAndMove(rb, ctrl.searchTextBox.Text);
+            ctrl.btnNext.Click += (o, e) => SciUtil.SearchAndMove(rb, ctrl.searchTextBox.Text);
+            ctrl.btnPrev.Click += (o, e) => SciUtil.SearchAndMove(rb, ctrl.searchTextBox.Text, reverse: true);
             ctrl.searchTextBox.KeyDown += (o, e) =>
             {
                 if (e.KeyCode == Keys.Enter)
                 {
                     if (e.Shift)
                     {
-                        SearchAndMove(reverse: true);
+                        SciUtil.SearchAndMove(rb, ctrl.searchTextBox.Text, reverse: true);
                     } else
                     {
-                        SearchAndMove();
+                        SciUtil.SearchAndMove(rb, ctrl.searchTextBox.Text);
                     }
                     e.SuppressKeyPress = true;
                     e.Handled = true;
@@ -263,8 +262,10 @@ namespace RoughGrep
             var text = File.ReadAllText(path);
             var fp = Previewer.Value;
             fp.scintilla.Text = text;
+            fp.Text = path;
             var pos = fp.scintilla.Lines[linenum].Position;
             fp.scintilla.GotoPosition(pos);
+            SciUtil.SearchAndMove(fp.scintilla, Ui.searchTextBox.Text);
             fp.Show();
         }
 

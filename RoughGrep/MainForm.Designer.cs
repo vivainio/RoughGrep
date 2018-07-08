@@ -34,11 +34,11 @@
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.panel1 = new System.Windows.Forms.Panel();
             this.btnAbort = new System.Windows.Forms.Button();
-            this.searchControl = new RoughGrep.SearchControl();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.statusLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
             this.toolStripDropDownButton1 = new System.Windows.Forms.ToolStripDropDownButton();
             this.rgArgsComboBox = new System.Windows.Forms.ToolStripComboBox();
+            this.searchControl = new RoughGrep.SearchControl();
             this.tableLayoutPanel1.SuspendLayout();
             this.panel1.SuspendLayout();
             this.statusStrip1.SuspendLayout();
@@ -104,14 +104,6 @@
             this.btnAbort.UseVisualStyleBackColor = true;
             this.btnAbort.Visible = false;
             // 
-            // searchControl
-            // 
-            this.searchControl.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.searchControl.Location = new System.Drawing.Point(424, 0);
-            this.searchControl.Name = "searchControl";
-            this.searchControl.Size = new System.Drawing.Size(174, 29);
-            this.searchControl.TabIndex = 2;
-            // 
             // statusStrip1
             // 
             this.statusStrip1.BackColor = System.Drawing.SystemColors.Control;
@@ -131,8 +123,8 @@
             this.statusLabel1.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
             this.statusLabel1.Font = new System.Drawing.Font("Segoe UI", 7F);
             this.statusLabel1.Name = "statusLabel1";
-            this.statusLabel1.Size = new System.Drawing.Size(118, 16);
-            this.statusLabel1.Text = "toolStripStatusLabel1";
+            this.statusLabel1.Size = new System.Drawing.Size(67, 15);
+            this.statusLabel1.Text = "RoughGrep";
             // 
             // toolStripDropDownButton1
             // 
@@ -152,6 +144,14 @@
             this.rgArgsComboBox.Name = "rgArgsComboBox";
             this.rgArgsComboBox.Size = new System.Drawing.Size(121, 28);
             this.rgArgsComboBox.ToolTipText = "rg command line arguments";
+            // 
+            // searchControl
+            // 
+            this.searchControl.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.searchControl.Location = new System.Drawing.Point(424, 0);
+            this.searchControl.Name = "searchControl";
+            this.searchControl.Size = new System.Drawing.Size(174, 29);
+            this.searchControl.TabIndex = 2;
             // 
             // MainForm
             // 

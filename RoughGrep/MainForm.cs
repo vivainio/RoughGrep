@@ -17,13 +17,10 @@ namespace RoughGrep
                 searchControl = searchControl,
                 form = this,
                 dirSelector = dirSelector,
-                //resultBox = resultBox,
                 searchTextBox = searchTextBox,
                 btnAbort = btnAbort,
                 tableLayout = tableLayoutPanel1,
                 statusLabel = statusLabel1
-                
-
             });
             this.Deactivate += (o, e) => behindDisposer.Dispose();
         }
