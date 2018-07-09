@@ -149,9 +149,9 @@ namespace RoughGrep
             {
                 Logic.RgExtraArgs,
                 "--files",
-                "-m 5", 
+                "-m 5 --smart-case", 
                 "-M 1000",
-                "-g *.cs *.xml",
+                "-g *.cs -g *.csproj",
                 "--no-ignore",
                 "--context 2"
 
@@ -169,9 +169,7 @@ namespace RoughGrep
                 Logic.KillSearch();
             };
             LiveSearchEvents(ui);
-            
-            
-            
+            UpdateStatusBar();
         }
         private readonly Lazy<FullPreviewForm> Previewer = new Lazy<FullPreviewForm>(() =>
         {

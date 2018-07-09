@@ -52,8 +52,9 @@ namespace RoughGrep
         {
             if (RgExtraArgs.StartsWith("--files"))
             {
+                var globs = string.Join(" ", text.Split(' ').Select(t => $"-g {t}"));
                 // special handling for --files, interpret search text as -g glob
-                return $"{RgExtraArgs} -g {text}";
+                return $"{RgExtraArgs} {globs}";
             }
 
             var maxcount = RgExtraArgs.Contains("-m ") ?  "" :  "-m 1000";
@@ -78,6 +79,7 @@ namespace RoughGrep
             var p = new Process();
 
             var args = CreateArgsForRg(text);
+            ui.statusLabelCurrentArgs.Text = args;
             AssignStartInfo(p.StartInfo, "rg.exe", args);
             p.StartInfo.RedirectStandardOutput = true;
             p.StartInfo.RedirectStandardError = true;
@@ -103,7 +105,7 @@ namespace RoughGrep
 
                     if (char.IsDigit(line[0]))
                     {
-                        var parts = line.Split(new[] { ":" }, 2, StringSplitOptions.None);
+                        var parts = line.Split(new[] { ":", "-" }, 2, StringSplitOptions.None);
                         // context
                         if (parts.Length == 1)
                         {
@@ -212,7 +214,7 @@ namespace RoughGrep
             {
                 return (null, 0);
             }
-            var split = Lines[lineNumber].Split(':');
+            var split = Lines[lineNumber].Split(new[] { ':', '-' });
             var resLineNum = 0;
             if (split.Length > 1)
             {
@@ -227,6 +229,10 @@ namespace RoughGrep
                     continue;
                 }            
                 if (char.IsDigit(linetext[0]))
+                {
+                    continue;
+                }
+                if (linetext == "--")
                 {
                     continue;
                 }
