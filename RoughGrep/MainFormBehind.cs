@@ -104,7 +104,7 @@ namespace RoughGrep
                 {
                     if (e.Change == UpdateChange.Selection)
                     {
-                        PositionUpdated();
+                        UpdateStatusBar();
                     }
                 };
                 //sci.ReadOnly = true;
@@ -159,6 +159,7 @@ namespace RoughGrep
             ui.rgArgsComboBox.TextChanged += (o, e) =>
             {
                 Logic.RgExtraArgs = ui.rgArgsComboBox.Text;
+                UpdateStatusBar();
             };
 
             ui.dirSelector.Text = Logic.WorkDir;
@@ -177,10 +178,12 @@ namespace RoughGrep
             return new FullPreviewForm();
         });
 
-        private void PositionUpdated()
+        private void UpdateStatusBar()
         {
             var (file, line) = Logic.LookupFileAtLine(Ui.resultBox.CurrentLine, relative: true);
             Ui.statusLabel.Text = $"{file} +{line}";
+            Ui.statusLabelCurrentArgs.Text = Logic.RgExtraArgs;
+            
 
             
         }

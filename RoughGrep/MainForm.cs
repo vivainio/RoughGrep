@@ -21,7 +21,8 @@ namespace RoughGrep
                 btnAbort = btnAbort,
                 tableLayout = tableLayoutPanel1,
                 statusLabel = statusLabel1,
-                rgArgsComboBox = rgArgsComboBox
+                rgArgsComboBox = rgArgsComboBox,
+                statusLabelCurrentArgs = statusLabelCurrentArgs
             });
             this.Deactivate += (o, e) => behindDisposer.Dispose();
         }

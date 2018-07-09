@@ -34,11 +34,12 @@
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.panel1 = new System.Windows.Forms.Panel();
             this.btnAbort = new System.Windows.Forms.Button();
+            this.searchControl = new RoughGrep.SearchControl();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.statusLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
             this.toolStripDropDownButton1 = new System.Windows.Forms.ToolStripDropDownButton();
             this.rgArgsComboBox = new System.Windows.Forms.ToolStripComboBox();
-            this.searchControl = new RoughGrep.SearchControl();
+            this.statusLabelCurrentArgs = new System.Windows.Forms.ToolStripStatusLabel();
             this.tableLayoutPanel1.SuspendLayout();
             this.panel1.SuspendLayout();
             this.statusStrip1.SuspendLayout();
@@ -104,6 +105,14 @@
             this.btnAbort.UseVisualStyleBackColor = true;
             this.btnAbort.Visible = false;
             // 
+            // searchControl
+            // 
+            this.searchControl.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.searchControl.Location = new System.Drawing.Point(424, 0);
+            this.searchControl.Name = "searchControl";
+            this.searchControl.Size = new System.Drawing.Size(174, 29);
+            this.searchControl.TabIndex = 2;
+            // 
             // statusStrip1
             // 
             this.statusStrip1.BackColor = System.Drawing.SystemColors.Control;
@@ -111,7 +120,8 @@
             this.statusStrip1.ImageScalingSize = new System.Drawing.Size(20, 20);
             this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.statusLabel1,
-            this.toolStripDropDownButton1});
+            this.toolStripDropDownButton1,
+            this.statusLabelCurrentArgs});
             this.statusStrip1.Location = new System.Drawing.Point(0, 508);
             this.statusStrip1.Name = "statusStrip1";
             this.statusStrip1.Size = new System.Drawing.Size(1025, 20);
@@ -145,13 +155,14 @@
             this.rgArgsComboBox.Size = new System.Drawing.Size(200, 28);
             this.rgArgsComboBox.ToolTipText = "rg command line arguments";
             // 
-            // searchControl
+            // statusLabelCurrentArgs
             // 
-            this.searchControl.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.searchControl.Location = new System.Drawing.Point(424, 0);
-            this.searchControl.Name = "searchControl";
-            this.searchControl.Size = new System.Drawing.Size(174, 29);
-            this.searchControl.TabIndex = 2;
+            this.statusLabelCurrentArgs.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.statusLabelCurrentArgs.Font = new System.Drawing.Font("Segoe UI", 7F);
+            this.statusLabelCurrentArgs.IsLink = true;
+            this.statusLabelCurrentArgs.Name = "statusLabelCurrentArgs";
+            this.statusLabelCurrentArgs.Size = new System.Drawing.Size(118, 15);
+            this.statusLabelCurrentArgs.Text = "toolStripStatusLabel1";
             // 
             // MainForm
             // 
@@ -181,6 +192,7 @@
         private System.Windows.Forms.ToolStripStatusLabel statusLabel1;
         private System.Windows.Forms.ToolStripDropDownButton toolStripDropDownButton1;
         public System.Windows.Forms.ToolStripComboBox rgArgsComboBox;
+        private System.Windows.Forms.ToolStripStatusLabel statusLabelCurrentArgs;
     }
 }
 
