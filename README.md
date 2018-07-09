@@ -30,6 +30,8 @@ launch it from command line.
   - Press `space` to open the file at line in preview window
   - Press `ENTER` to open it in VSCode
   - Press `p` to open the parent project DIRECTORY in vscode. RoughGrep takes the best guess on what that might be (e.g. finds .csproj).
+  - Press `n` to create a note from current line (and file) to scratchpad window. If there is selection, it's
+    appended instead of just the line.
 - You can modify RipGrep command line arguments after launch by using the ComboBox from the Status Bar.
 - If you want to *find file names* instead of finding contents, use the `--files` command line argument.
   Then, the "text to search for" inputs becomes the list of glob patterns instead.
