@@ -83,7 +83,7 @@ namespace RoughGrep
             AssignStartInfo(p.StartInfo, "rg.exe", args);
             p.StartInfo.RedirectStandardOutput = true;
             p.StartInfo.RedirectStandardError = true;
-
+            ui.resultBox.ReadOnly = false;
             ui.resultBox.ClearAll();
             Lines.Clear();
             p.EnableRaisingEvents = true;
@@ -150,10 +150,11 @@ namespace RoughGrep
                 }
             };
             Action hideAbort = () => ui.btnAbort.Visible = false;
-            Action moveToStart = () =>
+            Action searchReady = () =>
             {
                 ui.resultBox.SelectionStart = 0;
                 ui.resultBox.SelectionEnd = 0;
+                ui.resultBox.ReadOnly = true;
             };
             p.ErrorDataReceived += (o, e) =>
             {
@@ -167,11 +168,10 @@ namespace RoughGrep
             };
             p.Exited += (o, ev) =>
             {
-
                 CurrentSearchProcess = null;
                 ui.btnAbort.Invoke(hideAbort);
                 ui.resultBox.Invoke(doFlush);
-                ui.resultBox.Invoke(moveToStart);
+                ui.resultBox.Invoke(searchReady);
             };
             p.Start();
             p.BeginOutputReadLine();

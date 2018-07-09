@@ -77,7 +77,9 @@ namespace RoughGrep
 
         public static void SetAllText(Scintilla scintilla, string text)
         {
+            scintilla.ReadOnly = false;
             scintilla.Text = text;
+            scintilla.ReadOnly = true;
             TouchAfterTextLoad(scintilla);
         }
 
