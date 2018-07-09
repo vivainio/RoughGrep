@@ -20,7 +20,7 @@ namespace RoughGrep
 
             scintilla.StyleResetDefault();
             scintilla.Styles[Style.Default].Font = "Consolas";
-            scintilla.Styles[Style.Default].Size = 10;
+            scintilla.Styles[Style.Default].Size = 9;
             scintilla.StyleClearAll();
 
             // Configure the CPP (C#) lexer styles
@@ -61,10 +61,13 @@ namespace RoughGrep
                 scintilla.TargetEnd = scintilla.TextLength;
 
             }
-            scintilla.SearchInTarget(searchText);
-            scintilla.SelectionStart = scintilla.TargetStart;
-            scintilla.SelectionEnd = scintilla.TargetEnd;
-            scintilla.ScrollCaret();
+            int pos = scintilla.SearchInTarget(searchText);
+            if (pos != -1)
+            {
+                scintilla.SelectionStart = scintilla.TargetStart;
+                scintilla.SelectionEnd = scintilla.TargetEnd;
+                scintilla.ScrollCaret();
+            }
         }
         public static void TouchAfterTextLoad(Scintilla scintilla)
         {
