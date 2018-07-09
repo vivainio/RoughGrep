@@ -42,6 +42,10 @@ namespace RoughGrep
             // Set the keywords
             scintilla.SetKeywords(0, "abstract as base break case catch checked continue default delegate do else event explicit extern false finally fixed for foreach goto if implicit in interface internal is lock namespace new null object operator out override params private protected public readonly ref return sealed sizeof stackalloc switch this throw true try typeof unchecked unsafe using virtual while");
             scintilla.SetKeywords(1, "bool byte char class const decimal double enum float int long sbyte short static string struct uint ulong ushort void");
+
+            scintilla.ScrollWidth = 0;
+            scintilla.ScrollWidthTracking = true;
+
             return scintilla;
         }
         public static void SearchAndMove(Scintilla scintilla, string searchText, bool reverse = false)
@@ -62,10 +66,28 @@ namespace RoughGrep
             scintilla.SelectionEnd = scintilla.TargetEnd;
             scintilla.ScrollCaret();
         }
+        public static void TouchAfterTextLoad(Scintilla scintilla)
+        {
+            scintilla.ScrollWidth = 1;
+            scintilla.ScrollWidthTracking = true;
+        }
 
+        public static void SetAllText(Scintilla scintilla, string text)
+        {
+            scintilla.Text = text;
+            TouchAfterTextLoad(scintilla);
+        }
 
+        public static void RevealLine(Scintilla scintilla, int line)
+        {
+            var linesOnScreen = scintilla.LinesOnScreen - 2; // Fudge factor
 
+            var start = scintilla.Lines[line - (linesOnScreen / 2)].Position;
+            var end = scintilla.Lines[line + (linesOnScreen / 2)].Position;
+            scintilla.ScrollRange(start, end);
+        }
     }
+
     public class MainFormBehind
     {
         private readonly MainFormUi Ui;
@@ -116,7 +138,7 @@ namespace RoughGrep
                 // prevent PLING sound
                 e.Handled = true;
             };
-            ui.resultBox.Text = "Tutorial: space=preview, enter=edit, p=edit parent project dir";
+            SciUtil.SetAllText(ui.resultBox, "Tutorial: space=preview, enter=edit, p=edit parent project dir");
 
             ui.dirSelector.DataSource = Logic.DirHistory;
             ui.searchTextBox.DataSource = Logic.SearchHistory;
@@ -273,11 +295,15 @@ namespace RoughGrep
         {
             var text = File.ReadAllText(path);
             var fp = Previewer.Value;
-            fp.scintilla.Text = text;
+            SciUtil.SetAllText(fp.scintilla, text);
             fp.Text = path;
+
             var pos = fp.scintilla.Lines[linenum-1].Position;
+            SciUtil.RevealLine(fp.scintilla, linenum - 1);
+
             fp.scintilla.GotoPosition(pos);
             SciUtil.SearchAndMove(fp.scintilla, Ui.searchTextBox.Text);
+              
             fp.Show();
         }
 
