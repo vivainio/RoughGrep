@@ -23,11 +23,11 @@ launch it from command line.
 
 ## Usage
 
-- Go to the directory you want to search from in prompt of your choice
+- Go to the directory you want to search from in prompt of your choice.
 - Run rgg.exe. You may also add ripgrep command line arguments, e.g. `rgg -g *.fs` to restrict the search to glob pattern
-- Enter the search string in the box and press enter
+- Enter the search string in the box and press enter.
 - Navigate the results. When you find interesting result you can:
-  - Press `space` to show some context in preview window
+  - Press `space` to open the file at line in preview window
   - Press `ENTER` to open it in VSCode
   - Press `p` to open the parent project DIRECTORY in vscode. RoughGrep takes the best guess on what that might be (e.g. finds .csproj).
 - You can modify RipGrep command line arguments after launch by using the ComboBox from the Status Bar.
@@ -42,5 +42,3 @@ Credit for the blazing fast UI performance goes to [ScintillaNet](https://github
 ## License
 
 MIT
-
-
