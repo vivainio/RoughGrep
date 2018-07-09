@@ -141,7 +141,7 @@ namespace RoughGrep
                 // prevent PLING sound
                 e.Handled = true;
             };
-            SciUtil.SetAllText(ui.resultBox, "Tutorial: space=preview, enter=edit, p=edit parent project dir");
+            SciUtil.SetAllText(ui.resultBox, "Tutorial: space=preview, enter=edit, p=edit parent project dir, n=take note");
 
             ui.dirSelector.DataSource = Logic.DirHistory;
             ui.searchTextBox.DataSource = Logic.SearchHistory;
@@ -174,6 +174,13 @@ namespace RoughGrep
         private readonly Lazy<FullPreviewForm> Previewer = new Lazy<FullPreviewForm>(() =>
         {
             return new FullPreviewForm();
+        });
+
+        private readonly Lazy<FullPreviewForm> Notepad = new Lazy<FullPreviewForm>(() =>
+        {
+            var np = new FullPreviewForm();
+            np.Text = "RoughGrep Notes";
+            return np;
         });
 
         private void UpdateStatusBar()
@@ -249,6 +256,11 @@ namespace RoughGrep
                         }
                         break;
                     }
+                case Keys.N:
+                    {
+                        CreateNote();
+                        break;
+                    }
 
                 default:
                     {
@@ -262,6 +274,22 @@ namespace RoughGrep
                 e.SuppressKeyPress = true;
             }
 
+        }
+
+        private void CreateNote()
+        {
+            var sci = Ui.resultBox;
+            var np = Notepad.Value;
+            var line = sci.CurrentLine;
+            var file = Logic.LookupFileAtLine(line, relative: true);
+            var selected = sci.SelectedText;
+            if (selected.Length == 0)
+            {
+                selected = sci.Lines[line].Text;
+            }
+
+            np.scintilla.AppendText($"> {file}\r\n{selected}");
+            np.Show();
         }
 
         private static string ScanParentsForFiles(string startPath, string[] globs)
