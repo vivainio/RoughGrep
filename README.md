@@ -1,10 +1,9 @@
 # RoughGrep
 
-Fast and minimal UI on top of RipGrep
+Fast, brutalist UI on top of RipGrep
 
 "You RipGrep, so why not RoughGrep?" -Anon, 2018
 
-RoughGrep is a very thin UI over RipGrep that allows comfortably browsing over the results.
 
 ([RipGrep](https://github.com/BurntSushi/ripgrep), as people know, is the fastest Grep on the planet!)
 
@@ -19,18 +18,26 @@ RoughGrep is a very thin UI over RipGrep that allows comfortably browsing over t
 
 ## Installation
 
-Grab it from [Releases](https://github.com/vivainio/RoughGrep/releases) and unzip to your path. It's two files and less than 20kb total.
+Grab it from [Releases](https://github.com/vivainio/RoughGrep/releases) and unzip somewhere. Works best when you can
+launch it from command line.
 
 ## Usage
 
 - Go to the directory you want to search from in prompt of your choice
-- Run rgg.exe. You may also add ripgrep command line arguments, e.g. "rgg -g *.fs" to restrict the search to glob pattern
+- Run rgg.exe. You may also add ripgrep command line arguments, e.g. `rgg -g *.fs` to restrict the search to glob pattern
 - Enter the search string in the box and press enter
 - Navigate the results. When you find interesting result you can:
-  - Press "space" to show some context in preview pane
-  - Press ENTER to open it in VSCode
-  - Press "p" to open the parent project DIRECTORY in vscode. RoughGrep takes the best guess on what that might be (e.g. finds .csproj).
+  - Press `space` to show some context in preview window
+  - Press `ENTER` to open it in VSCode
+  - Press `p` to open the parent project DIRECTORY in vscode. RoughGrep takes the best guess on what that might be (e.g. finds .csproj).
+- You can modify RipGrep command line arguments after launch by using the ComboBox from the Status Bar.
+- If you want to *find file names* instead of finding contents, use the `--files` command line argument.
+  Then, the "text to search for" inputs becomes the list of glob patterns instead.
 
+
+## Acknowledgements
+
+Credit for the blazing fast UI performance goes to [ScintillaNet](https://github.com/jacobslusser/ScintillaNET) editor component.
 
 ## License
 
