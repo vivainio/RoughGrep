@@ -7,7 +7,7 @@ Fast, brutalist UI on top of RipGrep
 
 ([RipGrep](https://github.com/BurntSushi/ripgrep), as people know, is the fastest Grep on the planet!)
 
-![Screenshot](site/screenshot.png)
+![Screenshot](https://user-images.githubusercontent.com/557579/42448089-b4c3842a-8384-11e8-8a20-f1924045a522.png)
 
 ## Requirements
 
