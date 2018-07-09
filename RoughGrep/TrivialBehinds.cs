@@ -2,14 +2,18 @@
 using System.Collections.Generic;
 using System.Linq;
 
-// this is local copy of https://github.com/vivainio/trivialbehinds
-
 namespace TrivialBehind
 {
+    struct StoredBehind
+    {
+        public Type DataType;
+        public object BehindInstance;
+        public object Creator; // e.g. the form instance that created the behind
+    }
     public static class TrivialBehinds
     {
         static Dictionary<Type, Type> registeredBehinds = new Dictionary<Type, Type>();
-        static List<(Type, object)> createdBehinds = new List<(Type, object)>();
+        static List<StoredBehind> createdBehinds = new List<StoredBehind>();
 
         class BDisposer : IDisposable
         {
@@ -20,29 +24,45 @@ namespace TrivialBehind
             }
             public void Dispose()
             {
-                createdBehinds.RemoveAll(d => d.Item2 == this.obj);
+                createdBehinds.RemoveAll(d => d.BehindInstance == this.obj);
             }
         }
-        public static void RegisterBehind<TUi, TBehind>()
+        // register behind for later creation with CreateBehind
+        public static void RegisterBehind<TData, TBehind>()
         {
-            registeredBehinds.Add(typeof(TUi), typeof(TBehind));
+            registeredBehinds.Add(typeof(TData), typeof(TBehind));
         }
 
+        // creates a behind object for corresponding TData type
         // returns the disposer that removes this from list
-        public static IDisposable CreateForUi<TUi>(TUi ui)
+        public static IDisposable CreateBehind<TData>(object creator, TData ui)
         {
-            var handler = registeredBehinds[typeof(TUi)];
-            var ctor = handler.GetConstructor(new[] { typeof(TUi) });
+            Type handler;
+            var ok = registeredBehinds.TryGetValue(typeof(TData), out handler);
+            if (!ok)
+            {
+                throw new ArgumentException($"Behind handler for {ui} not found");
+            }
+            var ctor = handler.GetConstructor(new[] { typeof(TData) });
             var instance = ctor.Invoke(new[] { (object) ui });
-            createdBehinds.Add((handler, instance));
+            createdBehinds.Add(
+                new StoredBehind
+                {
+                    DataType = handler,
+                    BehindInstance = instance,
+                    Creator = creator
+                });
             return new BDisposer(instance);
         }
-        // should not be called from form side (since it shouldn't know behind types
-        public static TBehind[] FindBehinds<TBehind>()
+        // should not be called from form side (since it shouldn't know behind types)
+        public static TBehind[] BehindsByType<TBehind>()
         {
             var needle = typeof(TBehind);
-            var res = createdBehinds.Where(e => e.Item1 == needle).Select(e => e.Item2).Cast<TBehind>().ToArray();
+            var res = createdBehinds.Where(e => e.DataType == needle).Select(e => e.BehindInstance).Cast<TBehind>().ToArray();
             return res;
         }
+
+        public static TBehind BehindFor<TBehind>(object creator) where TBehind: class =>
+            createdBehinds.First(b => b.Creator == creator) as TBehind;
     }
 }

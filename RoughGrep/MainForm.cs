@@ -12,7 +12,7 @@ namespace RoughGrep
         {
             InitializeComponent();
             
-            behindDisposer = TrivialBehinds.CreateForUi(new MainFormUi
+            behindDisposer = TrivialBehinds.CreateBehind(this, new MainFormUi
             {
                 searchControl = searchControl,
                 form = this,
