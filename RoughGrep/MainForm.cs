@@ -26,15 +26,5 @@ namespace RoughGrep
             });
             this.Deactivate += (o, e) => behindDisposer.Dispose();
         }
-
-        private void toolStrip1_ItemClicked(object sender, ToolStripItemClickedEventArgs e)
-        {
-
-        }
-
-        private void statusStrip1_ItemClicked(object sender, ToolStripItemClickedEventArgs e)
-        {
-
-        }
     }
 }

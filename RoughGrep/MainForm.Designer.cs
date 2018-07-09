@@ -34,12 +34,12 @@
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.panel1 = new System.Windows.Forms.Panel();
             this.btnAbort = new System.Windows.Forms.Button();
-            this.searchControl = new RoughGrep.SearchControl();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.statusLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
             this.toolStripDropDownButton1 = new System.Windows.Forms.ToolStripDropDownButton();
             this.rgArgsComboBox = new System.Windows.Forms.ToolStripComboBox();
             this.statusLabelCurrentArgs = new System.Windows.Forms.ToolStripStatusLabel();
+            this.searchControl = new RoughGrep.SearchControl();
             this.tableLayoutPanel1.SuspendLayout();
             this.panel1.SuspendLayout();
             this.statusStrip1.SuspendLayout();
@@ -105,14 +105,6 @@
             this.btnAbort.UseVisualStyleBackColor = true;
             this.btnAbort.Visible = false;
             // 
-            // searchControl
-            // 
-            this.searchControl.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.searchControl.Location = new System.Drawing.Point(424, 0);
-            this.searchControl.Name = "searchControl";
-            this.searchControl.Size = new System.Drawing.Size(174, 29);
-            this.searchControl.TabIndex = 2;
-            // 
             // statusStrip1
             // 
             this.statusStrip1.BackColor = System.Drawing.SystemColors.Control;
@@ -126,7 +118,6 @@
             this.statusStrip1.Name = "statusStrip1";
             this.statusStrip1.Size = new System.Drawing.Size(1025, 20);
             this.statusStrip1.TabIndex = 4;
-            this.statusStrip1.ItemClicked += new System.Windows.Forms.ToolStripItemClickedEventHandler(this.statusStrip1_ItemClicked);
             // 
             // statusLabel1
             // 
@@ -164,12 +155,21 @@
             this.statusLabelCurrentArgs.Size = new System.Drawing.Size(118, 15);
             this.statusLabelCurrentArgs.Text = "toolStripStatusLabel1";
             // 
+            // searchControl
+            // 
+            this.searchControl.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.searchControl.Location = new System.Drawing.Point(424, 0);
+            this.searchControl.Name = "searchControl";
+            this.searchControl.Size = new System.Drawing.Size(174, 29);
+            this.searchControl.TabIndex = 2;
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1025, 528);
             this.Controls.Add(this.tableLayoutPanel1);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "MainForm";
             this.Text = "RoughGrep";
             this.tableLayoutPanel1.ResumeLayout(false);
