@@ -53,6 +53,9 @@
     <Reference Include="System.Net.Http" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
+    <Reference Include="TrivialBehinds, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\TrivialBehinds.1.0.0\lib\netstandard2.0\TrivialBehinds.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="FullPreviewForm.cs">
@@ -78,7 +81,6 @@
     <Compile Include="SearchControl.Designer.cs">
       <DependentUpon>SearchControl.cs</DependentUpon>
     </Compile>
-    <Compile Include="TrivialBehinds.cs" />
     <EmbeddedResource Include="FullPreviewForm.resx">
       <DependentUpon>FullPreviewForm.cs</DependentUpon>
     </EmbeddedResource>
