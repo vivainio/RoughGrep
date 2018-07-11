@@ -306,6 +306,7 @@ namespace RoughGrep
 
             np.scintilla.AppendText($"> {file}\r\n{selected}");
             np.Show();
+            FormsUtil.BringFormToFront(np, Ui.form);
         }
 
         private static string ScanParentsForFiles(string startPath, string[] globs)
