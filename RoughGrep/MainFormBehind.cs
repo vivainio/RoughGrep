@@ -93,6 +93,20 @@ namespace RoughGrep
         }
     }
 
+    public static class FormsUtil
+    {
+        public static void BringFormToFront(Form form, Form returnFocusTo = null)
+        {
+            form.TopMost = true;
+            form.TopMost = false;
+            if (returnFocusTo != null)
+            {
+                returnFocusTo.Activate();
+            }
+        }
+
+    }
+
     public class MainFormBehind
     {
         private readonly MainFormUi Ui;
@@ -334,11 +348,12 @@ namespace RoughGrep
 
             var pos = fp.scintilla.Lines[linenum-1].Position;
             SciUtil.RevealLine(fp.scintilla, linenum - 1);
-
             fp.scintilla.GotoPosition(pos);
             SciUtil.SearchAndMove(fp.scintilla, Ui.searchTextBox.Text);
-              
             fp.Show();
+
+            FormsUtil.BringFormToFront(fp, Ui.form);
+
         }
 
         void LaunchEditorWithArgs(string args)
