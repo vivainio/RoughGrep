@@ -19,14 +19,29 @@ namespace RoughGrep
     {
         public static string WorkDir = null;
         public static string RgExtraArgs = "";
+        // if set, will trigger search for this on launch
+        public static string InitialSearchString = null;
         static List<string> Lines = new List<string>();
         public static BindingList<string> DirHistory = new BindingList<string>();
         public static BindingList<string> SearchHistory = new BindingList<string>();
         public static Process CurrentSearchProcess = null;
         public static void InitApp()
         {
-            var extraArgs = string.Join(" ", Environment.GetCommandLineArgs().Skip(1));
-            Logic.RgExtraArgs = extraArgs == "" ? "--smart-case" : extraArgs;
+            var extraArgs = Environment.GetCommandLineArgs().Skip(1).ToList();
+            var lastArg = extraArgs.LastOrDefault();
+            if (lastArg != null && !lastArg.StartsWith("-"))
+            {
+                InitialSearchString = lastArg;
+                extraArgs.Remove(lastArg);
+            }
+
+            // --smart-case is a sensible default behavior
+            if (extraArgs.Count == 0)
+            {
+                extraArgs = new List<string> { "--smart-case" };
+            }
+
+            Logic.RgExtraArgs = string.Join(" ", extraArgs);
             Logic.WorkDir = Directory.GetCurrentDirectory();
             TrivialBehinds.RegisterBehind<MainFormUi, MainFormBehind>();
         }

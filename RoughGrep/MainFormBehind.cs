@@ -86,6 +86,13 @@ namespace RoughGrep
                 Logic.KillSearch();
             };
             LiveSearchEvents(ui);
+
+            if (Logic.InitialSearchString != null)
+            {
+                ui.searchTextBox.Text = Logic.InitialSearchString;
+                Logic.InitialSearchString = null;
+                Logic.StartSearch(ui);
+            }
             UpdateStatusBar();
         }
         private readonly Lazy<FullPreviewForm> Previewer = new Lazy<FullPreviewForm>(() =>
@@ -105,9 +112,6 @@ namespace RoughGrep
             var (file, line) = Logic.LookupFileAtLine(Ui.resultBox.CurrentLine, relative: true);
             Ui.statusLabel.Text = $"{file} +{line}";
             Ui.statusLabelCurrentArgs.Text = Logic.RgExtraArgs;
-            
-
-            
         }
         private void LiveSearchEvents(MainFormUi ui)
         {
