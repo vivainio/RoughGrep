@@ -11,7 +11,10 @@ namespace RoughGrep
     public class MainFormBehind
     {
         private readonly MainFormUi Ui;
-       
+
+        FullPreviewForm previewForm;
+        FullPreviewForm notepad;
+
         public MainFormBehind(MainFormUi ui)
         {
             void SetupScintilla()
@@ -95,10 +98,17 @@ namespace RoughGrep
             }
             UpdateStatusBar();
         }
-        private readonly Lazy<FullPreviewForm> Previewer = new Lazy<FullPreviewForm>(() =>
+
+        private FullPreviewForm Previewer()
         {
-            return new FullPreviewForm();
-        });
+            if (previewForm == null)
+            {
+                previewForm = new FullPreviewForm();
+                FormsUtil.FindVisiblePlaceForNewForm(Ui.form, previewForm);
+            }
+            return previewForm;
+
+        }
 
         private readonly Lazy<FullPreviewForm> Notepad = new Lazy<FullPreviewForm>(() =>
         {
@@ -248,7 +258,7 @@ namespace RoughGrep
         void PreviewFile(string path, int linenum)
         {
             var text = File.ReadAllText(path);
-            var fp = Previewer.Value;
+            var fp = Previewer();
             SciUtil.SetAllText(fp.scintilla, text);
             fp.Text = path;
 
