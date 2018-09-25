@@ -61,7 +61,7 @@ namespace RoughGrep
                 // prevent PLING sound
                 e.Handled = true;
             };
-            SciUtil.SetAllText(ui.resultBox, "Tutorial: space=preview, enter=edit, p=edit parent project dir, n=take note");
+            SciUtil.SetAllText(ui.resultBox, "Tutorial: space=preview, enter=edit, p=edit parent project dir, n=take note, g=git history");
 
             ui.dirSelector.DataSource = Logic.DirHistory;
             ui.searchTextBox.DataSource = Logic.SearchHistory;
@@ -69,7 +69,7 @@ namespace RoughGrep
             {
                 Logic.RgExtraArgs,
                 "--files",
-                "-m 5 --smart-case", 
+                "-m 5 --smart-case",
                 "-M 1000",
                 "-g *.cs -g *.csproj",
                 "--no-ignore",
@@ -192,6 +192,15 @@ namespace RoughGrep
                         CreateNote();
                         break;
                     }
+                case Keys.G:
+                    {
+                        var (file, lineNum) = Logic.LookupFileAtLine(line);
+                        if (file != null)
+                        {
+                            GitLog(file);
+                        }
+                        break;
+                    }
 
                 default:
                     {
@@ -205,6 +214,14 @@ namespace RoughGrep
                 e.SuppressKeyPress = true;
             }
 
+        }
+
+        private void GitLog(string file)
+        {
+            var psi = Logic.CreateStartInfo("gitk", file);
+            psi.WindowStyle = ProcessWindowStyle.Hidden;
+            psi.UseShellExecute = true;
+            Process.Start(psi);
         }
 
         private void CreateNote()
