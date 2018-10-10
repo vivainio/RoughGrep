@@ -212,6 +212,11 @@ namespace RoughGrep
                         OpenContainingDirectory(file);
                         break;
                     }
+                case Keys.F:
+                    {
+                        Ui.searchControl.searchTextBox.Focus();
+                        break;
+                    }
                 default:
                     {
                         supress = false;
