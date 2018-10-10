@@ -8,12 +8,26 @@ using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using TrivialBehind;
 
 namespace RoughGrep
 {
+    public class CmdRunner
+    {
+        public string Bin;
+        public string Arg;
+        public string Workdir;
+
+    }
+
+    public class ExternalCommand
+    {
+        public string Pattern;
+        public CmdRunner Runner;
+    }
 
     public static class Logic
     {
@@ -25,6 +39,10 @@ namespace RoughGrep
         public static BindingList<string> DirHistory = new BindingList<string>();
         public static BindingList<string> SearchHistory = new BindingList<string>();
         public static Process CurrentSearchProcess = null;
+
+        public static List<ExternalCommand> ExternalCommands = new List<ExternalCommand>();
+        public static string Tutorial = "Tutorial: space=preview, enter=edit, p=edit parent project dir, n=take note, g=git history";
+
         public static void InitApp()
         {
             var extraArgs = Environment.GetCommandLineArgs().Skip(1).ToList();
@@ -43,6 +61,11 @@ namespace RoughGrep
 
             Logic.RgExtraArgs = string.Join(" ", extraArgs);
             Logic.WorkDir = Directory.GetCurrentDirectory();
+            var rc = ScriptRunner.FindScript();
+            if (rc != null)
+            {
+                ScriptRunner.RunScript(rc);
+            }
             TrivialBehinds.RegisterBehind<MainFormUi, MainFormBehind>();
         }
         public static Action Debounce(int delayms, Action action)
@@ -208,6 +231,26 @@ namespace RoughGrep
             coll.Insert(0, entry);
         }
 
+        internal static void RunExternal(string file, int lineNum)
+        {
+            var cmd = Logic.ExternalCommands.FirstOrDefault(c => Regex.IsMatch(file, c.Pattern));
+            if (cmd == null)
+            {
+                return;
+            }
+
+            var arg = cmd.Runner.Arg.Replace("[[file]]", file).Replace("[[line]]", lineNum.ToString());
+
+            var p = new Process();
+            AssignStartInfo(p.StartInfo, cmd.Runner.Bin, arg);
+            p.StartInfo.UseShellExecute = false;
+            p.StartInfo.CreateNoWindow = false;
+            if (!string.IsNullOrEmpty(cmd.Runner.Workdir))
+                p.StartInfo.WorkingDirectory = cmd.Runner.Workdir;
+
+            p.Start();                        
+        }
+
         public static void AssignStartInfo(ProcessStartInfo psi, string fname, string arguments)
         {
             psi.FileName = fname;
@@ -263,5 +306,6 @@ namespace RoughGrep
                 CurrentSearchProcess.CancelOutputRead();
             }
         }
+
     }
 }

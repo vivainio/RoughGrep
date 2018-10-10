@@ -61,7 +61,7 @@ namespace RoughGrep
                 // prevent PLING sound
                 e.Handled = true;
             };
-            SciUtil.SetAllText(ui.resultBox, "Tutorial: space=preview, enter=edit, p=edit parent project dir, n=take note, g=git history");
+            SciUtil.SetAllText(ui.resultBox, Logic.Tutorial);
 
             ui.dirSelector.DataSource = Logic.DirHistory;
             ui.searchTextBox.DataSource = Logic.SearchHistory;
@@ -158,6 +158,7 @@ namespace RoughGrep
         internal void HandleKeyDownOnResults(KeyEventArgs e, int line)
         {
             var supress = true;
+
             switch (e.KeyCode)
             {
                 case Keys.Space:
@@ -201,7 +202,12 @@ namespace RoughGrep
                         }
                         break;
                     }
-
+                case Keys.R: 
+                    {
+                        var (file, lineNum) = Logic.LookupFileAtLine(line);
+                        RunExternal(file, lineNum);
+                        break;
+                    }
                 default:
                     {
                         supress = false;
@@ -224,6 +230,11 @@ namespace RoughGrep
             Process.Start(psi);
         }
 
+        private void RunExternal(string file, int lineNum) 
+        {
+            Logic.RunExternal(file, lineNum);
+            
+        }
         private void CreateNote()
         {
             var sci = Ui.resultBox;

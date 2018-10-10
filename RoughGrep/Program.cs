@@ -17,7 +17,8 @@ namespace RoughGrep
             Logic.InitApp();
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new MainForm());
+            var mf = new MainForm();
+            Application.Run(mf);
         }
     }
 }
