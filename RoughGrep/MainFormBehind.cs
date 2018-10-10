@@ -13,8 +13,6 @@ namespace RoughGrep
         private readonly MainFormUi Ui;
 
         FullPreviewForm previewForm;
-        FullPreviewForm notepad;
-
         public MainFormBehind(MainFormUi ui)
         {
             void SetupScintilla()
