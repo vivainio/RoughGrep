@@ -208,6 +208,12 @@ namespace RoughGrep
                         RunExternal(file, lineNum);
                         break;
                     }
+                case Keys.D:
+                    {
+                        var (file, lineNum) = Logic.LookupFileAtLine(line);
+                        OpenContainingDirectory(file);
+                        break;
+                    }
                 default:
                     {
                         supress = false;
@@ -220,6 +226,11 @@ namespace RoughGrep
                 e.SuppressKeyPress = true;
             }
 
+        }
+
+        private void OpenContainingDirectory(string file)
+        {
+            Process.Start(Path.GetDirectoryName(file));
         }
 
         private void GitLog(string file)

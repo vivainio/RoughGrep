@@ -41,7 +41,7 @@ namespace RoughGrep
         public static Process CurrentSearchProcess = null;
 
         public static List<ExternalCommand> ExternalCommands = new List<ExternalCommand>();
-        public static string Tutorial = "Tutorial: space=preview, enter=edit, p=edit parent project dir, n=take note, g=git history";
+        public static string Tutorial = "Tutorial: space=preview, enter=edit, p=edit parent project dir, d=containing dir, n=take note, g=git history";
 
         public static void InitApp()
         {
