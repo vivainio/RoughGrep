@@ -12,5 +12,8 @@
 
 (define robot-test-runner 
     (make-shell-launcher "pybot [[file]]"))
-    
+
 (add-command ".*.robot" robot-test-runner)
+(add-command ".*.config" robot-test-runner)
+
+(set-tutorial "Hello from configuration file")
