@@ -307,7 +307,16 @@ namespace RoughGrep
             var pos = fp.scintilla.Lines[linenum-1].Position;
             SciUtil.RevealLine(fp.scintilla, linenum - 1);
             fp.scintilla.GotoPosition(pos);
-            SciUtil.SearchAndMove(fp.scintilla, Ui.searchTextBox.Text);
+            int found = SciUtil.SearchAndMove(fp.scintilla, Ui.searchTextBox.Text);
+            // simple find didn't find it - so let's highlight the whole line
+            if (found == -1)
+            {
+                fp.scintilla.SelectionStart = pos;
+                fp.scintilla.SelectionEnd = fp.scintilla.Lines[linenum].Position;
+
+
+            }
+
             fp.Show();
 
             FormsUtil.BringFormToFront(fp, Ui.form);

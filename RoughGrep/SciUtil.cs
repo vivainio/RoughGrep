@@ -43,7 +43,7 @@ namespace RoughGrep
 
             return scintilla;
         }
-        public static void SearchAndMove(Scintilla scintilla, string searchText, bool reverse = false)
+        public static int SearchAndMove(Scintilla scintilla, string searchText, bool reverse = false)
         {
             if (reverse)
             {
@@ -63,6 +63,7 @@ namespace RoughGrep
                 scintilla.SelectionEnd = scintilla.TargetEnd;
                 scintilla.ScrollCaret();
             }
+            return pos;
         }
         public static void TouchAfterTextLoad(Scintilla scintilla)
         {
