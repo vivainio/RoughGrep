@@ -305,8 +305,9 @@ namespace RoughGrep
             fp.Text = path;
 
             var pos = fp.scintilla.Lines[linenum-1].Position;
-            SciUtil.RevealLine(fp.scintilla, linenum - 1);
             fp.scintilla.GotoPosition(pos);
+            SciUtil.RevealLine(fp.scintilla, linenum - 1);
+
             int found = SciUtil.SearchAndMove(fp.scintilla, Ui.searchTextBox.Text);
             // simple find didn't find it - so let's highlight the whole line
             if (found == -1)

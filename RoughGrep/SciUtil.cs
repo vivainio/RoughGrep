@@ -81,11 +81,12 @@ namespace RoughGrep
 
         public static void RevealLine(Scintilla scintilla, int line)
         {
-            var linesOnScreen = scintilla.LinesOnScreen - 2; // Fudge factor
+            var linesOnScreen = scintilla.LinesOnScreen - 2;
 
             var start = scintilla.Lines[line - (linesOnScreen / 2)].Position;
             var end = scintilla.Lines[line + (linesOnScreen / 2)].Position;
-            scintilla.ScrollRange(start, end);
+            scintilla.ScrollRange(end, start);
+
         }
     }
 }
