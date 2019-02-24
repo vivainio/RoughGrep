@@ -1,5 +1,7 @@
 # RoughGrep
 
+[![Build Status](https://dev.azure.com/ville0567/ville/_apis/build/status/vivainio.RoughGrep?branchName=master)](https://dev.azure.com/ville0567/ville/_build/latest?definitionId=5&branchName=master)
+
 Fast, brutalist UI on top of RipGrep
 
 "You RipGrep, so why not RoughGrep?" -Anon, 2018
