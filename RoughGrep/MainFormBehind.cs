@@ -314,12 +314,9 @@ namespace RoughGrep
             {
                 fp.scintilla.SelectionStart = pos;
                 fp.scintilla.SelectionEnd = fp.scintilla.Lines[linenum].Position;
-
-
             }
 
             fp.Show();
-
             FormsUtil.BringFormToFront(fp, Ui.form);
 
         }

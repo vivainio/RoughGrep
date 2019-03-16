@@ -11,6 +11,7 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using Microsoft.Win32;
 using TrivialBehind;
 
 namespace RoughGrep
@@ -43,9 +44,25 @@ namespace RoughGrep
         public static List<ExternalCommand> ExternalCommands = new List<ExternalCommand>();
         public static string Tutorial = "Tutorial: space=preview, enter=edit, p=edit parent project dir, d=containing dir, n=take note, g=git history, f=find in results";
 
+        public static void SetupShellIntegration()
+        {
+            var appPath = Application.ExecutablePath;
+            var keyPath = @"HKEY_CLASSES_ROOT\Folder\shell\RoughGrep";
+            Registry.SetValue(keyPath, "", "");
+            var keyPath2 = @"HKEY_CLASSES_ROOT\Folder\shell\RoughGrep\command";
+            var cmdline = $"{appPath} --launch %1";
+            Registry.SetValue(keyPath2, "", cmdline);
+        }
         public static void InitApp()
         {
             var extraArgs = Environment.GetCommandLineArgs().Skip(1).ToList();
+
+            var launchDir = extraArgs.FirstOrDefault() == "--launch" ? extraArgs[1] : null;
+            if (launchDir != null)
+            {
+                // launch from shell is "special", nothing else to consider
+                extraArgs.Clear();
+            }
             var lastArg = extraArgs.LastOrDefault();
             if (lastArg != null && !lastArg.StartsWith("-"))
             {
@@ -60,7 +77,7 @@ namespace RoughGrep
             }
 
             Logic.RgExtraArgs = string.Join(" ", extraArgs);
-            Logic.WorkDir = Directory.GetCurrentDirectory();
+            Logic.WorkDir = launchDir == null ? Directory.GetCurrentDirectory() : launchDir;
             var rc = ScriptRunner.FindScript();
             if (rc != null)
             {
@@ -88,6 +105,7 @@ namespace RoughGrep
 
         private static string CreateArgsForRg(string text)
         {
+            
             if (RgExtraArgs.StartsWith("--files"))
             {
                 var globs = string.Join(" ", text.Split(' ').Select(t => $"-g {t}"));
@@ -117,6 +135,7 @@ namespace RoughGrep
             var p = new Process();
 
             var args = CreateArgsForRg(text);
+            Debugger.Log(0, "", args);
             ui.statusLabelCurrentArgs.Text = args;
             AssignStartInfo(p.StartInfo, "rg.exe", args);
             p.StartInfo.RedirectStandardOutput = true;

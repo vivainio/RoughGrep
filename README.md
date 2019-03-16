@@ -14,6 +14,8 @@ Fast, brutalist UI on top of RipGrep
 Grab it from [Releases](https://github.com/vivainio/RoughGrep/releases) and unzip somewhere. Works best when you can
 launch it from command line.
 
+If you want to install RoughGrep for Explorer right click context menu, run "rgg --install" as administator.
+
 ## Requirements
 
 - RipGrep (rg.exe) on PATH. "choco install ripgrep"
@@ -34,7 +36,7 @@ launch it from command line.
     appended instead of just the line.
   - Press `g` to view git history for the file in `gitk`.
   - Press `d` to open containing folder in Windows file explorer.
-  
+
 - You can modify RipGrep command line arguments after launch by using the ComboBox from the Status Bar.
 - If you want to *find file names* instead of finding contents, use the `--files` command line argument.
   Then, the "text to search for" inputs becomes the list of glob patterns instead.

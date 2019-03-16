@@ -8,12 +8,16 @@ namespace RoughGrep
 {
     static class Program
     {
-        /// <summary>
-        /// The main entry point for the application.
-        /// </summary>
         [STAThread]
         static void Main()
         {
+            var cmdline = Environment.GetCommandLineArgs();            
+            if (cmdline.Skip(1).FirstOrDefault() == "--install")
+            {
+                Logic.SetupShellIntegration();
+                return;
+            }
+            
             Logic.InitApp();
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
