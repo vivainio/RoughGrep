@@ -16,6 +16,18 @@ launch it from command line.
 
 If you want to install RoughGrep for Explorer right click context menu, run "rgg --install" as administator.
 
+You can also install with Scoop:
+
+```
+# install scoop
+$ iex (new-object net.webclient).downloadstring('https://get.scoop.sh')
+
+# install scoop extras
+$ scoop bucket add extras
+
+# finally, install roughgrep
+$ scoop install roughgrep
+```
 ## Requirements
 
 - RipGrep (rg.exe) on PATH. "choco install ripgrep"
