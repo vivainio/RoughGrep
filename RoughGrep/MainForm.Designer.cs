@@ -40,6 +40,7 @@
             this.toolStripDropDownButton1 = new System.Windows.Forms.ToolStripDropDownButton();
             this.rgArgsComboBox = new System.Windows.Forms.ToolStripComboBox();
             this.statusLabelCurrentArgs = new System.Windows.Forms.ToolStripStatusLabel();
+            this.btnCls = new System.Windows.Forms.Button();
             this.tableLayoutPanel1.SuspendLayout();
             this.panel1.SuspendLayout();
             this.statusStrip1.SuspendLayout();
@@ -47,7 +48,7 @@
             // 
             // searchTextBox
             // 
-            this.searchTextBox.Location = new System.Drawing.Point(3, 3);
+            this.searchTextBox.Location = new System.Drawing.Point(3, 5);
             this.searchTextBox.Name = "searchTextBox";
             this.searchTextBox.Size = new System.Drawing.Size(269, 24);
             this.searchTextBox.TabIndex = 0;
@@ -58,7 +59,7 @@
             this.dirSelector.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Suggest;
             this.dirSelector.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.FileSystemDirectories;
             this.dirSelector.FormattingEnabled = true;
-            this.dirSelector.Location = new System.Drawing.Point(604, 3);
+            this.dirSelector.Location = new System.Drawing.Point(604, 6);
             this.dirSelector.Name = "dirSelector";
             this.dirSelector.Size = new System.Drawing.Size(418, 24);
             this.dirSelector.TabIndex = 1;
@@ -84,6 +85,7 @@
             // panel1
             // 
             this.panel1.BackColor = System.Drawing.SystemColors.Control;
+            this.panel1.Controls.Add(this.btnCls);
             this.panel1.Controls.Add(this.btnAbort);
             this.panel1.Controls.Add(this.searchControl);
             this.panel1.Controls.Add(this.dirSelector);
@@ -97,7 +99,7 @@
             // 
             // btnAbort
             // 
-            this.btnAbort.Location = new System.Drawing.Point(278, 3);
+            this.btnAbort.Location = new System.Drawing.Point(278, 6);
             this.btnAbort.Name = "btnAbort";
             this.btnAbort.Size = new System.Drawing.Size(18, 23);
             this.btnAbort.TabIndex = 3;
@@ -108,7 +110,7 @@
             // searchControl
             // 
             this.searchControl.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.searchControl.Location = new System.Drawing.Point(424, 0);
+            this.searchControl.Location = new System.Drawing.Point(424, 3);
             this.searchControl.Name = "searchControl";
             this.searchControl.Size = new System.Drawing.Size(174, 29);
             this.searchControl.TabIndex = 2;
@@ -132,7 +134,7 @@
             this.statusLabel1.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
             this.statusLabel1.Font = new System.Drawing.Font("Segoe UI", 7F);
             this.statusLabel1.Name = "statusLabel1";
-            this.statusLabel1.Size = new System.Drawing.Size(67, 15);
+            this.statusLabel1.Size = new System.Drawing.Size(67, 14);
             this.statusLabel1.Text = "RoughGrep";
             // 
             // toolStripDropDownButton1
@@ -159,8 +161,18 @@
             this.statusLabelCurrentArgs.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
             this.statusLabelCurrentArgs.Font = new System.Drawing.Font("Segoe UI", 7F);
             this.statusLabelCurrentArgs.Name = "statusLabelCurrentArgs";
-            this.statusLabelCurrentArgs.Size = new System.Drawing.Size(118, 15);
+            this.statusLabelCurrentArgs.Size = new System.Drawing.Size(118, 14);
             this.statusLabelCurrentArgs.Text = "toolStripStatusLabel1";
+            // 
+            // btnCls
+            // 
+            this.btnCls.Location = new System.Drawing.Point(382, 6);
+            this.btnCls.Name = "btnCls";
+            this.btnCls.Size = new System.Drawing.Size(36, 23);
+            this.btnCls.TabIndex = 4;
+            this.btnCls.Text = "Cls";
+            this.btnCls.UseVisualStyleBackColor = true;
+            this.btnCls.Click += new System.EventHandler(this.button1_Click);
             // 
             // MainForm
             // 
@@ -192,6 +204,7 @@
         private System.Windows.Forms.ToolStripDropDownButton toolStripDropDownButton1;
         public System.Windows.Forms.ToolStripComboBox rgArgsComboBox;
         private System.Windows.Forms.ToolStripStatusLabel statusLabelCurrentArgs;
+        private System.Windows.Forms.Button btnCls;
     }
 }
 
