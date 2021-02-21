@@ -86,6 +86,12 @@ namespace RoughGrep
                 ui.btnAbort.Visible = false;
                 Logic.KillSearch();
             };
+
+            ui.btnCls.Click += (o, e) =>
+            {
+                KillAllInstances();
+            };
+
             LiveSearchEvents(ui);
 
             if (Logic.InitialSearchString != null)
@@ -95,6 +101,11 @@ namespace RoughGrep
                 Logic.StartSearch(ui);
             }
             UpdateStatusBar();
+        }
+
+        private void KillAllInstances()
+        {
+            Logic.KillOtherInstancesOfProcess();
         }
 
         private FullPreviewForm Previewer()

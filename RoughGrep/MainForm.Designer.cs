@@ -172,7 +172,6 @@
             this.btnCls.TabIndex = 4;
             this.btnCls.Text = "Cls";
             this.btnCls.UseVisualStyleBackColor = true;
-            this.btnCls.Click += new System.EventHandler(this.button1_Click);
             // 
             // MainForm
             // 

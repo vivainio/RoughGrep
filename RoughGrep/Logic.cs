@@ -103,6 +103,20 @@ namespace RoughGrep
             };
         }
 
+        internal static void KillOtherInstancesOfProcess()
+        {
+            var currentProcess = Process.GetCurrentProcess();
+            var pid = currentProcess.Id;
+            var procs = Process.GetProcessesByName(currentProcess.ProcessName);
+            foreach (var p in procs)
+            {
+                if (p.Id != pid)
+                {
+                    p.Kill();
+                }
+            }
+        }
+
         private static string CreateArgsForRg(string text)
         {
             

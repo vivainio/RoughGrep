@@ -19,6 +19,7 @@ namespace RoughGrep
                 dirSelector = dirSelector,
                 searchTextBox = searchTextBox,
                 btnAbort = btnAbort,
+                btnCls = btnCls,
                 tableLayout = tableLayoutPanel1,
                 statusLabel = statusLabel1,
                 rgArgsComboBox = rgArgsComboBox,
