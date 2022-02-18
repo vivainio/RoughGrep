@@ -19,7 +19,7 @@ If you want to install RoughGrep for Explorer right click context menu, run "rgg
 You can also install with Scoop:
 
 ```
-# install scoop
+# install scoop (in PowerShell)
 $ iex (new-object net.webclient).downloadstring('https://get.scoop.sh')
 
 # install scoop extras
