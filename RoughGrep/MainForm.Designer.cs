@@ -33,6 +33,7 @@
             this.dirSelector = new System.Windows.Forms.ComboBox();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.btnCls = new System.Windows.Forms.Button();
             this.btnAbort = new System.Windows.Forms.Button();
             this.searchControl = new RoughGrep.SearchControl();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
@@ -40,7 +41,6 @@
             this.toolStripDropDownButton1 = new System.Windows.Forms.ToolStripDropDownButton();
             this.rgArgsComboBox = new System.Windows.Forms.ToolStripComboBox();
             this.statusLabelCurrentArgs = new System.Windows.Forms.ToolStripStatusLabel();
-            this.btnCls = new System.Windows.Forms.Button();
             this.tableLayoutPanel1.SuspendLayout();
             this.panel1.SuspendLayout();
             this.statusStrip1.SuspendLayout();
@@ -96,6 +96,15 @@
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(1025, 32);
             this.panel1.TabIndex = 3;
+            // 
+            // btnCls
+            // 
+            this.btnCls.Location = new System.Drawing.Point(382, 6);
+            this.btnCls.Name = "btnCls";
+            this.btnCls.Size = new System.Drawing.Size(36, 23);
+            this.btnCls.TabIndex = 4;
+            this.btnCls.Text = "Cls";
+            this.btnCls.UseVisualStyleBackColor = true;
             // 
             // btnAbort
             // 
@@ -163,15 +172,6 @@
             this.statusLabelCurrentArgs.Name = "statusLabelCurrentArgs";
             this.statusLabelCurrentArgs.Size = new System.Drawing.Size(118, 14);
             this.statusLabelCurrentArgs.Text = "toolStripStatusLabel1";
-            // 
-            // btnCls
-            // 
-            this.btnCls.Location = new System.Drawing.Point(382, 6);
-            this.btnCls.Name = "btnCls";
-            this.btnCls.Size = new System.Drawing.Size(36, 23);
-            this.btnCls.TabIndex = 4;
-            this.btnCls.Text = "Cls";
-            this.btnCls.UseVisualStyleBackColor = true;
             // 
             // MainForm
             // 

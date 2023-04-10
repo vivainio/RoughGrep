@@ -3,6 +3,7 @@ using System;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace RoughGrep
@@ -31,6 +32,7 @@ namespace RoughGrep
                 ui.resultBox.Dock = DockStyle.Fill;
                 ui.searchTextBox.Select();
                 ui.tableLayout.Controls.Add(ui.resultBox, 0, 1);
+
             }
 
             this.Ui = ui;
@@ -99,8 +101,19 @@ namespace RoughGrep
                 ui.searchTextBox.Text = Logic.InitialSearchString;
                 Logic.InitialSearchString = null;
                 Logic.StartSearch(ui);
+                SetFocusToResults();
             }
             UpdateStatusBar();
+        }
+
+        private void SetFocusToResults()
+        {
+            // without delay, focus gets stuck in search box
+            Task.Delay(1).ContinueWith(t =>
+            {
+                Action a = () => Ui.resultBox.Focus();
+                Ui.resultBox.Invoke(a);
+            });
         }
 
         private void KillAllInstances()
