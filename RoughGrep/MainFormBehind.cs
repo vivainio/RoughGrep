@@ -304,7 +304,7 @@ namespace RoughGrep
             var dir = ScanParentsForFiles(file, tries);
             if (dir != null)
             {
-                LaunchEditorWithArgs($"{dir} -g {file}:{lineNum}");
+                LaunchEditorWithArgs($"{dir} -g \"{file}\":{lineNum}");
             }
         }
 
@@ -341,7 +341,7 @@ namespace RoughGrep
         }
         void EditFile(string file, int lineNum)
         {
-            LaunchEditorWithArgs($"-g {file}:{lineNum}");
+            LaunchEditorWithArgs($"-g \"{file}\":{lineNum}");
         }
     }
 }
