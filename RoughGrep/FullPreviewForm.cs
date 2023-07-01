@@ -19,6 +19,7 @@ namespace RoughGrep
             scintilla = SciUtil.CreateScintilla();
             Controls.Add(scintilla);
             scintilla.Dock = DockStyle.Fill;
+            scintilla.Margins[0].Width = 48;
             FormClosing += (o, e) =>
             {
                 if (e.CloseReason == CloseReason.UserClosing)
