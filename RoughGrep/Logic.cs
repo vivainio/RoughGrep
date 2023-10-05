@@ -144,6 +144,7 @@ namespace RoughGrep
                 ui.resultBox.Text = $"Directory does not exist: '{WorkDir}'";
                 return;
             }
+            var originalText = text;
             text = text.Replace("\"", "\\\"");
             var p = new Process();
 
@@ -257,7 +258,7 @@ namespace RoughGrep
             CurrentSearchProcess = p;
             ui.btnAbort.Visible = true;
             PrependIfNew(Logic.DirHistory, WorkDir);
-            PrependIfNew(Logic.SearchHistory, text);
+            PrependIfNew(Logic.SearchHistory, originalText);
             ui.dirSelector.SelectedIndex = 0;
             ui.searchTextBox.SelectedIndex = 0;
         }
