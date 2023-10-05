@@ -172,6 +172,10 @@ namespace RoughGrep
 
         private static void SearchStartEvent(MainFormUi ui, KeyEventArgs e)
         {
+            if (Logic.CurrentSearchProcess != null)
+            {
+                Logic.KillSearch();
+            }
             e.SuppressKeyPress = true;
             e.Handled = true;
             Logic.StartSearch(ui);

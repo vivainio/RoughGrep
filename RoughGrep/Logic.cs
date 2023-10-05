@@ -1,15 +1,11 @@
-﻿using ScintillaNET;
-using System;
+﻿using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Diagnostics;
-using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using Microsoft.Win32;
 using TrivialBehind;
@@ -132,8 +128,11 @@ namespace RoughGrep
             
             return $"{RgExtraArgs} {maxcount} {maxlen} --heading -n \"{text}\"";
         }
+        private static int CurrentSearchSession = 0;
         public static void StartSearch(MainFormUi ui)
         {
+            CurrentSearchSession++;
+            var session = CurrentSearchSession;
             var text = ui.searchTextBox.Text;
             if (text == null || text.Trim().Length == 0)
             {
@@ -202,6 +201,13 @@ namespace RoughGrep
             {
                 var fl = toFlush;
                 toFlush = new List<string>();
+                // do not write ANYTHING if it's coming from older search session
+
+                if (session != CurrentSearchSession)
+                {
+                    return;
+                }
+
                 RichFlush(fl);
                 
             };
