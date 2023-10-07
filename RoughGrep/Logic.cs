@@ -33,12 +33,13 @@ namespace RoughGrep
         // if set, will trigger search for this on launch
         public static string InitialSearchString = null;
         static List<string> Lines = new List<string>();
-        public static BindingList<string> DirHistory = new BindingList<string>();
-        public static BindingList<string> SearchHistory = new BindingList<string>();
+        public static BindingList<string> DirHistory;
+        public static BindingList<string> SearchHistory;
         public static Process CurrentSearchProcess = null;
 
         public static List<ExternalCommand> ExternalCommands = new List<ExternalCommand>();
         public static string Tutorial = "Tutorial: space=preview, enter=edit, p=edit parent project dir, d=containing dir, n=take note, g=git history, f=find in results";
+        public static SettingsStorage<StoredSettings> SettingsStorage = new SettingsStorage<StoredSettings>("roughgrep", "settings.json");
 
         public static void SetupShellIntegration()
         {
@@ -75,6 +76,12 @@ namespace RoughGrep
             Logic.RgExtraArgs = string.Join(" ", extraArgs);
             Logic.WorkDir = launchDir == null ? Directory.GetCurrentDirectory() : launchDir;
             var rc = ScriptRunner.FindScript();
+            SettingsStorage.LoadAndModify(s =>
+            {
+                DirHistory = new BindingList<string>(s.DirHistory);
+                SearchHistory = new BindingList<string>(s.SearchHistory);
+            });
+
             if (rc != null)
             {
                 ScriptRunner.RunScript(rc);
@@ -259,15 +266,18 @@ namespace RoughGrep
             ui.btnAbort.Visible = true;
             PrependIfNew(Logic.DirHistory, WorkDir);
             PrependIfNew(Logic.SearchHistory, originalText);
+            SettingsStorage.LoadAndModify(s =>
+            {
+                s.DirHistory = Logic.DirHistory.Take(20).ToList();
+                s.SearchHistory = Logic.SearchHistory.Take(20).ToList();
+            });
             ui.dirSelector.SelectedIndex = 0;
             ui.searchTextBox.SelectedIndex = 0;
         }
         static void PrependIfNew<T>(IList<T> coll, T entry ) where T: IComparable<T>
         {
-            if (coll.Count > 0 && coll.ElementAt(0).CompareTo(entry) == 0)
-            {
-                return;
-            }
+
+            coll.RemoveAll(x => x.Equals(entry));
             coll.Insert(0, entry);
         }
 
@@ -348,4 +358,18 @@ namespace RoughGrep
         }
 
     }
+    public static class IListExtensions
+    {
+        public static void RemoveAll<T>(this IList<T> list, Predicate<T> match)
+        {
+            for (int i = list.Count - 1; i >= 0; i--)
+            {
+                if (match(list[i]))
+                {
+                    list.RemoveAt(i);
+                }
+            }
+        }
+    }
+
 }
