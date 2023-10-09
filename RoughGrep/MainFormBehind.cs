@@ -8,12 +8,12 @@ using System.Windows.Forms;
 
 namespace RoughGrep
 {
-
     public class MainFormBehind
     {
         private readonly MainFormUi Ui;
 
         FullPreviewForm previewForm;
+
         public MainFormBehind(MainFormUi ui)
         {
             void SetupScintilla()
@@ -32,7 +32,6 @@ namespace RoughGrep
                 ui.resultBox.Dock = DockStyle.Fill;
                 ui.searchTextBox.Select();
                 ui.tableLayout.Controls.Add(ui.resultBox, 0, 1);
-
             }
 
             this.Ui = ui;
@@ -65,17 +64,18 @@ namespace RoughGrep
 
             ui.dirSelector.DataSource = Logic.DirHistory;
             ui.searchTextBox.DataSource = Logic.SearchHistory;
-            ui.rgArgsComboBox.Items.AddRange(new[]
-            {
-                Logic.RgExtraArgs,
-                "--files",
-                "-m 5 --smart-case",
-                "-M 1000",
-                "-g *.cs -g *.csproj",
-                "--no-ignore",
-                "--context 2"
-
-            });
+            ui.rgArgsComboBox.Items.AddRange(
+                new[]
+                {
+                    Logic.RgExtraArgs,
+                    "--files",
+                    "-m 5 --smart-case",
+                    "-M 1000",
+                    "-g *.cs -g *.csproj",
+                    "--no-ignore",
+                    "--context 2"
+                }
+            );
             ui.rgArgsComboBox.TextChanged += (o, e) =>
             {
                 Logic.RgExtraArgs = ui.rgArgsComboBox.Text;
@@ -109,11 +109,12 @@ namespace RoughGrep
         private void SetFocusToResults()
         {
             // without delay, focus gets stuck in search box
-            Task.Delay(1).ContinueWith(t =>
-            {
-                Action a = () => Ui.resultBox.Focus();
-                Ui.resultBox.Invoke(a);
-            });
+            Task.Delay(1)
+                .ContinueWith(t =>
+                {
+                    Action a = () => Ui.resultBox.Focus();
+                    Ui.resultBox.Invoke(a);
+                });
         }
 
         private void KillAllInstances()
@@ -129,7 +130,6 @@ namespace RoughGrep
                 FormsUtil.FindVisiblePlaceForNewForm(Ui.form, previewForm);
             }
             return previewForm;
-
         }
 
         private readonly Lazy<FullPreviewForm> Notepad = new Lazy<FullPreviewForm>(() =>
@@ -145,13 +145,16 @@ namespace RoughGrep
             Ui.statusLabel.Text = $"{file} +{line}";
             Ui.statusLabelCurrentArgs.Text = Logic.RgExtraArgs;
         }
+
         private void LiveSearchEvents(MainFormUi ui)
         {
             var ctrl = ui.searchControl;
             var rb = ui.resultBox;
-            ctrl.searchTextBox.TextChanged += (o, e) => SciUtil.SearchAndMove(rb, ctrl.searchTextBox.Text);
+            ctrl.searchTextBox.TextChanged += (o, e) =>
+                SciUtil.SearchAndMove(rb, ctrl.searchTextBox.Text);
             ctrl.btnNext.Click += (o, e) => SciUtil.SearchAndMove(rb, ctrl.searchTextBox.Text);
-            ctrl.btnPrev.Click += (o, e) => SciUtil.SearchAndMove(rb, ctrl.searchTextBox.Text, reverse: true);
+            ctrl.btnPrev.Click += (o, e) =>
+                SciUtil.SearchAndMove(rb, ctrl.searchTextBox.Text, reverse: true);
             ctrl.searchTextBox.KeyDown += (o, e) =>
             {
                 if (e.KeyCode == Keys.Enter)
@@ -159,7 +162,8 @@ namespace RoughGrep
                     if (e.Shift)
                     {
                         SciUtil.SearchAndMove(rb, ctrl.searchTextBox.Text, reverse: true);
-                    } else
+                    }
+                    else
                     {
                         SciUtil.SearchAndMove(rb, ctrl.searchTextBox.Text);
                     }
@@ -167,7 +171,6 @@ namespace RoughGrep
                     e.Handled = true;
                 }
             };
-
         }
 
         private static void SearchStartEvent(MainFormUi ui, KeyEventArgs e)
@@ -188,64 +191,65 @@ namespace RoughGrep
             switch (e.KeyCode)
             {
                 case Keys.Space:
+                {
+                    var (file, lineNum) = Logic.LookupFileAtLine(line);
+                    if (file != null)
                     {
-                        var (file, lineNum) = Logic.LookupFileAtLine(line);
-                        if (file != null)
-                        {
-                            PreviewFile(file, lineNum);
-                        }
-                        break;
+                        PreviewFile(file, lineNum);
                     }
+                    break;
+                }
                 case Keys.Enter:
+                {
+                    var (file, lineNum) = Logic.LookupFileAtLine(line);
+                    if (file != null)
                     {
-                        var (file, lineNum) = Logic.LookupFileAtLine(line);
-                        if (file != null)
-                        {
-                            EditFile(file, lineNum);
-                        }
-                        break;
+                        EditFile(file, lineNum);
                     }
+                    break;
+                }
                 case Keys.P:
+                {
+                    var (file, lineNum) = Logic.LookupFileAtLine(line);
+                    if (file != null)
                     {
-                        var (file, lineNum) = Logic.LookupFileAtLine(line);
-                        if (file != null)
-                        {
-                            OpenProject(file, lineNum);
-                        }
-                        break;
+                        OpenProject(file, lineNum);
                     }
+                    break;
+                }
                 case Keys.N:
-                    {
-                        CreateNote();
-                        break;
-                    }
+                {
+                    CreateNote();
+                    break;
+                }
                 case Keys.G:
+                {
+                    var (file, lineNum) = Logic.LookupFileAtLine(line);
+                    if (file != null)
                     {
-                        var (file, lineNum) = Logic.LookupFileAtLine(line);
-                        if (file != null)
-                        {
-                            GitLog(file);
-                        }
-                        break;
+                        GitLog(file);
                     }
-                case Keys.R: 
-                    {
-                        var (file, lineNum) = Logic.LookupFileAtLine(line);
-                        RunExternal(file, lineNum);
-                        break;
-                    }
+                    break;
+                }
+                case Keys.R:
+                {
+                    var (file, lineNum) = Logic.LookupFileAtLine(line);
+                    RunExternal(file, lineNum);
+                    break;
+                }
                 case Keys.D:
-                    {
-                        var (file, lineNum) = Logic.LookupFileAtLine(line);
-                        OpenContainingDirectory(file);
-                        break;
-                    }
+                {
+                    var (file, lineNum) = Logic.LookupFileAtLine(line);
+                    OpenContainingDirectory(file);
+                    break;
+                }
                 case Keys.F:
-                    {
-                        Ui.searchControl.searchTextBox.Focus();
-                        break;
-                    }
+                {
+                    Ui.searchControl.searchTextBox.Focus();
+                    break;
+                }
                 default:
+
                     {
                         supress = false;
                     }
@@ -256,7 +260,6 @@ namespace RoughGrep
                 e.Handled = true;
                 e.SuppressKeyPress = true;
             }
-
         }
 
         private void OpenContainingDirectory(string file)
@@ -272,11 +275,11 @@ namespace RoughGrep
             Process.Start(psi);
         }
 
-        private void RunExternal(string file, int lineNum) 
+        private void RunExternal(string file, int lineNum)
         {
             Logic.RunExternal(file, lineNum);
-            
         }
+
         private void CreateNote()
         {
             var sci = Ui.resultBox;
@@ -315,6 +318,7 @@ namespace RoughGrep
                 }
             }
         }
+
         private void OpenProject(string file, int lineNum)
         {
             var tries = new[] { "package.json", "*.csproj", "*.fsproj", ".gitignore", "*.sln" };
@@ -332,7 +336,7 @@ namespace RoughGrep
             SciUtil.SetAllText(fp.scintilla, text);
             fp.Text = path;
 
-            var pos = fp.scintilla.Lines[linenum-1].Position;
+            var pos = fp.scintilla.Lines[linenum - 1].Position;
             fp.scintilla.GotoPosition(pos);
             SciUtil.RevealLine(fp.scintilla, linenum - 1);
 
@@ -346,7 +350,6 @@ namespace RoughGrep
 
             fp.Show();
             FormsUtil.BringFormToFront(fp, Ui.form);
-
         }
 
         void LaunchEditorWithArgs(string args)
@@ -356,6 +359,7 @@ namespace RoughGrep
             psi.WindowStyle = ProcessWindowStyle.Hidden;
             Process.Start(psi);
         }
+
         void EditFile(string file, int lineNum)
         {
             LaunchEditorWithArgs($"-g \"{file}\":{lineNum}");

@@ -11,13 +11,13 @@ namespace RoughGrep
         [STAThread]
         static void Main()
         {
-            var cmdline = Environment.GetCommandLineArgs();            
+            var cmdline = Environment.GetCommandLineArgs();
             if (cmdline.Skip(1).FirstOrDefault() == "--install")
             {
                 Logic.SetupShellIntegration();
                 return;
             }
-            
+
             Logic.InitApp();
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);

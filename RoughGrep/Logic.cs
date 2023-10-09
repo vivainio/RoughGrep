@@ -17,7 +17,6 @@ namespace RoughGrep
         public string Bin;
         public string Arg;
         public string Workdir;
-
     }
 
     public class ExternalCommand
@@ -30,6 +29,7 @@ namespace RoughGrep
     {
         public static string WorkDir = null;
         public static string RgExtraArgs = "";
+
         // if set, will trigger search for this on launch
         public static string InitialSearchString = null;
         static List<string> Lines = new List<string>();
@@ -38,8 +38,10 @@ namespace RoughGrep
         public static Process CurrentSearchProcess = null;
 
         public static List<ExternalCommand> ExternalCommands = new List<ExternalCommand>();
-        public static string Tutorial = "Tutorial: space=preview, enter=edit, p=edit parent project dir, d=containing dir, n=take note, g=git history, f=find in results";
-        public static SettingsStorage<StoredSettings> SettingsStorage = new SettingsStorage<StoredSettings>("roughgrep", "settings.json");
+        public static string Tutorial =
+            "Tutorial: space=preview, enter=edit, p=edit parent project dir, d=containing dir, n=take note, g=git history, f=find in results";
+        public static SettingsStorage<StoredSettings> SettingsStorage =
+            new SettingsStorage<StoredSettings>("roughgrep", "settings.json");
 
         public static void SetupShellIntegration()
         {
@@ -50,6 +52,7 @@ namespace RoughGrep
             var cmdline = $"{appPath} --launch %1";
             Registry.SetValue(keyPath2, "", cmdline);
         }
+
         public static void InitApp()
         {
             var extraArgs = Environment.GetCommandLineArgs().Skip(1).ToList();
@@ -88,6 +91,7 @@ namespace RoughGrep
             }
             TrivialBehinds.RegisterBehind<MainFormUi, MainFormBehind>();
         }
+
         public static Action Debounce(int delayms, Action action)
         {
             Stopwatch sw = new Stopwatch();
@@ -98,7 +102,8 @@ namespace RoughGrep
                 {
                     action();
                     sw.Restart();
-                } else
+                }
+                else
                 {
                     ;
                     // skipping;
@@ -122,7 +127,6 @@ namespace RoughGrep
 
         private static string CreateArgsForRg(string text)
         {
-            
             if (RgExtraArgs.StartsWith("--files"))
             {
                 var globs = string.Join(" ", text.Split(' ').Select(t => $"-g {t}"));
@@ -130,12 +134,14 @@ namespace RoughGrep
                 return $"{RgExtraArgs} {globs}";
             }
 
-            var maxcount = RgExtraArgs.Contains("-m ") ?  "" :  "-m 1000";
+            var maxcount = RgExtraArgs.Contains("-m ") ? "" : "-m 1000";
             var maxlen = RgExtraArgs.Contains("-M ") ? "" : "-M 300";
-            
+
             return $"{RgExtraArgs} {maxcount} {maxlen} --heading -n \"{text}\"";
         }
+
         private static int CurrentSearchSession = 0;
+
         public static void StartSearch(MainFormUi ui)
         {
             CurrentSearchSession++;
@@ -167,14 +173,13 @@ namespace RoughGrep
             p.EnableRaisingEvents = true;
             var toFlush = new List<string>();
             var flushlock = new Object();
-            // do not decorate 
+            // do not decorate
             var emitCommentsForFiles = !RgExtraArgs.StartsWith("--files");
             void RichFlush(IEnumerable<string> lines)
             {
                 var sb = new StringBuilder();
                 foreach (var line in lines)
                 {
-                    
                     if (line.Length == 0)
                     {
                         sb.Append("\r\n");
@@ -188,7 +193,8 @@ namespace RoughGrep
                         if (parts.Length == 1)
                         {
                             sb.Append(line + "\r\n");
-                        } else
+                        }
+                        else
                         {
                             sb.Append(" ").Append(parts[1].Trim()).Append("\r\n");
                         }
@@ -217,7 +223,6 @@ namespace RoughGrep
                 }
 
                 RichFlush(fl);
-                
             };
             Action debouncedFlush = Debounce(100, doFlush);
 
@@ -274,9 +279,10 @@ namespace RoughGrep
             ui.dirSelector.SelectedIndex = 0;
             ui.searchTextBox.SelectedIndex = 0;
         }
-        static void PrependIfNew<T>(IList<T> coll, T entry ) where T: IComparable<T>
-        {
 
+        static void PrependIfNew<T>(IList<T> coll, T entry)
+            where T : IComparable<T>
+        {
             coll.RemoveAll(x => x.Equals(entry));
             coll.Insert(0, entry);
         }
@@ -289,7 +295,9 @@ namespace RoughGrep
                 return;
             }
 
-            var arg = cmd.Runner.Arg.Replace("[[file]]", file).Replace("[[line]]", lineNum.ToString());
+            var arg = cmd.Runner.Arg
+                .Replace("[[file]]", file)
+                .Replace("[[line]]", lineNum.ToString());
 
             var p = new Process();
             AssignStartInfo(p.StartInfo, cmd.Runner.Bin, arg);
@@ -298,7 +306,7 @@ namespace RoughGrep
             if (!string.IsNullOrEmpty(cmd.Runner.Workdir))
                 p.StartInfo.WorkingDirectory = cmd.Runner.Workdir;
 
-            p.Start();                        
+            p.Start();
         }
 
         public static void AssignStartInfo(ProcessStartInfo psi, string fname, string arguments)
@@ -309,6 +317,7 @@ namespace RoughGrep
             psi.UseShellExecute = false;
             psi.CreateNoWindow = true;
         }
+
         public static ProcessStartInfo CreateStartInfo(string fname, string arguments)
         {
             var psi = new ProcessStartInfo();
@@ -316,7 +325,7 @@ namespace RoughGrep
             return psi;
         }
 
-        public static (string, int) LookupFileAtLine(int lineNumber, bool relative=false)
+        public static (string, int) LookupFileAtLine(int lineNumber, bool relative = false)
         {
             if (lineNumber > Lines.Count - 1)
             {
@@ -327,15 +336,15 @@ namespace RoughGrep
             if (split.Length > 1)
             {
                 Int32.TryParse(split[0], out resLineNum);
-            } 
+            }
 
-            for (var idx = lineNumber;  idx >= 0; idx--)
+            for (var idx = lineNumber; idx >= 0; idx--)
             {
                 var linetext = Lines[idx];
                 if (linetext.Length == 0)
                 {
                     continue;
-                }            
+                }
                 if (char.IsDigit(linetext[0]))
                 {
                     continue;
@@ -356,8 +365,8 @@ namespace RoughGrep
                 CurrentSearchProcess.CancelOutputRead();
             }
         }
-
     }
+
     public static class IListExtensions
     {
         public static void RemoveAll<T>(this IList<T> list, Predicate<T> match)
@@ -371,5 +380,4 @@ namespace RoughGrep
             }
         }
     }
-
 }
