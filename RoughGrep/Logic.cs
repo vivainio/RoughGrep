@@ -39,7 +39,7 @@ namespace RoughGrep
 
         public static List<ExternalCommand> ExternalCommands = new List<ExternalCommand>();
         public static string Tutorial =
-            "Tutorial: space=preview, enter=edit, p=edit parent project dir, d=containing dir, n=take note, g=git history, f=find in results";
+            "Tutorial: space=preview, enter=edit, p=edit parent project dir,\nd=containing dir, n=take note, g=git history, f=find in results\nF12=open selected word";
         public static SettingsStorage<StoredSettings> SettingsStorage =
             new SettingsStorage<StoredSettings>("roughgrep", "settings.json");
 
@@ -51,7 +51,7 @@ namespace RoughGrep
             var keyPath2 = @"HKEY_CURRENT_USER\Software\Classes\directory\Background\shell\RoughGrep\command";
             var cmdline = $"\"{appPath}\" \"%V\"";
             Registry.SetValue(keyPath2, "", cmdline, RegistryValueKind.ExpandString);
-            
+
             // Add Context menu icon
             var iconPath = $"{Application.StartupPath}\\roughgrep.ico";
             Registry.SetValue(keyPath, "Icon", iconPath);
