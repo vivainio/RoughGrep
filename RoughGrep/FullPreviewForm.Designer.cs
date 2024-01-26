@@ -39,6 +39,7 @@
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "FullPreviewForm";
             this.Text = "FullPreviewForm";
+            this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.FullPreviewForm_KeyDown);
             this.ResumeLayout(false);
 
         }

@@ -126,7 +126,7 @@ namespace RoughGrep
         {
             if (previewForm == null)
             {
-                previewForm = new FullPreviewForm();
+                previewForm = new FullPreviewForm(Ui);
                 FormsUtil.FindVisiblePlaceForNewForm(Ui.form, previewForm);
             }
             return previewForm;
@@ -134,7 +134,7 @@ namespace RoughGrep
 
         private readonly Lazy<FullPreviewForm> Notepad = new Lazy<FullPreviewForm>(() =>
         {
-            var np = new FullPreviewForm();
+            var np = new FullPreviewForm(null);
             np.Text = "RoughGrep Notes";
             return np;
         });
@@ -248,6 +248,15 @@ namespace RoughGrep
                     Ui.searchControl.searchTextBox.Focus();
                     break;
                 }
+                case Keys.F12:
+                {
+                    var selected = SciUtil.GetSelectionOrWordOnPosition(Ui.resultBox);
+                    Ui.searchTextBox.Text = selected;
+                    Ui.form.BringToFront();
+                    Logic.StartSearch(Ui);
+                    break;
+                }
+
                 default:
 
                     {

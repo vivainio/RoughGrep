@@ -11,7 +11,6 @@ namespace RoughGrep
         public MainForm form;
         public SearchControl searchControl;
         public Button btnAbort;
-        public Scintilla sci;
         public TableLayoutPanel tableLayout;
         public ToolStripStatusLabel statusLabel;
         public ToolStripComboBox rgArgsComboBox;

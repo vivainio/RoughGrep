@@ -82,6 +82,18 @@ namespace RoughGrep
             scintilla.ScrollWidthTracking = true;
         }
 
+        public static string GetSelectionOrWordOnPosition(Scintilla scintilla)
+        {
+            var selection = scintilla.SelectedText;
+            if (!string.IsNullOrEmpty(selection))
+                return selection;
+            var pos = scintilla.CurrentPosition;
+            int start = scintilla.WordStartPosition(pos, true);
+            int end = scintilla.WordEndPosition(pos, true);
+            var selected = scintilla.GetTextRange(start, end - start);
+            return selected;
+
+        }
         public static void SetAllText(Scintilla scintilla, string text)
         {
             scintilla.ReadOnly = false;
