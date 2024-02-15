@@ -39,7 +39,7 @@ namespace RoughGrep
 
         public static List<ExternalCommand> ExternalCommands = new List<ExternalCommand>();
         public static string Tutorial =
-            "Tutorial: space=preview, enter=edit, p=edit parent project dir,\nd=containing dir, n=take note, g=git history, f=find in results\nF12=open selected word";
+            "Tutorial: space=preview, enter=edit, p=edit parent project dir,\nd=containing dir, n=take note, \ng=git history, f=find in results\nF12=open selected word";
         public static SettingsStorage<StoredSettings> SettingsStorage =
             new SettingsStorage<StoredSettings>("roughgrep", "settings.json");
 

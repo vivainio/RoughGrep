@@ -48,6 +48,7 @@ $ scoop install roughgrep
     appended instead of just the line.
   - Press `g` to view git history for the file in `gitk`.
   - Press `d` to open containing folder in Windows file explorer.
+  - Press `F12` ('go to definition) to search for the word under cursor, or the currently selected text.
 
 - You can modify RipGrep command line arguments after launch by using the ComboBox from the Status Bar.
 - If you want to *find file names* instead of finding contents, use the `--files` command line argument.

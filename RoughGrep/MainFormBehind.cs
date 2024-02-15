@@ -68,6 +68,7 @@ namespace RoughGrep
                 new[]
                 {
                     Logic.RgExtraArgs,
+                    "--fixed-strings",
                     "--files",
                     "-m 5 --smart-case",
                     "-M 1000",
