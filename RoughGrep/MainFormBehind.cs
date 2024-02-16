@@ -95,6 +95,10 @@ namespace RoughGrep
                 KillAllInstances();
             };
 
+            ui.statusLabelCurrentArgs.Click += (o, e) =>
+            {
+                ShowFlags();
+            };
             LiveSearchEvents(ui);
 
             if (Logic.InitialSearchString != null)
@@ -140,7 +144,20 @@ namespace RoughGrep
             return np;
         });
 
-        private void UpdateStatusBar()
+        FlagsForm flagsForm = null;
+        
+        private void ShowFlags()
+        {
+            if (flagsForm == null)
+            {
+                flagsForm = new FlagsForm(this);
+
+            }
+            flagsForm.Show();
+            flagsForm.BringToFront();
+        }
+
+        public void UpdateStatusBar()
         {
             var (file, line) = Logic.LookupFileAtLine(Ui.resultBox.CurrentLine, relative: true);
             Ui.statusLabel.Text = $"{file} +{line}";

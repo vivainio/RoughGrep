@@ -43,6 +43,17 @@ namespace RoughGrep
         public static SettingsStorage<StoredSettings> SettingsStorage =
             new SettingsStorage<StoredSettings>("roughgrep", "settings.json");
 
+        public static string[] AvailableFlags = new string[]
+        {
+            "--fixed-strings",
+            "--files",
+            "-m 5 --smart-case",
+            "-M 1000",
+            "-g *.cs -g *.csproj",
+            "--no-ignore",
+            "--context 2"
+        };
+
         public static void SetupShellIntegration()
         {
             var appPath = Application.ExecutablePath;
