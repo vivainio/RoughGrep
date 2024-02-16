@@ -45,13 +45,14 @@ namespace RoughGrep
 
         public static string[] AvailableFlags = new string[]
         {
-            "--fixed-strings",
+            "--context 2",
             "--files",
-            "-m 5 --smart-case",
-            "-M 1000",
+            "--fixed-strings",
             "-g *.cs -g *.csproj",
+            "-M 1000",
+            "-m 5 --smart-case",
             "--no-ignore",
-            "--context 2"
+            "--pcre2",
         };
 
         public static void SetupShellIntegration()

@@ -13,7 +13,6 @@ namespace RoughGrep
         public Button btnAbort;
         public TableLayoutPanel tableLayout;
         public ToolStripStatusLabel statusLabel;
-        public ToolStripComboBox rgArgsComboBox;
         public ToolStripStatusLabel statusLabelCurrentArgs;
         public Button btnCls;
     }

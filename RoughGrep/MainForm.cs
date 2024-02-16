@@ -24,7 +24,6 @@ namespace RoughGrep
                     btnCls = btnCls,
                     tableLayout = tableLayoutPanel1,
                     statusLabel = statusLabel1,
-                    rgArgsComboBox = rgArgsComboBox,
                     statusLabelCurrentArgs = statusLabelCurrentArgs
                 }
             );
