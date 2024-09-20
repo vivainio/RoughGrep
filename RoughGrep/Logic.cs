@@ -191,6 +191,10 @@ namespace RoughGrep
             var flushlock = new Object();
             // do not decorate
             var emitCommentsForFiles = !RgExtraArgs.StartsWith("--files");
+            void appendText(string textToAppend)
+            {
+                ui.resultBox.AppendText(textToAppend);
+            }
             void RichFlush(IEnumerable<string> lines)
             {
                 var sb = new StringBuilder();
@@ -198,6 +202,7 @@ namespace RoughGrep
                 {
                     if (line.Length == 0)
                     {
+                        Console.WriteLine(line);
                         sb.Append("\r\n");
                         continue;
                     }
@@ -224,7 +229,8 @@ namespace RoughGrep
                         sb.Append(line).Append("\r\n");
                     }
                 }
-                ui.resultBox.AppendText(sb.ToString());
+                var toAdd = sb.ToString();
+                appendText(toAdd);
             }
 
             Action doFlush = () =>
@@ -272,13 +278,20 @@ namespace RoughGrep
 
                 ui.resultBox.Invoke(doFlush);
             };
-            p.Exited += (o, ev) =>
+
+            void doProcessExit()
             {
-                CurrentSearchProcess = null;
+                // we should watForExit since the output may still be coming when running this.
+                // beats my why
+                p.WaitForExit();
                 ui.btnAbort.Invoke(hideAbort);
                 ui.resultBox.Invoke(doFlush);
                 ui.resultBox.Invoke(searchReady);
-            };
+                CurrentSearchProcess = null;
+
+            }
+
+            p.Exited += (o, ev) => doProcessExit();
             p.Start();
             p.BeginOutputReadLine();
             p.BeginErrorReadLine();
