@@ -35,10 +35,10 @@
             this.panel1 = new System.Windows.Forms.Panel();
             this.btnCls = new System.Windows.Forms.Button();
             this.btnAbort = new System.Windows.Forms.Button();
-            this.searchControl = new RoughGrep.SearchControl();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.statusLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
             this.statusLabelCurrentArgs = new System.Windows.Forms.ToolStripStatusLabel();
+            this.searchControl = new RoughGrep.SearchControl();
             this.tableLayoutPanel1.SuspendLayout();
             this.panel1.SuspendLayout();
             this.statusStrip1.SuspendLayout();
@@ -115,14 +115,6 @@
             this.btnAbort.UseVisualStyleBackColor = true;
             this.btnAbort.Visible = false;
             // 
-            // searchControl
-            // 
-            this.searchControl.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.searchControl.Location = new System.Drawing.Point(424, 3);
-            this.searchControl.Name = "searchControl";
-            this.searchControl.Size = new System.Drawing.Size(174, 29);
-            this.searchControl.TabIndex = 2;
-            // 
             // statusStrip1
             // 
             this.statusStrip1.BackColor = System.Drawing.SystemColors.Control;
@@ -146,11 +138,21 @@
             // 
             // statusLabelCurrentArgs
             // 
+            this.statusLabelCurrentArgs.AutoToolTip = true;
             this.statusLabelCurrentArgs.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
             this.statusLabelCurrentArgs.Font = new System.Drawing.Font("Segoe UI", 7F);
             this.statusLabelCurrentArgs.Name = "statusLabelCurrentArgs";
-            this.statusLabelCurrentArgs.Size = new System.Drawing.Size(118, 14);
-            this.statusLabelCurrentArgs.Text = "toolStripStatusLabel1";
+            this.statusLabelCurrentArgs.Size = new System.Drawing.Size(93, 14);
+            this.statusLabelCurrentArgs.Text = "Extra arguments";
+            this.statusLabelCurrentArgs.ToolTipText = "Click to set extra arguments to RipGrep";
+            // 
+            // searchControl
+            // 
+            this.searchControl.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.searchControl.Location = new System.Drawing.Point(424, 3);
+            this.searchControl.Name = "searchControl";
+            this.searchControl.Size = new System.Drawing.Size(174, 29);
+            this.searchControl.TabIndex = 2;
             // 
             // MainForm
             // 

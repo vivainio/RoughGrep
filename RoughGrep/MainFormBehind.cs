@@ -143,7 +143,7 @@ namespace RoughGrep
         {
             var (file, line) = Logic.LookupFileAtLine(Ui.resultBox.CurrentLine, relative: true);
             Ui.statusLabel.Text = $"{file} +{line}";
-            Ui.statusLabelCurrentArgs.Text = Logic.RgExtraArgs;
+            Ui.statusLabelCurrentArgs.Text = string.IsNullOrEmpty(Logic.RgExtraArgs) ? "No extra arguments" : Logic.RgExtraArgs;
         }
 
         private void LiveSearchEvents(MainFormUi ui)
