@@ -3,7 +3,7 @@ from __future__ import print_function
 import os, shutil, glob
 
 prjdir = "RoughGrep"
-version = "3.9"
+version = "3.10"
 
 
 def c(s):
@@ -36,4 +36,4 @@ os.chdir("%s/bin" % prjdir)
 rm_globs("Release/*.pdb", "Release/*.xml")
 os.rename("Release", "RoughGrep")
 
-c("7za a ../../deploy/RoughGrep-%s.zip RoughGrep" % version)
+c("7z a ../../deploy/RoughGrep-%s.zip RoughGrep" % version)

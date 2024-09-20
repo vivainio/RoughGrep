@@ -153,7 +153,7 @@ namespace RoughGrep
             var maxcount = RgExtraArgs.Contains("-m ") ? "" : "-m 1000";
             var maxlen = RgExtraArgs.Contains("-M ") ? "" : "-M 300";
 
-            return $"{RgExtraArgs} {maxcount} {maxlen} --heading -n \"{text}\"";
+            return $"{RgExtraArgs} {maxcount} {maxlen} --heading -n -- \"{text}\"";
         }
 
         private static int CurrentSearchSession = 0;
