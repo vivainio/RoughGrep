@@ -3,7 +3,7 @@ from __future__ import print_function
 import os, shutil, glob
 
 prjdir = "RoughGrep"
-version = "3.11"
+version = "3.12"
 
 
 def c(s):

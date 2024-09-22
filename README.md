@@ -48,6 +48,7 @@ $ scoop install roughgrep
     appended instead of just the line.
   - Press `g` to view git history for the file in `gitk`.
   - Press `b` to open `git blame` view of the file, with current line focused. Spread the guilt!
+  - Press `l` to open `git log -p` view of the file. Useful to search deeper than what "git blame" shows you.
   - Press `d` to open containing folder in Windows file explorer.
   - Press `F12` ('go to definition) to search for the word under cursor, or the currently selected text.
 
