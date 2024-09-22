@@ -240,6 +240,16 @@ namespace RoughGrep
                         }
                         break;
                     }
+                case Keys.L:
+                    {
+                        var (file, lineNum) = Logic.LookupFileAtLine(line);
+                        if (file != null)
+                        {
+                            GitLog(file);
+                        }
+                        break;
+
+                    }
 
                 case Keys.R:
                 {
@@ -288,24 +298,24 @@ namespace RoughGrep
 
         private void GitLog(string file)
         {
-            var psi = Logic.CreateStartInfo("gitk", file);
-            psi.WindowStyle = ProcessWindowStyle.Hidden;
-            psi.WorkingDirectory = Path.GetDirectoryName(file);
-            Process.Start(psi);
+            RunCommandAndPreviewOutput("git", "log -p " + file, "git log -p " + file, 0);
         }
-
         private void GitBlame(string file, int line)
         {
-            var psi = Logic.CreateStartInfo("git", "blame --date=short " + file);
+            RunCommandAndPreviewOutput("git", "blame --date=short " + file, "git blame " + file, line);
+        }
+
+        private void RunCommandAndPreviewOutput(string command, string args, string title, int line)
+        {
+            var psi = Logic.CreateStartInfo(command, args);
             psi.WindowStyle = ProcessWindowStyle.Hidden;
-            psi.WorkingDirectory = Path.GetDirectoryName(file);
             psi.RedirectStandardOutput = true;
             psi.RedirectStandardError = true;
             var p = Process.Start(psi);
             // read all output
             var output = p.StandardOutput.ReadToEnd();
             var err = p.StandardError.ReadToEnd();
-            PreviewText(output, line, "git blame " + file);
+            PreviewText(output, line, title);
 
         }
 
