@@ -24,10 +24,12 @@ namespace RoughGrep
                     btnCls = btnCls,
                     tableLayout = tableLayoutPanel1,
                     statusLabel = statusLabel1,
-                    statusLabelCurrentArgs = statusLabelCurrentArgs
+                    statusLabelCurrentArgs = statusLabelCurrentArgs,
+                    helpLink = helpLink,
                 }
             );
             this.Deactivate += (o, e) => behindDisposer.Dispose();
         }
+
     }
 }

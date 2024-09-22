@@ -90,6 +90,14 @@ namespace RoughGrep
                 Logic.StartSearch(ui);
                 SetFocusToResults();
             }
+            ui.helpLink.Click += (o, e) =>
+            {
+                Process.Start(new ProcessStartInfo
+                {
+                    FileName = "https://github.com/vivainio/RoughGrep/blob/master/README.md#usage",
+                    UseShellExecute = true
+                });
+            };
             UpdateStatusBar();
         }
 
