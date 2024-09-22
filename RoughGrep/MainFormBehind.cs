@@ -231,6 +231,16 @@ namespace RoughGrep
                     }
                     break;
                 }
+                case Keys.B:
+                    {
+                        var (file, lineNum) = Logic.LookupFileAtLine(line);
+                        if (file != null)
+                        {
+                            GitBlame(file, lineNum);
+                        }
+                        break;
+                    }
+
                 case Keys.R:
                 {
                     var (file, lineNum) = Logic.LookupFileAtLine(line);
@@ -280,8 +290,23 @@ namespace RoughGrep
         {
             var psi = Logic.CreateStartInfo("gitk", file);
             psi.WindowStyle = ProcessWindowStyle.Hidden;
-            psi.UseShellExecute = true;
+            psi.WorkingDirectory = Path.GetDirectoryName(file);
             Process.Start(psi);
+        }
+
+        private void GitBlame(string file, int line)
+        {
+            var psi = Logic.CreateStartInfo("git", "blame --date=short " + file);
+            psi.WindowStyle = ProcessWindowStyle.Hidden;
+            psi.WorkingDirectory = Path.GetDirectoryName(file);
+            psi.RedirectStandardOutput = true;
+            psi.RedirectStandardError = true;
+            var p = Process.Start(psi);
+            // read all output
+            var output = p.StandardOutput.ReadToEnd();
+            var err = p.StandardError.ReadToEnd();
+            PreviewText(output, line, "git blame " + file);
+
         }
 
         private void RunExternal(string file, int lineNum)
@@ -337,13 +362,17 @@ namespace RoughGrep
                 LaunchEditorWithArgs($"{dir} -g \"{file}\":{lineNum}");
             }
         }
-
         void PreviewFile(string path, int linenum)
         {
             var text = File.ReadAllText(path);
+            PreviewText(text, linenum, path);
+        }
+
+        void PreviewText(string text, int linenum, string title)
+        {
             var fp = Previewer();
             SciUtil.SetAllText(fp.scintilla, text);
-            fp.Text = path;
+            fp.Text = title;
 
             var pos = fp.scintilla.Lines[linenum - 1].Position;
             fp.scintilla.GotoPosition(pos);

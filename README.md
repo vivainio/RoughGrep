@@ -47,10 +47,11 @@ $ scoop install roughgrep
   - Press `n` to create a note from current line (and file) to scratchpad window. If there is selection, it's
     appended instead of just the line.
   - Press `g` to view git history for the file in `gitk`.
+  - Press `b` to open `git blame` view of the file, with current line focused. Spread the guilt!
   - Press `d` to open containing folder in Windows file explorer.
   - Press `F12` ('go to definition) to search for the word under cursor, or the currently selected text.
 
-- You can modify RipGrep command line arguments after launch by using the ComboBox from the Status Bar.
+- You can modify RipGrep command line arguments after launch by clicking the ComboBox from the Status Bar.
 - If you want to *find file names* instead of finding contents, use the `--files` command line argument.
   Then, the "text to search for" inputs becomes the list of glob patterns instead.
 - Configurable in Scheme! Undocumented, but [you get the idea](https://github.com/vivainio/RoughGrep/blob/master/RoughGrep/RoughGrep.ss).
