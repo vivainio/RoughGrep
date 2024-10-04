@@ -19,6 +19,8 @@ If you want to install RoughGrep for Explorer right click context menu, run "rgg
 You can also install with Scoop:
 
 ```
+$ winget install BurntSushi.ripgrep.MSVC
+
 # install scoop (in PowerShell)
 $ iex (new-object net.webclient).downloadstring('https://get.scoop.sh')
 
@@ -28,9 +30,9 @@ $ scoop bucket add extras
 # finally, install roughgrep
 $ scoop install roughgrep
 ```
+
 ## Requirements
 
-- RipGrep (rg.exe) on PATH. "choco install ripgrep"
 - Microsoft Windows (R)
 - .NET Framework 4.7.2 (because Windows Forms font rendering is broken on the old ones)
 - VSCode launcher ("code") on PATH
