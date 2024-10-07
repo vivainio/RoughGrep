@@ -1,9 +1,10 @@
 from __future__ import print_function
 
+from pathlib import Path
 import os, shutil, glob
 
 prjdir = "RoughGrep"
-version = "3.12"
+version = Path("RoughGrep/version.txt").read_text().strip()
 
 
 def c(s):
@@ -24,6 +25,7 @@ def rm_globs(*globs):
             print("Del", f)
             os.remove(f)
 
+c("fistbump --check")
 
 nuke(prjdir + "/bin")
 nuke(prjdir + "/obj")
