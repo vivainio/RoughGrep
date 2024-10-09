@@ -100,6 +100,7 @@ namespace RoughGrep
             var rc = ScriptRunner.FindScript();
             SettingsStorage.LoadAndModify(s =>
             {
+                PrependIfNew(s.DirHistory, Logic.WorkDir);
                 DirHistory = new BindingList<string>(s.DirHistory);
                 SearchHistory = new BindingList<string>(s.SearchHistory);
             });
