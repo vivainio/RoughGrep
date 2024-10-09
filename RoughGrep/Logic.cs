@@ -58,14 +58,17 @@ namespace RoughGrep
         public static void SetupShellIntegration()
         {
             var appPath = Application.ExecutablePath;
-            var keyPath = @"HKEY_CURRENT_USER\Software\Classes\directory\Background\shell\RoughGrep";
-            Registry.SetValue(keyPath, "", "");
-            var keyPath2 = @"HKEY_CURRENT_USER\Software\Classes\directory\Background\shell\RoughGrep\command";
-            var cmdline = $"\"{appPath}\" \"%V\"";
-            Registry.SetValue(keyPath2, "", cmdline, RegistryValueKind.ExpandString);
-
-            // Add Context menu icon
             var iconPath = $"{Application.StartupPath}\\roughgrep.ico";
+            const string keyPrefix = @"HKEY_CURRENT_USER\Software\Classes\directory";
+
+            CreateRegistryEntry($@"{keyPrefix}\shell\RoughGrep", $"\"{appPath}\" \"--launch\" \"%V\"", iconPath);
+            CreateRegistryEntry($@"{keyPrefix}\Background\shell\RoughGrep", appPath, iconPath);
+        }
+
+        private static void CreateRegistryEntry(string keyPath, string appPath, string iconPath)
+        {
+            Registry.SetValue(keyPath, "", "");
+            Registry.SetValue($@"{keyPath}\command", "", appPath);
             Registry.SetValue(keyPath, "Icon", iconPath);
         }
 
