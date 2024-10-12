@@ -1,5 +1,5 @@
-﻿using ScintillaNET;
-using System.Windows.Forms;
+﻿using System.Windows.Forms;
+using ScintillaNET;
 
 namespace RoughGrep
 {

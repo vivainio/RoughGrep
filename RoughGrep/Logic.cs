@@ -42,7 +42,8 @@ namespace RoughGrep
         public static List<ExternalCommand> ExternalCommands = new List<ExternalCommand>();
         public static string Tutorial =
             "Tutorial: space=preview, enter=edit, p=edit parent project dir,\nd=containing dir, n=take note, \ng=git history, f=find in results\nF12=open selected word";
-        public static string RgNotFoundError = "RipGrep executable (rg.exe) not found in path. Install it by running:\nwinget install --id=BurntSushi.ripgrep.MSVC";
+        public static string RgNotFoundError =
+            "RipGrep executable (rg.exe) not found in path. Install it by running:\nwinget install --id=BurntSushi.ripgrep.MSVC";
 
         public static SettingsStorage<StoredSettings> SettingsStorage =
             new SettingsStorage<StoredSettings>("roughgrep", "settings.json");
@@ -65,7 +66,11 @@ namespace RoughGrep
             var iconPath = $"{Application.StartupPath}\\roughgrep.ico";
             const string keyPrefix = @"HKEY_CURRENT_USER\Software\Classes\directory";
 
-            CreateRegistryEntry($@"{keyPrefix}\shell\RoughGrep", $"\"{appPath}\" \"--launch\" \"%V\"", iconPath);
+            CreateRegistryEntry(
+                $@"{keyPrefix}\shell\RoughGrep",
+                $"\"{appPath}\" \"--launch\" \"%V\"",
+                iconPath
+            );
             CreateRegistryEntry($@"{keyPrefix}\Background\shell\RoughGrep", appPath, iconPath);
         }
 
@@ -90,6 +95,7 @@ namespace RoughGrep
             }
             return null;
         }
+
         public static void InitApp()
         {
             var extraArgs = Environment.GetCommandLineArgs().Skip(1).ToList();
@@ -113,7 +119,7 @@ namespace RoughGrep
                 extraArgs = new List<string> { "--smart-case" };
             }
 
-            RipGrepExecutable = SearchExecutable("rg.exe"); 
+            RipGrepExecutable = SearchExecutable("rg.exe");
             Logic.RgExtraArgs = string.Join(" ", extraArgs);
             Logic.WorkDir = launchDir == null ? Directory.GetCurrentDirectory() : launchDir;
             var rc = ScriptRunner.FindScript();
@@ -315,7 +321,6 @@ namespace RoughGrep
                 ui.resultBox.Invoke(doFlush);
                 ui.resultBox.Invoke(searchReady);
                 CurrentSearchProcess = null;
-
             }
 
             p.Exited += (o, ev) => doProcessExit();
@@ -330,9 +335,6 @@ namespace RoughGrep
                 s.DirHistory = Logic.DirHistory.Take(20).ToList();
                 s.SearchHistory = Logic.SearchHistory.Take(20).ToList();
             });
-
-
-
         }
 
         static void PrependIfNew<T>(IList<T> coll, T entry)
@@ -352,8 +354,8 @@ namespace RoughGrep
             Logic.SearchHistory.RaiseListChangedEvents = true;
             Logic.DirHistory.ResetBindings();
             Logic.SearchHistory.ResetBindings();
-
         }
+
         internal static void RunExternal(string file, int lineNum)
         {
             var cmd = Logic.ExternalCommands.FirstOrDefault(c => Regex.IsMatch(file, c.Pattern));
@@ -362,8 +364,8 @@ namespace RoughGrep
                 return;
             }
 
-            var arg = cmd.Runner.Arg
-                .Replace("[[file]]", file)
+            var arg = cmd
+                .Runner.Arg.Replace("[[file]]", file)
                 .Replace("[[line]]", lineNum.ToString());
 
             var p = new Process();

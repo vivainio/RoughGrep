@@ -1,10 +1,10 @@
-﻿using ScintillaNET;
-using System;
+﻿using System;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using ScintillaNET;
 
 namespace RoughGrep
 {
@@ -63,7 +63,8 @@ namespace RoughGrep
             if (Logic.RipGrepExecutable == null)
             {
                 SciUtil.SetAllText(ui.resultBox, Logic.RgNotFoundError);
-            } else
+            }
+            else
             {
                 SciUtil.SetAllText(ui.resultBox, Logic.Tutorial);
             }
@@ -98,11 +99,14 @@ namespace RoughGrep
             }
             ui.helpLink.Click += (o, e) =>
             {
-                Process.Start(new ProcessStartInfo
-                {
-                    FileName = "https://github.com/vivainio/RoughGrep/blob/master/README.md#usage",
-                    UseShellExecute = true
-                });
+                Process.Start(
+                    new ProcessStartInfo
+                    {
+                        FileName =
+                            "https://github.com/vivainio/RoughGrep/blob/master/README.md#usage",
+                        UseShellExecute = true,
+                    }
+                );
             };
             UpdateStatusBar();
         }
@@ -141,13 +145,12 @@ namespace RoughGrep
         });
 
         FlagsForm flagsForm = null;
-        
+
         private void ShowFlags()
         {
             if (flagsForm == null)
             {
                 flagsForm = new FlagsForm(this);
-
             }
             flagsForm.Show();
             flagsForm.BringToFront();
@@ -157,7 +160,9 @@ namespace RoughGrep
         {
             var (file, line) = Logic.LookupFileAtLine(Ui.resultBox.CurrentLine, relative: true);
             Ui.statusLabel.Text = $"{file} +{line}";
-            Ui.statusLabelCurrentArgs.Text = string.IsNullOrEmpty(Logic.RgExtraArgs) ? "No extra arguments" : Logic.RgExtraArgs;
+            Ui.statusLabelCurrentArgs.Text = string.IsNullOrEmpty(Logic.RgExtraArgs)
+                ? "No extra arguments"
+                : Logic.RgExtraArgs;
         }
 
         private void LiveSearchEvents(MainFormUi ui)
@@ -246,24 +251,23 @@ namespace RoughGrep
                     break;
                 }
                 case Keys.B:
+                {
+                    var (file, lineNum) = Logic.LookupFileAtLine(line);
+                    if (file != null)
                     {
-                        var (file, lineNum) = Logic.LookupFileAtLine(line);
-                        if (file != null)
-                        {
-                            GitBlame(file, lineNum);
-                        }
-                        break;
+                        GitBlame(file, lineNum);
                     }
+                    break;
+                }
                 case Keys.L:
+                {
+                    var (file, lineNum) = Logic.LookupFileAtLine(line);
+                    if (file != null)
                     {
-                        var (file, lineNum) = Logic.LookupFileAtLine(line);
-                        if (file != null)
-                        {
-                            GitLog(file);
-                        }
-                        break;
-
+                        GitLog(file);
                     }
+                    break;
+                }
 
                 case Keys.R:
                 {
@@ -292,7 +296,6 @@ namespace RoughGrep
                 }
 
                 default:
-
                     {
                         supress = false;
                     }
@@ -314,9 +317,15 @@ namespace RoughGrep
         {
             RunCommandAndPreviewOutput("git", "log -p " + file, "git log -p " + file, 0);
         }
+
         private void GitBlame(string file, int line)
         {
-            RunCommandAndPreviewOutput("git", "blame --date=short " + file, "git blame " + file, line);
+            RunCommandAndPreviewOutput(
+                "git",
+                "blame --date=short " + file,
+                "git blame " + file,
+                line
+            );
         }
 
         private void RunCommandAndPreviewOutput(string command, string args, string title, int line)
@@ -330,7 +339,6 @@ namespace RoughGrep
             var output = p.StandardOutput.ReadToEnd();
             var err = p.StandardError.ReadToEnd();
             PreviewText(output, line, title);
-
         }
 
         private void RunExternal(string file, int lineNum)
@@ -386,6 +394,7 @@ namespace RoughGrep
                 LaunchEditorWithArgs($"{dir} -g \"{file}\":{lineNum}");
             }
         }
+
         void PreviewFile(string path, int linenum)
         {
             var text = File.ReadAllText(path);

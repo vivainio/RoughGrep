@@ -37,7 +37,6 @@ namespace RoughGrep
         {
             Logic.RgExtraArgs = inpRenderedFlags.Text;
             ui.UpdateStatusBar();
-            
         }
 
         private void RenderCurrentSelections()
@@ -45,24 +44,28 @@ namespace RoughGrep
             var rendered = new StringBuilder();
             foreach (var item in lbAvailableFlags.CheckedItems)
             {
-                var s = (string) item;
+                var s = (string)item;
                 rendered.Append(s);
                 rendered.Append(" ");
             }
             inpRenderedFlags.Text = rendered.ToString();
         }
+
         private void LbAvailableFlags_ItemCheck(object sender, ItemCheckEventArgs e)
         {
             // checkedlistbox sucks ass
-            Task.Delay(100).ContinueWith((t) =>
-            {
-                this.Invoke(new Action(() =>
-                {
-                    RenderCurrentSelections();
-                }));
-
-            });
-
+            Task.Delay(100)
+                .ContinueWith(
+                    (t) =>
+                    {
+                        this.Invoke(
+                            new Action(() =>
+                            {
+                                RenderCurrentSelections();
+                            })
+                        );
+                    }
+                );
         }
     }
 }

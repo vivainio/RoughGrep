@@ -22,8 +22,8 @@ namespace RoughGrep
                 workarea.Right,
                 workarea.Bottom
             );
-            var all = new[] { left, right, top, bottom }.Where(
-                r => r.Height > 200 && r.Width > 200
+            var all = new[] { left, right, top, bottom }.Where(r =>
+                r.Height > 200 && r.Width > 200
             );
             var best = all.OrderByDescending(r => r.Width * r.Height).FirstOrDefault();
             if (best == default(Rectangle))

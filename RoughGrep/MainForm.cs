@@ -30,6 +30,5 @@ namespace RoughGrep
             );
             this.Deactivate += (o, e) => behindDisposer.Dispose();
         }
-
     }
 }

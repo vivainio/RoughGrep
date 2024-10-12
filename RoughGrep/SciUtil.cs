@@ -1,5 +1,5 @@
-﻿using ScintillaNET;
-using System.Drawing;
+﻿using System.Drawing;
+using ScintillaNET;
 
 namespace RoughGrep
 {
@@ -92,8 +92,8 @@ namespace RoughGrep
             int end = scintilla.WordEndPosition(pos, true);
             var selected = scintilla.GetTextRange(start, end - start);
             return selected;
-
         }
+
         public static void SetAllText(Scintilla scintilla, string text)
         {
             scintilla.ReadOnly = false;

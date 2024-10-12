@@ -14,42 +14,41 @@ namespace RoughGrep
         public static void RunScript(string pth)
         {
             var basedir = Path.GetDirectoryName(pth);
-            Interpreter.CreateSymbolTableDelegate extension = _ =>
-                new Dictionary<Symbol, object>()
+            Interpreter.CreateSymbolTableDelegate extension = _ => new Dictionary<Symbol, object>()
+            {
+                // generic stuff
                 {
-                    // generic stuff
-                    {
-                        Symbol.FromString("sprintf"),
-                        NativeProcedure.Create<string, List<object>, string>(
-                            (fmt, parts) => Sprintf(fmt, parts)
-                        )
-                    },
-                    // roughgrep stuff
-                    {
-                        Symbol.FromString("make-runner"),
-                        NativeProcedure.Create<string, string, string, object>(
-                            (bin, arg, workdir) => MakeRunner(bin, arg, workdir)
-                        )
-                    },
-                    {
-                        Symbol.FromString("add-command"),
-                        NativeProcedure.Create<string, CmdRunner, object>(
-                            (pat, cmspec) => AddCommand(pat, cmspec)
-                        )
-                    },
-                    {
-                        Symbol.FromString("path-rel"),
-                        NativeProcedure.Create<string, string>(s => Path.Combine(basedir, s))
-                    },
-                    {
-                        Symbol.FromString("set-arg"),
-                        NativeProcedure.Create<string, object>(s => SetArg(s))
-                    },
-                    {
-                        Symbol.FromString("set-tutorial"),
-                        NativeProcedure.Create<string, object>(s => SetTutorial(s))
-                    },
-                };
+                    Symbol.FromString("sprintf"),
+                    NativeProcedure.Create<string, List<object>, string>(
+                        (fmt, parts) => Sprintf(fmt, parts)
+                    )
+                },
+                // roughgrep stuff
+                {
+                    Symbol.FromString("make-runner"),
+                    NativeProcedure.Create<string, string, string, object>(
+                        (bin, arg, workdir) => MakeRunner(bin, arg, workdir)
+                    )
+                },
+                {
+                    Symbol.FromString("add-command"),
+                    NativeProcedure.Create<string, CmdRunner, object>(
+                        (pat, cmspec) => AddCommand(pat, cmspec)
+                    )
+                },
+                {
+                    Symbol.FromString("path-rel"),
+                    NativeProcedure.Create<string, string>(s => Path.Combine(basedir, s))
+                },
+                {
+                    Symbol.FromString("set-arg"),
+                    NativeProcedure.Create<string, object>(s => SetArg(s))
+                },
+                {
+                    Symbol.FromString("set-tutorial"),
+                    NativeProcedure.Create<string, object>(s => SetTutorial(s))
+                },
+            };
 
             var interpreter = new Interpreter(
                 new[] { extension },
@@ -81,7 +80,7 @@ namespace RoughGrep
             {
                 Arg = arg,
                 Bin = bin,
-                Workdir = workdir
+                Workdir = workdir,
             };
         }
 

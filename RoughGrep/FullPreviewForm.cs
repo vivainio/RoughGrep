@@ -1,5 +1,4 @@
-﻿using ScintillaNET;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -8,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using ScintillaNET;
 
 namespace RoughGrep
 {
@@ -18,7 +18,7 @@ namespace RoughGrep
             InitializeComponent();
             _mainUi = ui;
             this.KeyPreview = true;
-           
+
             scintilla = SciUtil.CreateScintilla();
             Controls.Add(scintilla);
             scintilla.Dock = DockStyle.Fill;
