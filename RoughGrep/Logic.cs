@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Windows.Forms;
@@ -40,8 +41,8 @@ namespace RoughGrep
         public static Process CurrentSearchProcess = null;
 
         public static List<ExternalCommand> ExternalCommands = new List<ExternalCommand>();
-        public static string Tutorial =
-            "Tutorial: space=preview, enter=edit, p=edit parent project dir,\nd=containing dir, n=take note, \ng=git history, f=find in results\nF12=open selected word";
+        public static Lazy<string> Tutorial = new Lazy<string>(() => "RoughGrep version " + GetVersion() + "\n\n" +
+            "Tutorial: space=preview, enter=edit, p=edit parent project dir,\nd=containing dir, n=take note, \ng=git history, f=find in results\nF12=open selected word");
         public static string RgNotFoundError =
             "RipGrep executable (rg.exe) not found in path. Install it by running:\nwinget install --id=BurntSushi.ripgrep.MSVC";
 
@@ -434,6 +435,15 @@ namespace RoughGrep
                 CurrentSearchProcess.CancelOutputRead();
             }
         }
+
+        public static string GetVersion()
+        {
+            var informationalVersion = Assembly.GetEntryAssembly()
+                                  .GetCustomAttribute<AssemblyInformationalVersionAttribute>()
+                                  .InformationalVersion;
+            return informationalVersion;
+        }
+
     }
 
     public static class IListExtensions

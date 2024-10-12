@@ -66,7 +66,7 @@ namespace RoughGrep
             }
             else
             {
-                SciUtil.SetAllText(ui.resultBox, Logic.Tutorial);
+                SciUtil.SetAllText(ui.resultBox, Logic.Tutorial.Value);
             }
 
             ui.dirSelector.DataSource = Logic.DirHistory;

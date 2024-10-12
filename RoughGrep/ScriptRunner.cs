@@ -59,13 +59,13 @@ namespace RoughGrep
             {
                 var res = interpreter.Evaluate(reader);
                 if (res.Error != null)
-                    Logic.Tutorial = res.Error.Message;
+                    Logic.Tutorial = new Lazy<string>(() => res.Error.Message);
             }
         }
 
         private static object SetTutorial(string s)
         {
-            Logic.Tutorial = s;
+            Logic.Tutorial = new Lazy<string>(() => s);
             return None.Instance;
         }
 
