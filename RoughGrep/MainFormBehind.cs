@@ -60,7 +60,13 @@ namespace RoughGrep
                 // prevent PLING sound
                 e.Handled = true;
             };
-            SciUtil.SetAllText(ui.resultBox, Logic.Tutorial);
+            if (Logic.RipGrepExecutable == null)
+            {
+                SciUtil.SetAllText(ui.resultBox, Logic.RgNotFoundError);
+            } else
+            {
+                SciUtil.SetAllText(ui.resultBox, Logic.Tutorial);
+            }
 
             ui.dirSelector.DataSource = Logic.DirHistory;
             ui.searchTextBox.DataSource = Logic.SearchHistory;
