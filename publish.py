@@ -31,7 +31,7 @@ nuke(prjdir + "/bin")
 nuke(prjdir + "/obj")
 nuke("deploy")
 
-c(f"msbuild RoughGrep.sln /p:Configuration=Release /p:InformationalVersion={version}")
+c("msbuild RoughGrep.sln -p:Configuration=Release")
 os.mkdir("deploy")
 os.chdir("%s/bin" % prjdir)
 

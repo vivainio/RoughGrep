@@ -438,10 +438,13 @@ namespace RoughGrep
 
         public static string GetVersion()
         {
-            var informationalVersion = Assembly.GetEntryAssembly()
-                                  .GetCustomAttribute<AssemblyInformationalVersionAttribute>()
-                                  .InformationalVersion;
-            return informationalVersion;
+            var appDir = Path.GetDirectoryName(Assembly.GetEntryAssembly().Location);
+            var versionFile = Path.Combine(appDir, "version.txt");
+            if (File.Exists(versionFile))
+            {
+                return File.ReadAllText(versionFile).Trim();
+            }
+            return "0.0.0";
         }
 
     }
