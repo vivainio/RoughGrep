@@ -62,10 +62,11 @@ namespace RoughGrep
             "--fixed-strings",
             "-g *.cs -g *.csproj",
             "-M 1000",
-            "-m 5 --smart-case",
+            "-m 5",
             "--no-ignore",
             "--pcre2",
         };
+        public static string[] DefaultFlags = new string[] { "--smart-case" };
 
         public static void SetupShellIntegration()
         {

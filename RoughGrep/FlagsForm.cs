@@ -21,7 +21,13 @@ namespace RoughGrep
             InitializeComponent();
             lbAvailableFlags.CheckOnClick = true;
             lbAvailableFlags.Items.Clear();
+            lbAvailableFlags.Items.AddRange(Logic.DefaultFlags.ToArray());
+            for (int i = 0; i < lbAvailableFlags.Items.Count; i++)
+            {
+                lbAvailableFlags.SetItemChecked(i, true);
+            }
             lbAvailableFlags.Items.AddRange(Logic.AvailableFlags.ToArray());
+
             lbAvailableFlags.ItemCheck += LbAvailableFlags_ItemCheck;
             inpRenderedFlags.TextChanged += InpRenderedFlags_TextChanged;
             this.FormClosing += FlagsForm_FormClosing;
