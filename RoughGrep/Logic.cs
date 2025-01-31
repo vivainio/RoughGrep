@@ -42,8 +42,13 @@ namespace RoughGrep
         public static Process CurrentSearchProcess = null;
 
         public static List<ExternalCommand> ExternalCommands = new List<ExternalCommand>();
-        public static Lazy<string> Tutorial = new Lazy<string>(() => "RoughGrep version " + GetVersion() + "\n\n" +
-            "Tutorial: space=preview, enter=edit, p=edit parent project dir,\nd=containing dir, n=take note, \ng=git history, f=find in results\nF12=open selected word");
+        public static Lazy<string> Tutorial = new Lazy<string>(
+            () =>
+                "RoughGrep version "
+                + GetVersion()
+                + "\n\n"
+                + "Tutorial: space=preview, enter=edit, p=edit parent project dir,\nd=containing dir, n=take note, \ng=git history, f=find in results\nF12=open selected word"
+        );
         public static string RgNotFoundError =
             "RipGrep executable (rg.exe) not found in path. Install it by running:\nwinget install --id=BurntSushi.ripgrep.MSVC";
 
@@ -189,13 +194,16 @@ namespace RoughGrep
 
         private static int CurrentSearchSession = 0;
         private static Regex rgLineRegex = new Regex(@"^\d+[:-]", RegexOptions.Compiled);
+
         // use zero width space for great justice
         private const string fakeStartComment = "/" + "\u200B" + "*";
         private const string fakeEndComment = "*" + "\u200B" + "/";
+
         private static string SanitizeLineWithMultiLineComments(string line)
         {
             return line.Replace("/*", fakeStartComment).Replace("*/", fakeEndComment);
         }
+
         public static void StartSearch(MainFormUi ui)
         {
             CurrentSearchSession++;
@@ -259,7 +267,9 @@ namespace RoughGrep
                         }
                         else
                         {
-                            sb.Append(" ").Append(SanitizeLineWithMultiLineComments(parts[1]).Trim()).Append("\r\n");
+                            sb.Append(" ")
+                                .Append(SanitizeLineWithMultiLineComments(parts[1]).Trim())
+                                .Append("\r\n");
                         }
                     }
                     else
@@ -454,7 +464,6 @@ namespace RoughGrep
             }
             return "0.0.0";
         }
-
     }
 
     public static class IListExtensions
