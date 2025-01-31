@@ -187,7 +187,7 @@ namespace RoughGrep
         }
 
         private static int CurrentSearchSession = 0;
-
+        private static Regex rgLineRegex = new Regex(@"^\d+[:-]", RegexOptions.Compiled);
         public static void StartSearch(MainFormUi ui)
         {
             CurrentSearchSession++;
@@ -241,7 +241,7 @@ namespace RoughGrep
                         continue;
                     }
 
-                    if (char.IsDigit(line[0]))
+                    if (rgLineRegex.IsMatch(line))
                     {
                         var parts = line.Split(new[] { ":", "-" }, 2, StringSplitOptions.None);
                         // context
@@ -415,7 +415,7 @@ namespace RoughGrep
                 {
                     continue;
                 }
-                if (char.IsDigit(linetext[0]))
+                if (rgLineRegex.IsMatch(linetext))
                 {
                     continue;
                 }
