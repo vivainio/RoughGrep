@@ -5,6 +5,7 @@ using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Reflection;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Windows.Forms;
@@ -188,6 +189,13 @@ namespace RoughGrep
 
         private static int CurrentSearchSession = 0;
         private static Regex rgLineRegex = new Regex(@"^\d+[:-]", RegexOptions.Compiled);
+        // use zero width space for great justice
+        private const string fakeStartComment = "/" + "\u200B" + "*";
+        private const string fakeEndComment = "*" + "\u200B" + "/";
+        private static string SanitizeLineWithMultiLineComments(string line)
+        {
+            return line.Replace("/*", fakeStartComment).Replace("*/", fakeEndComment);
+        }
         public static void StartSearch(MainFormUi ui)
         {
             CurrentSearchSession++;
@@ -251,7 +259,7 @@ namespace RoughGrep
                         }
                         else
                         {
-                            sb.Append(" ").Append(parts[1].Trim()).Append("\r\n");
+                            sb.Append(" ").Append(SanitizeLineWithMultiLineComments(parts[1]).Trim()).Append("\r\n");
                         }
                     }
                     else
