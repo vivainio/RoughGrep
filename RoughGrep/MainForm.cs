@@ -25,6 +25,7 @@ namespace RoughGrep
                     tableLayout = tableLayoutPanel1,
                     statusLabel = statusLabel1,
                     statusLabelCurrentArgs = statusLabelCurrentArgs,
+                    toolTip = toolTip1,
                     helpLink = helpLink,
                 }
             );

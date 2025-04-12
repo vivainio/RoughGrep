@@ -108,6 +108,13 @@ namespace RoughGrep
                     }
                 );
             };
+
+            ui.toolTip.SetToolTip(ui.btnAbort, "Stop Searching");
+            ui.toolTip.SetToolTip(ui.btnCls, "Close Other Windows");
+            ui.toolTip.SetToolTip(ui.dirSelector, "Directory");
+            ui.toolTip.SetToolTip(ui.searchControl.btnNext, "Next");
+            ui.toolTip.SetToolTip(ui.searchControl.btnPrev, "Prev");
+            ui.toolTip.SetToolTip(ui.searchControl.searchTextBox, "Search Within Results");
             UpdateStatusBar();
         }
 

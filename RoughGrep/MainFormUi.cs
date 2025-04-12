@@ -15,6 +15,7 @@ namespace RoughGrep
         public ToolStripStatusLabel statusLabel;
         public ToolStripStatusLabel statusLabelCurrentArgs;
         public Button btnCls;
+        public ToolTip toolTip;
         internal ToolStripStatusLabel helpLink;
     }
 }
