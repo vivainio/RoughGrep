@@ -1,0 +1,3 @@
+pre-commit = "dotnet csharpier ."
+# empty hooks are ignored
+pre-push = ""

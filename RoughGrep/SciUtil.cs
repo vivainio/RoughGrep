@@ -32,12 +32,25 @@ namespace RoughGrep
             scintilla.Styles[Style.Cpp.StringEol].BackColor = Color.Pink;
             scintilla.Styles[Style.Cpp.Operator].ForeColor = Color.Purple;
             scintilla.Styles[Style.Cpp.Preprocessor].ForeColor = Color.Maroon;
-            scintilla.Lexer = Lexer.Cpp;
+
+            scintilla.Styles[Style.Python.Default].ForeColor = Color.Silver;
+            scintilla.Styles[Style.Python.CommentLine].ForeColor = Color.FromArgb(0, 128, 0); // Green
+            scintilla.Styles[Style.Python.Number].ForeColor = Color.Olive;
+            scintilla.Styles[Style.Python.Word].ForeColor = Color.Blue;
+            scintilla.Styles[Style.Python.Word2].ForeColor = Color.Blue;
+            scintilla.Styles[Style.Python.String].ForeColor = Color.FromArgb(163, 21, 21); // Red
+            scintilla.Styles[Style.Python.Character].ForeColor = Color.FromArgb(163, 21, 21); // Red
+            scintilla.Styles[Style.Python.StringEol].BackColor = Color.Pink;
+            scintilla.Styles[Style.Python.Operator].ForeColor = Color.Purple;
+            scintilla.Styles[Style.Python.DefName].ForeColor = Color.Maroon;
+            scintilla.Styles[Style.Python.ClassName].ForeColor = Color.Maroon;
+            scintilla.Styles[Style.Python.Decorator].ForeColor = Color.Maroon;
+            scintilla.Styles[Style.Python.CommentBlock].ForeColor = Color.FromArgb(0, 128, 0); // Green
 
             // Set the keywords
             scintilla.SetKeywords(
                 0,
-                "abstract as base break case catch checked continue default delegate do else event explicit extern false finally fixed for foreach goto if implicit in interface internal is lock namespace new null object operator out override params private protected public readonly ref return sealed sizeof stackalloc switch this throw true try typeof unchecked unsafe using virtual while"
+                "abstract as base break case catch checked continue def default delegate do else event explicit extern false finally fixed for foreach goto if implicit in import interface internal is lock namespace new null object operator out override params private protected public readonly ref return sealed sizeof stackalloc switch this throw true try typeof unchecked unsafe using virtual while"
             );
             scintilla.SetKeywords(
                 1,
@@ -92,6 +105,23 @@ namespace RoughGrep
             int end = scintilla.WordEndPosition(pos, true);
             var selected = scintilla.GetTextRange(start, end - start);
             return selected;
+        }
+
+        public static void SelectLexerByFileName(Scintilla scintilla, string fileName)
+        {
+            return;
+            if (fileName.EndsWith(".cs"))
+            {
+                scintilla.Lexer = Lexer.Cpp;
+            }
+            else if (fileName.EndsWith(".py"))
+            {
+                scintilla.Lexer = Lexer.Python;
+            }
+            else
+            {
+                scintilla.Lexer = Lexer.Cpp;
+            }
         }
 
         public static void SetAllText(Scintilla scintilla, string text)

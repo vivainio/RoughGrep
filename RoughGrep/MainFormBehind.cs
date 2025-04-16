@@ -398,6 +398,7 @@ namespace RoughGrep
         void PreviewFile(string path, int linenum)
         {
             var text = File.ReadAllText(path);
+            SciUtil.SelectLexerByFileName(Previewer().scintilla, path);
             PreviewText(text, linenum, path);
         }
 
