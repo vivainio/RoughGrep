@@ -1,0 +1,36 @@
+name: CI
+
+on:
+  push:
+    branches: [ master, main ]
+  pull_request:
+    branches: [ master, main ]
+
+jobs:
+  build:
+    runs-on: windows-latest
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+      
+    - name: Setup .NET Framework
+      uses: microsoft/setup-msbuild@v2
+      
+    - name: Setup NuGet
+      uses: nuget/setup-nuget@v2
+      with:
+        nuget-version: 'latest'
+    
+    - name: Restore NuGet packages
+      run: nuget restore RoughGrep.sln
+      
+    - name: Build solution
+      run: msbuild RoughGrep.sln /p:Configuration=Release /p:Platform="Any CPU"
+      
+    - name: Upload build artifacts
+      uses: actions/upload-artifact@v4
+      with:
+        name: RoughGrep-Release
+        path: RoughGrep/bin/Release/
+        if-no-files-found: error 
