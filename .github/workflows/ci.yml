@@ -23,19 +23,34 @@ jobs:
       with:
         nuget-version: 'latest'
     
+    - name: Get version
+      id: version
+      run: |
+        if ("${{ github.ref }}" -like "refs/tags/v*") {
+          # Extract version from tag (remove 'v' prefix)
+          $version = "${{ github.ref }}" -replace "refs/tags/v", ""
+          echo "Using tag version: $version"
+        } else {
+          # Use version from file for non-tag builds
+          $version = Get-Content "RoughGrep/version.txt"
+          echo "Using file version: $version"
+        }
+        echo "VERSION=$version" >> $env:GITHUB_OUTPUT
+      shell: pwsh
+      
+    - name: Update version.txt for release
+      if: startsWith(github.ref, 'refs/tags/')
+      run: |
+        $version = "${{ steps.version.outputs.VERSION }}"
+        Set-Content -Path "RoughGrep/version.txt" -Value $version
+        echo "Updated version.txt to: $version"
+      shell: pwsh
+    
     - name: Restore NuGet packages
       run: nuget restore RoughGrep.sln
       
     - name: Build solution
       run: msbuild RoughGrep.sln /p:Configuration=Release /p:Platform="Any CPU"
-      
-    - name: Read version
-      id: version
-      run: |
-        $version = Get-Content "RoughGrep/version.txt"
-        echo "VERSION=$version" >> $env:GITHUB_OUTPUT
-        echo "Version: $version"
-      shell: pwsh
       
     - name: Create release zip
       if: startsWith(github.ref, 'refs/tags/')
