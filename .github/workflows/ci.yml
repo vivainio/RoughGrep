@@ -3,6 +3,7 @@ name: CI
 on:
   push:
     branches: [ master, main ]
+    tags: [ 'v*' ]
   pull_request:
     branches: [ master, main ]
 
@@ -28,9 +29,35 @@ jobs:
     - name: Build solution
       run: msbuild RoughGrep.sln /p:Configuration=Release /p:Platform="Any CPU"
       
+    - name: Read version
+      id: version
+      run: |
+        $version = Get-Content "RoughGrep/version.txt"
+        echo "VERSION=$version" >> $env:GITHUB_OUTPUT
+        echo "Version: $version"
+      shell: pwsh
+      
+    - name: Create release zip
+      if: startsWith(github.ref, 'refs/tags/')
+      run: |
+        $version = "${{ steps.version.outputs.VERSION }}"
+        Compress-Archive -Path "RoughGrep/bin/Release/*" -DestinationPath "RoughGrep-$version.zip"
+      shell: pwsh
+      
     - name: Upload build artifacts
       uses: actions/upload-artifact@v4
       with:
         name: RoughGrep-Release
         path: RoughGrep/bin/Release/
-        if-no-files-found: error 
+        if-no-files-found: error
+        
+    - name: Create GitHub Release
+      if: startsWith(github.ref, 'refs/tags/')
+      uses: softprops/action-gh-release@v2
+      with:
+        files: RoughGrep-${{ steps.version.outputs.VERSION }}.zip
+        name: RoughGrep ${{ steps.version.outputs.VERSION }}
+        draft: false
+        prerelease: false
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} 
