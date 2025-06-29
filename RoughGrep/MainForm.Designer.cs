@@ -35,11 +35,12 @@
             this.panel1 = new System.Windows.Forms.Panel();
             this.btnCls = new System.Windows.Forms.Button();
             this.btnAbort = new System.Windows.Forms.Button();
-            this.searchControl = new RoughGrep.SearchControl();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.statusLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
             this.helpLink = new System.Windows.Forms.ToolStripStatusLabel();
             this.statusLabelCurrentArgs = new System.Windows.Forms.ToolStripStatusLabel();
+            this.searchControl = new RoughGrep.SearchControl();
+            this.toolTip1 = new System.Windows.Forms.ToolTip();
             this.tableLayoutPanel1.SuspendLayout();
             this.panel1.SuspendLayout();
             this.statusStrip1.SuspendLayout();
@@ -194,6 +195,7 @@
         private System.Windows.Forms.ToolStripStatusLabel statusLabelCurrentArgs;
         private System.Windows.Forms.Button btnCls;
         private System.Windows.Forms.ToolStripStatusLabel helpLink;
+        private System.Windows.Forms.ToolTip toolTip1;
     }
 }
 
